@@ -1,13 +1,14 @@
 package com.example.NYA_reservation.controller;
 
+import com.example.NYA_reservation.controller.form.SearchForm;
 import com.example.NYA_reservation.dto.AreaReservationCountDto;
 import com.example.NYA_reservation.dto.GenreReservationCountDto;
 import com.example.NYA_reservation.dto.RestaurantReservationCountDto;
 import com.example.NYA_reservation.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -18,17 +19,17 @@ public class HomeController {
     RestaurantService restaurantService;
 
     @GetMapping("/")
-    public ModelAndView showHome() {
+    public String showHome(Model model) {
 
         List<AreaReservationCountDto> popularAreas = restaurantService.selectTopAreasByReservationCount();
         List<GenreReservationCountDto> popularGenres = restaurantService.selectTopGenresByReservationCount();
         List<RestaurantReservationCountDto> popularRestaurants = restaurantService.selectTopRestaurantsByReservationCount();
 
-        ModelAndView mav = new ModelAndView("index");
-        mav.addObject("popularAreas", popularAreas);
-        mav.addObject("popularGenres", popularGenres);
-        mav.addObject("popularRestaurants", popularRestaurants);
-        return mav;
+        model.addAttribute("searchForm", new SearchForm());
+        model.addAttribute("popularAreas", popularAreas);
+        model.addAttribute("popularGenres", popularGenres);
+        model.addAttribute("popularRestaurants", popularRestaurants);
+        return "index";
     }
 
 }
