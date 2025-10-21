@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -29,8 +30,9 @@ public class Reservation {
     @Column
     private Integer headcount;
 
-    @Column
-    private Integer restaurantId;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 
     @Column
     private Integer userId;

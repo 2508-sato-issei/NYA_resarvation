@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "restaurants")
@@ -57,4 +58,6 @@ public class Restaurant {
     @Column(insertable = false, updatable = true)
     private Timestamp updatedDate;
 
+    @OneToMany(mappedBy = "restaurant")
+    private List<Reservation> reservations;
 }
