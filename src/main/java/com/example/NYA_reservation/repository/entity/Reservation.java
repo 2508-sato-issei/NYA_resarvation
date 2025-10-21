@@ -20,19 +20,20 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
+    @Column(name = "reservation_date", nullable = false)
     private LocalDate reservationDate;
 
-    @Column
+    @Column(name = "reservation_time", nullable = false)
     private LocalTime reservationTime;
 
     @Column
     private Integer headcount;
 
-    @Column
-    private Integer restaurantId;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 
-    @Column
+    @Column(name = "user_id", nullable = false)
     private Integer userId;
 
     @Column(insertable = false, updatable = false)

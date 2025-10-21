@@ -3,6 +3,7 @@ package com.example.NYA_reservation.service;
 import com.example.NYA_reservation.controller.form.ReservationForm;
 import com.example.NYA_reservation.repository.ReservationRepository;
 import com.example.NYA_reservation.repository.entity.Reservation;
+import com.example.NYA_reservation.repository.entity.Restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ public class ReservationService {
     private Reservation setReservationEntity(ReservationForm reservationForm){
         Reservation reservation = new Reservation();
 
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(reservationForm.getRestaurantId());
+
         //予約登録時はid == null 予約編集時はid != null
 //        if(reservationForm.getId() != null){
 //            reservation.setId(reservationForm.getId());
@@ -34,7 +38,7 @@ public class ReservationService {
         reservation.setReservationDate(reservationForm.getReservationDate());
         reservation.setReservationTime(reservationForm.getReservationTime());
         reservation.setHeadcount(reservationForm.getHeadcount());
-        reservation.setRestaurantId(reservationForm.getRestaurantId());
+        reservation.setRestaurant(restaurant);
         reservation.setUserId(reservationForm.getUserId());
 
         return reservation;
