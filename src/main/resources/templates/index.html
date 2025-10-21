@@ -4,11 +4,56 @@
     <meta charset="UTF-8">
     <!-- Bootstrap CSS -->
     <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
-    <title>ホーム画面（仮）</title>
+    <title>ホーム画面</title>
 </head>
 <body>
-<h1>ホーム画面（仮）</h1>
-<!-- webjar -->
+<h1>ホーム画面</h1>
+
+<form>
+
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>人気エリア</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="popularArea : ${popularAreas}">
+            <td th:text="${popularArea.area}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th>人気ジャンル</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="popularGenre : ${popularGenres}">
+            <td th:text="${popularGenre.genre}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th>人気店舗</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="popularRestaurant : ${popularRestaurants}">
+            <a th:href="@{'/restaurant' + ${popularRestaurant.id}}"
+               th:text="${popularRestaurant.name}"></a>
+        </tr>
+    </tbody>
+</table>
+
+
 <script th:href="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
 <script th:href="@{/webjars/bootstrap/5.1.3/js/bootstrap.min.js}"></script>
 </body>
