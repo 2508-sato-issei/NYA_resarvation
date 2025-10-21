@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 import java.time.LocalTime;
 
 @Entity
@@ -44,10 +45,10 @@ public class Restaurant {
     @Column
     private Integer capacity;
 
-    @Column(name = "min_amount", nullable = false)
+    @Column
     private Integer minAmount;
 
-    @Column(name = "max_amount", nullable = false)
+    @Column
     private Integer maxAmount;
 
     @Column(insertable = false, updatable = false)
@@ -55,4 +56,7 @@ public class Restaurant {
 
     @Column(insertable = false, updatable = true)
     private Timestamp updatedDate;
+
+    @OneToMany(mappedBy = "restaurant")
+    private List<Reservation> reservations;
 }

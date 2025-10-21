@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "reservations")
@@ -18,24 +18,25 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "reservation_date", nullable = false)
-    private LocalDate reservationDate;
+    @Column
+    private Date reservationDate;
 
-    @Column(name = "reservation_time", nullable = false)
-    private LocalTime reservationTime;
+    @Column
+    private Time reservationTime;
 
     @Column
     private Integer headcount;
 
-    @Column(name = "restaurant_id", nullable = false)
-    private Integer restaurantId;
+    @ManyToOne
+    @JoinColumn(name = "restaurant_id")
+    private Restaurant restaurant;
 
-    @Column(name = "user_id", nullable = false)
+    @Column
     private Integer userId;
 
-    @Column(name = "created_date", nullable = false, updatable = false)
-    private LocalDateTime createdDate;
+    @Column(insertable = false, updatable = false)
+    private Timestamp createdDate;
 
-    @Column(name = "updated_date", nullable = false)
-    private LocalDateTime updatedDate;
+    @Column(insertable = false, updatable = true)
+    private Timestamp updatedDate;
 }
