@@ -2,11 +2,15 @@ package com.example.NYA_reservation.controller;
 
 import com.example.NYA_reservation.controller.form.RegularHolidaysForm;
 import com.example.NYA_reservation.controller.form.RestaurantForm;
+import com.example.NYA_reservation.controller.form.UserForm;
 import com.example.NYA_reservation.repository.entity.Restaurant;
+import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.RegularHolidaysService;
 import com.example.NYA_reservation.service.RestaurantService;
+import com.example.NYA_reservation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +33,8 @@ public class AdminController {
     RestaurantService restaurantService;
     @Autowired
     RegularHolidaysService regularHolidaysService;
+    @Autowired
+    UserService userService;
 
     /*
      * サイト管理者画面表示
@@ -192,5 +198,31 @@ public class AdminController {
         //定休日情報も削除
         regularHolidaysService.deleteByRestaurantId(id);
         return new ModelAndView("redirect:/admin/restaurant-list");
+    }
+
+    /*
+     * ユーザー一覧表示
+     */
+    @GetMapping("/user-list")
+    public ModelAndView showUsers(@AuthenticationPrincipal LoginUserDetails loginUser){
+        ModelAndView mav = new ModelAndView();
+
+        List<UserForm> users = userService.findAllUser();
+
+        mav.setViewName("admin/user/index");
+        mav.addObject("users", users);
+        mav.addObject("loginUser", loginUser);
+        return mav;
+    }
+
+    /*
+     * ユーザー停止・有効切り替え
+     */
+    @PutMapping("/user/change/{id}")
+    public ModelAndView changeIsStopped(@PathVariable("id") Integer id,
+                                        @RequestParam("isStopped") boolean isStopped){
+        userService.changeIsStopped(id, isStopped);
+
+        return new ModelAndView("redirect:/admin/user-list");
     }
 }

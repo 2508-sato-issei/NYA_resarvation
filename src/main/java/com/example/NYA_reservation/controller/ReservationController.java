@@ -3,7 +3,6 @@ package com.example.NYA_reservation.controller;
 import com.example.NYA_reservation.controller.form.RegularHolidaysForm;
 import com.example.NYA_reservation.controller.form.ReservationForm;
 import com.example.NYA_reservation.controller.form.RestaurantForm;
-import com.example.NYA_reservation.repository.entity.RegularHolidays;
 import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.RegularHolidaysService;
 import com.example.NYA_reservation.service.ReservationService;

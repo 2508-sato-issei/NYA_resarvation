@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -38,5 +42,36 @@ public class UserService {
     }
 
     // ユーザー編集
+
+    //ユーザー情報全件取得
+    public List<UserForm> findAllUser(){
+        List<User> results = userRepository.findAll();
+        return setUserForm(results);
+    }
+
+    //ユーザー停止・有効切り替え
+    public void changeIsStopped(Integer id, boolean isStopped){
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        userRepository.changeIsStopped(id, isStopped, ts);
+    }
+
+
+    private List<UserForm> setUserForm(List<User> results){
+        List<UserForm> users = new ArrayList<>();
+
+        for(User result : results){
+            UserForm user = new UserForm();
+            user.setId(result.getId());
+            user.setAccount(result.getAccount());
+            user.setPassword(result.getPassword());
+            user.setName(result.getName());
+            user.setAuthority(result.getAuthority());
+            user.setStopped(result.isStopped());
+            user.setCreatedDate(result.getCreatedDate());
+            user.setUpdatedDate(result.getUpdatedDate());
+            users.add(user);
+        }
+        return users;
+    }
 
 }

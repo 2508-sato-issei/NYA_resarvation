@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Table(name = "regular_holidays")
 @Getter
 @Setter
-public class RegularHolidays {
+public class RegularHoliday {
 
     @Id
     @Column
