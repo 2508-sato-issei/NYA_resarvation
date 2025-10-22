@@ -7,6 +7,8 @@
     <title th:text="${restaurant.name} + 'の店舗詳細'">店舗詳細</title>
 </head>
 <body>
+<!-- 共通メニューバーの読み込み -->
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <h1>店舗詳細</h1>
 
