@@ -97,8 +97,4 @@ public class RestaurantService {
         return restaurantRepository.findTopRestaurantsByReservationCount(PageRequest.of(0, 5));
     }
 
-    //店舗変更画面で店舗情報を取得する際の処理
-    public Restaurant findById(Integer restaurantId) {
-        return restaurantRepository.findById(restaurantId).orElse(null);
-    }
 }
