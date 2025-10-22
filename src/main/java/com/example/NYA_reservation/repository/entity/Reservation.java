@@ -4,25 +4,27 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "reservations")
 @Getter
 @Setter
 public class Reservation {
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
-    private Date reservationDate;
+    @Column(name = "reservation_date", nullable = false)
+    private LocalDate reservationDate;
 
-    @Column
-    private Time reservationTime;
+    @Column(name = "reservation_time", nullable = false)
+    private LocalTime reservationTime;
 
     @Column
     private Integer headcount;
@@ -31,7 +33,7 @@ public class Reservation {
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;
 
-    @Column
+    @Column(name = "user_id", nullable = false)
     private Integer userId;
 
     @Column(insertable = false, updatable = false)

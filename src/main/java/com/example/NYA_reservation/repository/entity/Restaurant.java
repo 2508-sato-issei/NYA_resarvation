@@ -4,9 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalTime;
 import java.util.List;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "restaurants")
@@ -36,11 +37,11 @@ public class Restaurant {
     @Column
     private String explanation;
 
-    @Column
-    private Time startBusiness;
+    @Column(name = "start_business", nullable = false)
+    private LocalTime startBusiness;
 
-    @Column
-    private Time endBusiness;
+    @Column(name = "end_business", nullable = false)
+    private LocalTime endBusiness;
 
     @Column
     private Integer capacity;
