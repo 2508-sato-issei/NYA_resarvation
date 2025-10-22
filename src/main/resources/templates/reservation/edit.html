@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <title>予約変更画面</title>
+</head>
+<body class="bg-light">
+    <div class="container">
+        <h2>予約変更</h2>
+
+        <!-- エラーメッセージ表示 -->
+        <div th:if="${errorMessages}">
+            <div class="alert alert-danger" th:each="err : ${errorMessages}" th:text="${err}"></div>
+        </div>
+
+        <!-- 予約変更フォーム -->
+        <form th:action="@{/reservation/update/{id}(id=${formModel.id})}"
+              th:object="${formModel}" method="post">
+            <input type="hidden" name="_method" value="put"/>
+
+            <!-- 予約日 -->
+            <div class="yoyaku">
+                <label for="reservationDate" class="form-label">予約日</label>
+                <input type="date" id="reservationDate"
+                       class="form-control"
+                       th:field="*{reservationDate}" required>
+                <div class="text-danger small" th:if="${#fields.hasErrors('reservationDate')}"
+                     th:errors="*{reservationDate}"></div>
+            </div>
+
+            <!-- 予約時間 -->
+            <div class="yoyaku">
+                <label for="reservationTime" class="form-label">予約時間</label>
+                <select id="reservationTime"
+                        class="form-select"
+                        th:field="*{reservationTime}"
+                        th:data-start="${restaurant.startBusiness}"
+                        th:data-end="${restaurant.endBusiness}">
+                </select>
+                <div class="text-danger small" th:if="${#fields.hasErrors('reservationTime')}"
+                     th:errors="*{reservationTime}"></div>
+            </div>
+
+            <!-- 人数 -->
+            <div class="yoyaku">
+                <label for="headcount" class="form-label">人数</label>
+                <input type="number" id="headcount"
+                       class="form-control"
+                       th:field="*{headcount}" min="1"
+                       th:max="${restaurant.capacity}" required>
+                <div class="text-danger small" th:if="${#fields.hasErrors('headcount')}"
+                     th:errors="*{headcount}"></div>
+            </div>
+
+            <!-- ボタン -->
+            <div class="d-flex justify-content-between">
+                <a th:href="@{/mypage}" class="btn btn-secondary">戻る</a>
+                <button type="submit" class="btn btn-primary">変更を確定</button>
+            </div>
+        </form>
+    </div>
+    <!-- WebJarスクリプト -->
+    <script th:src="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

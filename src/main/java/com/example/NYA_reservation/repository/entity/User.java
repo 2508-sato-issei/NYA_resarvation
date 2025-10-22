@@ -25,10 +25,10 @@ public class User {
     @Column
     private String name;
 
-    @Column
+    @Column(insertable = false, updatable = false)
     private Integer authority;
 
-    @Column
+    @Column(insertable = false, updatable = false)
     private boolean isStopped;
 
     @Column(insertable = false, updatable = false)

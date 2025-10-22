@@ -36,11 +36,11 @@ public class ReservationController {
      */
     @GetMapping("/new/{id}")
     public ModelAndView show(Model model,
-                             @PathVariable("id") Integer restaurantId){
+                             @PathVariable("id") Integer restaurantId) {
         ModelAndView mav = new ModelAndView();
 
         //IDで店舗情報を取得
-        RestaurantForm restaurant =  restaurantService.findRestaurantById(restaurantId);
+        RestaurantForm restaurant = restaurantService.findRestaurantById(restaurantId);
 
         //restaurantIdで定休日情報を取得
         List<RegularHolidaysForm> regularHolidays = regularHolidaysService.findRegularHolidaysByRestaurantId(restaurantId);
@@ -67,7 +67,7 @@ public class ReservationController {
                                        RedirectAttributes redirectAttributes,
                                        @AuthenticationPrincipal LoginUserDetails loginUser){
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.formModel", result);
             redirectAttributes.addFlashAttribute("formModel", reservationForm);
             return new ModelAndView("redirect:/reservation/new/" + restaurantId);

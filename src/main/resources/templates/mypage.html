@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <title>マイページ</title>
+</head>
+<body>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>マイページ</h2>
+        <a th:href="@{/}" class="btn btn-secondary">戻る</a>
+    </div>
+    <h4 th:text="'ようこそ、' + ${loginUser.name} + 'さん'"></h4>
+    <hr>
+    <h5>予約一覧</h5>
+    <table class="table table-striped mt-3">
+        <thead class="table-light">
+        <tr>
+            <th>予約日</th>
+            <th>予約時間</th>
+            <th>店舗名</th>
+            <th>人数</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="r : ${reservations}">
+            <td th:text="${r.reservationDate}"></td>
+            <td th:text="${r.reservationTime}"></td>
+            <td th:text="${r.restaurant.name}"></td>
+            <td th:text="${r.headcount}"></td>
+            <td>
+                <a th:href="@{'/reservation/edit/' + ${r.id}}" class="btn btn-sm btn-primary">予約変更</a>
+                <form th:action="@{/reservation/cancel/{id}(id=${r.id})}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit" class="btn btn-sm btn-danger"
+                            onclick="return confirm('この予約をキャンセルしますか？');">キャンセル</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- WebJarスクリプト -->
+    <script th:src="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
