@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +32,14 @@ public class RestaurantService {
         Integer headcount = searchForm.getHeadcount();
 
         Specification<Restaurant> spec = RestaurantSpecifications.searchByCriteria(area, genre, headcount);
-        return restaurantRepository.findAll(spec, pageable);
+
+        Pageable sortedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(Sort.Direction.DESC, "updatedDate")
+        );
+
+        return restaurantRepository.findAll(spec, sortedPageable);
     }
 
     // レストラン情報を取得（店舗詳細画面用）
