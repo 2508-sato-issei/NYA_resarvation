@@ -10,42 +10,44 @@
 <h1>ホーム</h1>
 
 <!-- 検索フォーム -->
-<form th:action="@{/search}" method="get">
+<div>
+    <form th:action="@{/search}" method="get">
 
-    <label for="area">エリア：</label>
-    <select name="area" id="area" th:value="${searchForm.area}">
-        <option value="">-- 選択してください --</option>
-        <option value="東京" th:selected="${searchForm.area == '東京'}">東京</option>
-        <option value="神奈川" th:selected="${searchForm.area == '神奈川'}">神奈川</option>
-        <option value="愛知" th:selected="${searchForm.area == '愛知'}">愛知</option>
-        <option value="大阪" th:selected="${searchForm.area == '大阪'}">大阪</option>
-        <option value="京都" th:selected="${searchForm.area == '京都'}">京都</option>
-        <option value="福岡" th:selected="${searchForm.area == '福岡'}">福岡</option>
-    </select>
+        <label for="area">エリア：</label>
+        <select name="area" id="area" th:value="${searchForm.area}">
+            <option value="">-- 選択してください --</option>
+            <option value="東京" th:selected="${searchForm.area == '東京'}">東京</option>
+            <option value="神奈川" th:selected="${searchForm.area == '神奈川'}">神奈川</option>
+            <option value="愛知" th:selected="${searchForm.area == '愛知'}">愛知</option>
+            <option value="大阪" th:selected="${searchForm.area == '大阪'}">大阪</option>
+            <option value="京都" th:selected="${searchForm.area == '京都'}">京都</option>
+            <option value="福岡" th:selected="${searchForm.area == '福岡'}">福岡</option>
+        </select>
 
-    <label for="genre">ジャンル：</label>
-    <select name="genre" id="genre" th:value="${searchForm.genre}">
-        <option value="">-- 選択してください --</option>
-        <option value="焼肉" th:selected="${searchForm.genre == '焼肉'}">焼肉</option>
-        <option value="寿司" th:selected="${searchForm.genre == '寿司'}">寿司</option>
-        <option value="居酒屋" th:selected="${searchForm.genre == '居酒屋'}">居酒屋</option>
-        <option value="イタリアン" th:selected="${searchForm.genre == 'イタリアン'}">イタリアン</option>
-        <option value="ラーメン" th:selected="${searchForm.genre == 'ラーメン'}">ラーメン</option>
-        <option value="カフェ" th:selected="${searchForm.genre == 'カフェ'}">カフェ</option>
-    </select>
+        <label for="genre">ジャンル：</label>
+        <select name="genre" id="genre" th:value="${searchForm.genre}">
+            <option value="">-- 選択してください --</option>
+            <option value="焼肉" th:selected="${searchForm.genre == '焼肉'}">焼肉</option>
+            <option value="寿司" th:selected="${searchForm.genre == '寿司'}">寿司</option>
+            <option value="居酒屋" th:selected="${searchForm.genre == '居酒屋'}">居酒屋</option>
+            <option value="イタリアン" th:selected="${searchForm.genre == 'イタリアン'}">イタリアン</option>
+            <option value="ラーメン" th:selected="${searchForm.genre == 'ラーメン'}">ラーメン</option>
+            <option value="カフェ" th:selected="${searchForm.genre == 'カフェ'}">カフェ</option>
+        </select>
 
-    <label for="headcount">人数：</label>
-    <select name="headcount" id="headcount" th:value="${searchForm.headcount}">
-        <option value="">-- 選択してください --</option>
-        <option th:each="i : ${#numbers.sequence(1, 99)}"
-                th:value="${i}"
-                th:text="${i} + '名'"
-                th:selected="${searchForm.headcount == i}">
-        </option>
-    </select>
+        <label for="headcount">人数：</label>
+        <select name="headcount" id="headcount" th:value="${searchForm.headcount}">
+            <option value="">-- 選択してください --</option>
+            <option th:each="i : ${#numbers.sequence(1, 99)}"
+                    th:value="${i}"
+                    th:text="${i} + '名'"
+                    th:selected="${searchForm.headcount == i}">
+            </option>
+        </select>
 
-    <button type="submit">検索</button>
-</form>
+        <button type="submit">検索</button>
+    </form>
+</div>
 
 <!-- 人気エリア・ジャンル・店舗 -->
 <div>
@@ -90,7 +92,6 @@
     </table>
 </div>
 
-<h1>ホーム画面（仮）</h1>
 <div th:if="${#authentication == null or !#authorization.expression('isAuthenticated()')}">
     <a th:href="@{/login}" class="btn btn-primary me-2">ログイン</a>
 </div>
