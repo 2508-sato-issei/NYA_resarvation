@@ -10,8 +10,20 @@
 <body>
     <main>
         <h2 th:text="${restaurant.name + ' の予約'}"></h2>
-        <div th:text="${'営業時間：' + restaurant.startBusiness + '~' + restaurant.endBusiness}"></div>
+        <div th:text="${'営業時間(L.Oは営業終了30分前)：' + restaurant.startBusiness + '~' + restaurant.endBusiness}"></div>
         <div th:text="${'定員：' + restaurant.capacity + '席'}"></div>
+        定休日：
+        <span th:each="regularHoliday : ${regularHolidays}">
+            <th:block th:switch="${regularHoliday.regularHoliday}">
+                <span th:case=1 th:text="月曜日"></span>
+                <span th:case=2 th:text="火曜日"></span>
+                <span th:case=3 th:text="水曜日"></span>
+                <span th:case=4 th:text="木曜日"></span>
+                <span th:case=5 th:text="金曜日"></span>
+                <span th:case=6 th:text="土曜日"></span>
+                <span th:case=7 th:text="日曜日"></span>
+            </th:block>
+        </span>
         <form method="post" th:action="@{/reservation/add/{id}(id = ${restaurantId})}" th:object="${formModel}">
             <!-- CSRFトークン -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -23,7 +35,7 @@
                 <input type="date" th:field="*{reservationDate}">
             </p>
             <p>
-                <label for="timeSelect">予約時間</label>
+                <label for="timeSelect">予約時間（営業終了1時間前まで予約可）</label>
                 <div th:if="${#fields.hasErrors('reservationTime')}" th:errors="*{reservationTime}"></div>
                 <select id="timeSelect"
                         th:field="*{reservationTime}"
