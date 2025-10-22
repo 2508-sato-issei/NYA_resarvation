@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <title>検索結果</title>
+</head>
+<body>
+
+<h1>検索結果</h1>
+
+<!-- 検索条件の表示 -->
+<h2>検索条件</h2>
+
+<div>
+    <ul>
+        <li>
+            エリア：
+            <span th:text="${#strings.isEmpty(searchForm.area) ? '指定なし' : searchForm.area}"></span>
+        </li>
+        <li>
+            ジャンル：
+            <span th:text="${#strings.isEmpty(searchForm.genre) ? '指定なし' : searchForm.genre}"></span>
+        </li>
+        <li>
+            人数：
+            <span th:text="${#strings.isEmpty(searchForm.headcount) ? '指定なし' : searchForm.headcount}"></span>
+        </li>
+    </ul>
+</div>
+
+<!-- 検索結果が空の場合のメッセージ -->
+<div>
+    <P th:if="${#lists.isEmpty(results)}">検索条件に一致する店舗は見つかりませんでした。</P>
+</div>
+
+<!-- 検索結果一覧 -->
+<div>
+    <table th:if="${not #lists.isEmpty(results)}">
+        <thead>
+        <tr>
+            <th>名前</th>
+            <th>エリア</th>
+            <th>ジャンル</th>
+            <th>定員</th>
+            <th>予算</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="restaurant : ${results}">
+            <td>
+                <a th:href="@{'/restaurant/' + ${restaurant.id}}"
+                   th:text="${restaurant.name}">店舗名</a>
+            </td>
+            <td th:text="${restaurant.area}">エリア</td>
+            <td th:text="${restaurant.address}">ジャンル</td>
+            <td th:text="${restaurant.capacity}">定員</td>
+            <td th:text="${#numbers.formatInteger(restaurant.minAmount, 0, 'COMMA')} + '円～' + ${#numbers.formatInteger(restaurant.maxAmount, 0, 'COMMA')} + '円'">予算</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ページネーション -->
+<div th:if="${page.totalPages > 1}" class="pagination">
+    <ul>
+
+        <!-- 「前の10件」※ 最初のページでは非表示 -->
+        <li th:if="${!page.first}">
+            <a th:href="@{/search(page=${page.number - 1}, area=${searchForm.area}, genre=${searchForm.genre}, headcount=${searchForm.headcount})}">
+                « 前の10件
+            </a>
+        </li>
+
+        <!-- 最初のページ -->
+        <li th:if="${showFirst}">
+            <a th:href="@{/search(page=0, area=${searchForm.area}, genre=${searchForm.genre}, headcount=${searchForm.headcount})}">1</a>
+        </li>
+
+        <!-- 「...」 -->
+        <li th:if="${showFirst}">
+            <span>...</span>
+        </li>
+
+        <!-- 中央ページ番号 -->
+        <li th:each="i : ${#numbers.sequence(startPage, endPage)}"
+            th:classappend="${i == page.number} ? 'active'">
+            <a th:if="${i != page.number}"
+               th:href="@{/search(page=${i}, area=${searchForm.area}, genre=${searchForm.genre}, headcount=${searchForm.headcount})}"
+               th:text="${i + 1}">1</a>
+            <strong th:if="${i == page.number}" th:text="${i + 1}">1</strong>
+        </li>
+
+        <!-- 「...」 -->
+        <li th:if="${showLast}">
+            <span>...</span>
+        </li>
+
+        <!-- 最後のページ -->
+        <li th:if="${showLast}">
+            <a th:href="@{/search(page=${page.totalPages - 1}, area=${searchForm.area}, genre=${searchForm.genre}, headcount=${searchForm.headcount})}"
+               th:text="${page.totalPages}">最終</a>
+        </li>
+
+        <!-- 「次の10件」※ 最後のページでは非表示 -->
+        <li th:if="${!page.last}">
+            <a th:href="@{/search(page=${page.number + 1}, area=${searchForm.area}, genre=${searchForm.genre}, headcount=${searchForm.headcount})}">
+                次の10件 »
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+<script th:href="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
+<script th:href="@{/webjars/bootstrap/5.1.3/js/bootstrap.min.js}"></script>
+</body>
+</html>

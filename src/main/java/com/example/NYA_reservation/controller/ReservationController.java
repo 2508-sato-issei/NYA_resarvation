@@ -27,12 +27,12 @@ public class ReservationController {
      */
     @GetMapping("/new/{id}")
     public ModelAndView show(Model model,
-                             @PathVariable("id") Integer restaurantId){
+                             @PathVariable("id") Integer restaurantId) {
         ModelAndView mav = new ModelAndView();
 
-        RestaurantForm restaurant =  restaurantService.findRestaurantById(restaurantId);
+        RestaurantForm restaurant = restaurantService.findRestaurantById(restaurantId);
 
-        if(!model.containsAttribute("formModel")){
+        if (!model.containsAttribute("formModel")) {
             //modelにformModelがない場合、空のFormをmavに保持させる(formModelが存在するとき=エラーでフォワード処理した時)
             ReservationForm reservationForm = new ReservationForm();
             mav.addObject("formModel", reservationForm);
@@ -50,9 +50,9 @@ public class ReservationController {
     public ModelAndView addReservation(@ModelAttribute("formModel") @Validated ReservationForm reservationForm,
                                        BindingResult result,
                                        @PathVariable("id") Integer restaurantId,
-                                       RedirectAttributes redirectAttributes){
+                                       RedirectAttributes redirectAttributes) {
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.formModel", result);
             redirectAttributes.addFlashAttribute("formModel", reservationForm);
             return new ModelAndView("redirect:/reservation/new/" + restaurantId);

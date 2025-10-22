@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <title th:text="${restaurant.name} + 'の店舗詳細'">店舗詳細</title>
+</head>
+<body>
+
+<h1>店舗詳細</h1>
+
+<!-- 店舗紹介 -->
+<div>
+    <section>
+        <h2 th:text="${restaurant.name}">店舗名</h2>
+
+        <table>
+            <tr>
+                <th>エリア</th>
+                <td th:text="${restaurant.area}">エリア</td>
+            </tr>
+            <tr>
+                <th>ジャンル</th>
+                <td th:text="${restaurant.genre}">ジャンル</td>
+            </tr>
+            <tr>
+                <th>予算</th>
+                <td th:text="${#numbers.formatInteger(restaurant.minAmount, 0, 'COMMA')} + '円～' + ${#numbers.formatInteger(restaurant.maxAmount, 0, 'COMMA')} + '円'">予算</td>
+            </tr>
+            <tr>
+                <th>定休日</th>
+                <!--<td th:text="${restaurant.　}">定休日</td>-->
+            </tr>
+            <tr>
+                <th>説明</th>
+                <td th:text="${restaurant.explanation}">説明</td>
+            </tr>
+        </table>
+
+        <!-- 予約ページへのリンク -->
+        <div>
+            <form th:action="@{'/reservation/new/' + ${restaurant.id}}" method="get">
+                <button type="submit" class="button">予約する</button>
+            </form>
+        </div>
+    </section>
+</div>
+
+<!-- 店舗詳細情報 -->
+<div>
+    <section>
+        <h3>店舗詳細情報</h3>
+
+        <table>
+            <tr>
+                <th>店舗名</th>
+                <td th:text="${restaurant.name}">店舗名</td>
+            </tr>
+            <tr>
+                <th>ジャンル</th>
+                <td th:text="${restaurant.genre}">ジャンル</td>
+            </tr>
+            <tr>
+                <th>電話番号</th>
+                <td th:text="${restaurant.telephone}">電話番号</td>
+            </tr>
+            <tr>
+                <th>住所</th>
+                <td th:text="${restaurant.address}">住所</td>
+            </tr>
+            <tr>
+                <th>営業時間</th>
+                <!-- 営業日 -->
+                <td th:text="${#temporals.format(restaurant.startBusiness, 'HH:mm')} + ' ～ ' + ${#temporals.format(restaurant.endBusiness, 'HH:mm')}">営業時間</td>
+                <!-- 定休日 -->
+            </tr>
+            <tr>
+                <th>予算</th>
+                <td th:text="${#numbers.formatInteger(restaurant.minAmount, 0, 'COMMA')} + '円～' + ${#numbers.formatInteger(restaurant.maxAmount, 0, 'COMMA')} + '円'">予算</td>
+            </tr>
+            <tr>
+                <th>定員</th>
+                <td th:text="${restaurant.capacity} + ' 名'">定員</td>
+            </tr>
+        </table>
+
+        <!-- 予約ページへのリンク -->
+        <div>
+            <form th:action="@{'/reservation/new/' + ${restaurant.id}}" method="get">
+                <button type="submit" class="button">予約する</button>
+            </form>
+        </div>
+    </section>
+</div>
+
+<script th:href="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
+<script th:href="@{/webjars/bootstrap/5.1.3/js/bootstrap.min.js}"></script>
+</body>
+</html>
