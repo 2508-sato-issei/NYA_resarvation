@@ -25,9 +25,27 @@ public class SearchController {
 
         Page<Restaurant> resultPage = restaurantService.searchRestaurants(searchForm, PageRequest.of(page, 10));
 
+        int totalPages = resultPage.getTotalPages();
+        int currentPage = resultPage.getNumber();
+        int displayRange = 5;
+
+        int startPage = Math.max(0, currentPage - displayRange);
+        int endPage = Math.min(totalPages - 1, currentPage + displayRange);
+
+        boolean showFirst = startPage > 0;
+        boolean showLast = endPage < totalPages - 1;
+
+        // 検索結果
         model.addAttribute("searchForm", searchForm);
         model.addAttribute("results", resultPage.getContent());
+
+        // ページネーション
         model.addAttribute("page", resultPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("showFirst", showFirst);
+        model.addAttribute("showLast", showLast);
+
         return "search-result";
     }
 
