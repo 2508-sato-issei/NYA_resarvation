@@ -1,5 +1,6 @@
 package com.example.NYA_reservation.controller.form;
 
+import com.example.NYA_reservation.repository.entity.Restaurant;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class ReservationForm {
     private Integer headcount;
 
     private Integer restaurantId;
+    private Restaurant restaurant;
     private Integer userId;
     private Timestamp createdDate;
     private Timestamp updatedDate;
