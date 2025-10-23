@@ -73,7 +73,7 @@ public class ReservationController {
         //入力された予約日を取得
         LocalDate reservationDate = reservationForm.getReservationDate();
         //店舗の定休日情報を取得
-        List<RegularHolidaysForm> regularHolidays = regularHolidaysService.findRegularHolidaysByRestaurantId(restaurantId);
+        List<RegularHolidayForm> regularHolidays = regularHolidayService.findRegularHolidaysByRestaurantId(restaurantId);
         //本日の日付、６０日後の日付を取得
         LocalDate now = LocalDate.now();
         LocalDate future = now.plusDays(60);
@@ -82,7 +82,7 @@ public class ReservationController {
         if(reservationDate != null){
             //入力された予約日の曜日（インデックス）を取得
             int intDayOfWeek = reservationDate.getDayOfWeek().getValue();
-            for(RegularHolidaysForm regularHoliday : regularHolidays){
+            for(RegularHolidayForm regularHoliday : regularHolidays){
                 //定休日チェック
                 if(regularHoliday.getRegularHoliday() == intDayOfWeek){
                     FieldError error = new FieldError(result.getObjectName(),
