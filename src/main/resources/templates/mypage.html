@@ -13,6 +13,12 @@
     <h4 th:text="'ようこそ、' + ${loginUser.name} + 'さん'"></h4>
     <hr>
     <h5>予約一覧</h5>
+    <div class="text-center mt-3">
+        <a th:href="@{/user/edit/{id}(id=${loginUser.id})}" class="btn btn-primary">
+            会員情報を編集する
+        </a>
+    </div>
+
     <table class="table table-striped mt-3">
         <thead class="table-light">
         <tr>

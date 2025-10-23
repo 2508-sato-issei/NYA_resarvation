@@ -1,20 +1,17 @@
 package com.example.NYA_reservation.controller;
 
-import com.example.NYA_reservation.controller.form.RegularHolidaysForm;
+import com.example.NYA_reservation.controller.form.RegularHolidayForm;
 import com.example.NYA_reservation.controller.form.RestaurantForm;
 import com.example.NYA_reservation.controller.form.UserForm;
-import com.example.NYA_reservation.repository.entity.Restaurant;
 import com.example.NYA_reservation.security.LoginUserDetails;
-import com.example.NYA_reservation.service.RegularHolidaysService;
+import com.example.NYA_reservation.service.RegularHolidayService;
 import com.example.NYA_reservation.service.RestaurantService;
 import com.example.NYA_reservation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,7 +29,7 @@ public class AdminController {
     @Autowired
     RestaurantService restaurantService;
     @Autowired
-    RegularHolidaysService regularHolidaysService;
+    RegularHolidayService regularHolidayService;
     @Autowired
     UserService userService;
 
@@ -57,7 +54,7 @@ public class AdminController {
         List<RestaurantForm> restaurants = restaurantService.findAllRestaurants();
 
         //定休日情報を取得
-        List<RegularHolidaysForm> regularHolidays = regularHolidaysService.findAllRegularHolidays();
+        List<RegularHolidayForm> regularHolidays = regularHolidayService.findAllRegularHolidays();
 
         mav.setViewName("admin/restaurant/index");
         mav.addObject("restaurants", restaurants);
@@ -109,15 +106,15 @@ public class AdminController {
         RestaurantForm savedRestaurant= restaurantService.addRestaurant(restaurantForm);
 
         //定休日、レストランIDをregularHolidaysFormにセット
-        List<RegularHolidaysForm> regularHolidaysForms = new ArrayList<>();
+        List<RegularHolidayForm> regularHolidayForms = new ArrayList<>();
         for(Integer regularHoliday : regularHolidays){
-            RegularHolidaysForm regularHolidaysForm = new RegularHolidaysForm();
-            regularHolidaysForm.setRegularHoliday(regularHoliday);
-            regularHolidaysForm.setRestaurantId(savedRestaurant.getId());
-            regularHolidaysForms.add(regularHolidaysForm);
+            RegularHolidayForm regularHolidayForm = new RegularHolidayForm();
+            regularHolidayForm.setRegularHoliday(regularHoliday);
+            regularHolidayForm.setRestaurantId(savedRestaurant.getId());
+            regularHolidayForms.add(regularHolidayForm);
         }
         //定休日をDBに登録
-        regularHolidaysService.addRegularHolidays(regularHolidaysForms);
+        regularHolidayService.addRegularHolidays(regularHolidayForms);
 
         return new ModelAndView("redirect:/admin/restaurant-list");
     }
@@ -172,18 +169,18 @@ public class AdminController {
         RestaurantForm savedRestaurant= restaurantService.addRestaurant(restaurantForm);
 
         //元々の定休日情報を削除
-        regularHolidaysService.deleteByRestaurantId(id);
+        regularHolidayService.deleteByRestaurantId(id);
 
         //新しい定休日、レストランIDをregularHolidaysFormにセット
-        List<RegularHolidaysForm> regularHolidaysForms = new ArrayList<>();
+        List<RegularHolidayForm> regularHolidayForms = new ArrayList<>();
         for(Integer regularHoliday : regularHolidays){
-            RegularHolidaysForm regularHolidaysForm = new RegularHolidaysForm();
-            regularHolidaysForm.setRegularHoliday(regularHoliday);
-            regularHolidaysForm.setRestaurantId(savedRestaurant.getId());
-            regularHolidaysForms.add(regularHolidaysForm);
+            RegularHolidayForm regularHolidayForm = new RegularHolidayForm();
+            regularHolidayForm.setRegularHoliday(regularHoliday);
+            regularHolidayForm.setRestaurantId(savedRestaurant.getId());
+            regularHolidayForms.add(regularHolidayForm);
         }
         //定休日をDBに登録
-        regularHolidaysService.addRegularHolidays(regularHolidaysForms);
+        regularHolidayService.addRegularHolidays(regularHolidayForms);
 
         return new ModelAndView("redirect:/admin/restaurant-list");
 
@@ -198,7 +195,7 @@ public class AdminController {
         //店舗情報を削除
         restaurantService.deleteRestaurant(id);
         //定休日情報も削除
-        regularHolidaysService.deleteByRestaurantId(id);
+        regularHolidayService.deleteByRestaurantId(id);
         return new ModelAndView("redirect:/admin/restaurant-list");
     }
 
