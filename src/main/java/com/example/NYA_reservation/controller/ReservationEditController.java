@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,21 +68,35 @@ public class ReservationEditController {
 
     //予約変更機能
     @PutMapping("/reservation/update/{id}")
-    public ModelAndView updateReservation(@PathVariable("id") Integer id, @AuthenticationPrincipal LoginUserDetails loginUser,
-                                          @ModelAttribute("formModel") @Validated ReservationForm reservationForm,
-                                          BindingResult result, RedirectAttributes redirectAttributes){
+    public ModelAndView updateReservation(
+            @PathVariable("id") Integer id,
+            @AuthenticationPrincipal LoginUserDetails loginUser,
+            @Validated @ModelAttribute("formModel") ReservationForm reservationForm,
+            BindingResult result,
+            RedirectAttributes redirectAttributes){
 
         List<String> errorMessages = new ArrayList<>();
+        //入力された予約日を取得
+        LocalDate reservationDate = reservationForm.getReservationDate();
+        //本日の日付、６０日後の日付を取得
+        LocalDate now = LocalDate.now();
+        LocalDate future = now.plusDays(60);
+
+        if (reservationDate != null) {
+            if (reservationDate.isBefore(now)) {
+                result.addError(new FieldError(
+                        result.getObjectName(), "reservationDate",
+                        reservationDate, false, null, null, "過去の日付は選択できません"));
+            } else if (reservationDate.isAfter(future)) {
+                result.addError(new FieldError(
+                        result.getObjectName(), "reservationDate",
+                        reservationDate, false, null, null, "予約日は2か月以内で選択してください"));
+            }
+        }
 
         //必須チェック
         if (result.hasErrors()) {
             result.getAllErrors().forEach(error -> errorMessages.add(error.getDefaultMessage()));
-        }
-
-        //過去の日付を選択した際
-        if (reservationForm.getReservationDate() != null &&
-                reservationForm.getReservationDate().isBefore(LocalDate.now())) {
-            errorMessages.add(E0007);
         }
 
         //定員を超える場合
@@ -104,8 +119,9 @@ public class ReservationEditController {
 
     //予約キャンセル
     @DeleteMapping("/reservation/cancel/{id}")
-    public ModelAndView cancelReservation(@PathVariable Integer id){
+    public ModelAndView cancelReservation(@PathVariable Integer id, RedirectAttributes redirectAttributes){
         reservationService.deleteReservation(id);
+        redirectAttributes.addFlashAttribute("successMessage", "✔️予約をキャンセルしました。");
         return new ModelAndView("redirect:/mypage");
     }
 }

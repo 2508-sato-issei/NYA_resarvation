@@ -47,6 +47,11 @@ public class UserService {
         return userRepository.findById(id).orElse(null);
     }
 
+    //総会員数取得
+    public Long countUsers(){
+        return userRepository.count();
+    }
+
     // User → UserForm 変換
     public UserForm convertToForm(User user) {
         return userConverter.toForm(user);

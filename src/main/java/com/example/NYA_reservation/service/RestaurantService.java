@@ -73,6 +73,12 @@ public class RestaurantService {
         return restaurant.get(0);
     }
 
+    //店舗数取得
+    public Long countRestaurants(){
+        return restaurantRepository.count();
+    }
+
+
     //店舗登録・更新処理
     public RestaurantForm addRestaurant(RestaurantForm restaurantForm){
         Restaurant restaurant = setRestaurantEntity(restaurantForm);

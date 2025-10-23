@@ -3,6 +3,7 @@ package com.example.NYA_reservation.controller;
 import com.example.NYA_reservation.controller.form.RegularHolidayForm;
 import com.example.NYA_reservation.controller.form.RestaurantForm;
 import com.example.NYA_reservation.controller.form.UserForm;
+import com.example.NYA_reservation.dto.RestaurantReservationCountDto;
 import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.RegularHolidayService;
 import com.example.NYA_reservation.service.RestaurantService;
@@ -39,7 +40,18 @@ public class AdminController {
     @GetMapping
     public ModelAndView show(){
         ModelAndView mav = new ModelAndView();
+        //総会員数取得
+        Long totalUsers = userService.countUsers();
+        //総店舗数取得
+        Long totalRestaurants = restaurantService.countRestaurants();
+        //人気店舗取得
+        List<RestaurantReservationCountDto> popularRestaurants = restaurantService.selectTopRestaurantsByReservationCount();
+
+
         mav.setViewName("admin/index");
+        mav.addObject("totalUsers", totalUsers);
+        mav.addObject("totalRestaurants", totalRestaurants);
+        mav.addObject("popularRestaurants", popularRestaurants);
         return mav;
     }
 
