@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
-    <!-- Bootstrap CSS -->
-    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/css/style.css}" rel="styleSheet">
-    <script th:src="@{/js/main.js}"></script>
+    <div th:replace="fragments/fragment :: head"></div>
     <title>ユーザー一覧</title>
 </head>
 <body>
@@ -65,8 +61,6 @@
     </table>
     <a th:href="@{/admin}">戻る</a>
 </main>
-<!-- webjar -->
-<script th:href="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
-<script th:href="@{/webjars/bootstrap/5.1.3/js/bootstrap.min.js}"></script>
+<div th:replace="fragments/fragment :: scriptsAndJs"></div>
 </body>
 </html>
