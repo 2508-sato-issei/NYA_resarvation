@@ -87,8 +87,6 @@ public class AdminController {
                                       @RequestParam(value = "regularHoliday", required = false) List<Integer> regularHolidays,
                                       RedirectAttributes redirectAttributes){
 
-
-
         if(result.hasErrors()){
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.formModel", result);
             redirectAttributes.addFlashAttribute("formModel", restaurantForm);
@@ -188,9 +186,13 @@ public class AdminController {
 
     }
 
+    /*
+     *店舗削除
+     */
+
     @DeleteMapping("/restaurant/delete/{id}")
     public ModelAndView deleteRestaurant(@PathVariable("id") Integer id){
-        //レストラン情報を削除
+        //店舗情報を削除
         restaurantService.deleteRestaurant(id);
         //定休日情報も削除
         regularHolidayService.deleteByRestaurantId(id);
