@@ -7,7 +7,6 @@ import lombok.Setter;
 import java.sql.Timestamp;
 import java.time.LocalTime;
 import java.util.List;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "restaurants")
@@ -52,6 +51,9 @@ public class Restaurant {
     @Column
     private Integer maxAmount;
 
+    @Column
+    private String mainImage;
+
     @Column(insertable = false, updatable = false)
     private Timestamp createdDate;
 
@@ -60,4 +62,5 @@ public class Restaurant {
 
     @OneToMany(mappedBy = "restaurant")
     private List<Reservation> reservations;
+
 }

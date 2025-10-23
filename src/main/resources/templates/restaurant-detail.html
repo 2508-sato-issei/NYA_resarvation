@@ -17,6 +17,12 @@
     <section>
         <h2 th:text="${restaurant.name}">店舗名</h2>
 
+        <div>
+            <img img th:src="${restaurant.mainImage} != null ? @{'/storage/' + ${restaurant.mainImage}} : @{/storage/noimage.jpg}"
+                 class="w-100"
+                 alt="店舗画像">
+        </div>
+
         <table>
             <tr>
                 <th>エリア</th>
