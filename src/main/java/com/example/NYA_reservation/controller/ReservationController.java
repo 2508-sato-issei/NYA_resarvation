@@ -1,10 +1,10 @@
 package com.example.NYA_reservation.controller;
 
-import com.example.NYA_reservation.controller.form.RegularHolidaysForm;
+import com.example.NYA_reservation.controller.form.RegularHolidayForm;
 import com.example.NYA_reservation.controller.form.ReservationForm;
 import com.example.NYA_reservation.controller.form.RestaurantForm;
 import com.example.NYA_reservation.security.LoginUserDetails;
-import com.example.NYA_reservation.service.RegularHolidaysService;
+import com.example.NYA_reservation.service.RegularHolidayService;
 import com.example.NYA_reservation.service.ReservationService;
 import com.example.NYA_reservation.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class ReservationController {
     @Autowired
     RestaurantService restaurantService;
     @Autowired
-    RegularHolidaysService regularHolidaysService;
+    RegularHolidayService regularHolidayService;
 
     /*
      * 予約画面を表示
@@ -42,7 +42,7 @@ public class ReservationController {
         RestaurantForm restaurant = restaurantService.findRestaurantById(restaurantId);
 
         //restaurantIdで定休日情報を取得
-        List<RegularHolidaysForm> regularHolidays = regularHolidaysService.findRegularHolidaysByRestaurantId(restaurantId);
+        List<RegularHolidayForm> regularHolidays = regularHolidayService.findRegularHolidaysByRestaurantId(restaurantId);
 
         if(!model.containsAttribute("formModel")){
             //modelにformModelがない場合、空のFormをmavに保持させる(formModelが存在するとき=エラーでフォワード処理した時)

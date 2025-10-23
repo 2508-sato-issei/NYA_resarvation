@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 
 @Getter
 @Setter
-public class RegularHolidaysForm {
+public class RegularHolidayForm {
     private Integer id;
     private Integer restaurantId;
     private Integer regularHoliday;
