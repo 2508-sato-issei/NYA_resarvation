@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ja" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <div th:replace="fragments/fragment :: head"></div>
     <title>予約画面</title>
@@ -9,50 +9,73 @@
         <div th:replace="fragments/navbar :: navbar"></div>
     </header>
     <main>
-        <h2 th:text="${restaurant.name + ' の予約'}"></h2>
-        <div th:text="${'営業時間(L.Oは営業終了30分前)：' + restaurant.startBusiness + '~' + restaurant.endBusiness}"></div>
-        <div th:text="${'定員：' + restaurant.capacity + '席'}"></div>
-        定休日：
-        <span th:each="regularHoliday : ${regularHolidays}">
-            <th:block th:switch="${regularHoliday.regularHoliday}">
-                <span th:case=1 th:text="月曜日"></span>
-                <span th:case=2 th:text="火曜日"></span>
-                <span th:case=3 th:text="水曜日"></span>
-                <span th:case=4 th:text="木曜日"></span>
-                <span th:case=5 th:text="金曜日"></span>
-                <span th:case=6 th:text="土曜日"></span>
-                <span th:case=7 th:text="日曜日"></span>
-            </th:block>
-        </span>
-        <form method="post" th:action="@{/reservation/add/{id}(id = ${restaurantId})}" th:object="${formModel}">
-            <!-- CSRFトークン -->
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <div class="container pt-4 pb-5 nya-container">
+            <div class="row justify-content-center">
+                <div class="col-xxl-9 col-xl-10 col-lg-11">
+                    <!--パンくずリスト-->
+                    <nav aria-label="breadcrumb" role="navigation">
+                        <ol class="breadcrumb p-3 bg-light rounded-2">
+                            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+                            <li class="breadcrumb-item"><a th:href="@{/restaurant/{id}(id=${restaurant.id})}">店舗詳細</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">予約</li>
+                        </ol>
+                    </nav>
 
-            <!-- 入力フォーム -->
-            <p>
-                <label>予約日</label>
-                <div th:if="${#fields.hasErrors('reservationDate')}" th:errors="*{reservationDate}"></div>
-                <input type="date" th:field="*{reservationDate}">
-            </p>
-            <p>
-                <label for="timeSelect">予約時間（営業終了1時間前まで予約可）</label>
-                <div th:if="${#fields.hasErrors('reservationTime')}" th:errors="*{reservationTime}"></div>
-                <select id="timeSelect"
-                        th:field="*{reservationTime}"
-                        th:attr="data-start=${restaurant.startBusiness}, data-end=${restaurant.endBusiness}">
-                </select>
-                <input type="hidden" id="currentTime" th:value="*{reservationTime}">
-            </p>
-            <p>
-                <label>予約人数</label>
-                <div th:if="${#fields.hasErrors('headcount')}" th:errors="*{headcount}"></div>
-                <input type="number" min="1" th:max="${restaurant.capacity}" th:field="*{headcount}">
-            </p>
-            <p>
-                <input type="submit" value="登録確定">
-            </p>
-        </form>
-        <a th:href="@{/restaurant/{id}(id=${restaurant.id})}">戻る</a>
+                    <h2 class="mb-4 text-center" th:text="${restaurant.name + ' の予約'}"></h2>
+                    <div>
+                        <span th:text="${'営業時間(L.Oは営業終了30分前)：' + restaurant.startBusiness + '~' + restaurant.endBusiness}"></span>
+                        <span th:text="${'定員：' + restaurant.capacity + '席'}"></span>
+                        <span>
+                             定休日：
+                            <span th:each="regularHoliday : ${regularHolidays}">
+                            <th:block th:switch="${regularHoliday.regularHoliday}">
+                                <span th:case=1 th:text="月曜日"></span>
+                                <span th:case=2 th:text="火曜日"></span>
+                                <span th:case=3 th:text="水曜日"></span>
+                                <span th:case=4 th:text="木曜日"></span>
+                                <span th:case=5 th:text="金曜日"></span>
+                                <span th:case=6 th:text="土曜日"></span>
+                                <span th:case=7 th:text="日曜日"></span>
+                            </th:block>
+                         </span>
+                        </span>
+                    </div>
+
+
+                    <form method="post" th:action="@{/reservation/add/{id}(id = ${restaurantId})}" th:object="${formModel}">
+                        <!-- CSRFトークン -->
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+                        <!-- 入力フォーム -->
+                        <div class="form-group row mb-3">
+                            <label class="form-label" for="date">予約日</label>
+                            <div th:if="${#fields.hasErrors('reservationDate')}" th:errors="*{reservationDate}"></div>
+                            <input type="date" class="form-control" id="date" th:field="*{reservationDate}">
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="form-label" for="timeSelect">予約時間（営業終了1時間前まで予約可）</label>
+                        <div th:if="${#fields.hasErrors('reservationTime')}" th:errors="*{reservationTime}"></div>
+                        <select class="form-select"
+                                id="timeSelect"
+                                th:field="*{reservationTime}"
+                                th:attr="data-start=${restaurant.startBusiness}, data-end=${restaurant.endBusiness}">
+                        </select>
+                        <input type="hidden" id="currentTime" th:value="*{reservationTime}">
+                        </div>
+                        <div class="form-group row mb-3">
+                            <label class="form-label" for="headcount">予約人数</label>
+                        <div th:if="${#fields.hasErrors('headcount')}" th:errors="*{headcount}"></div>
+                        <input class="form-control" id="headcount" type="number" min="1" th:max="${restaurant.capacity}" th:field="*{headcount}">
+                        </div>
+                        <p>
+                            <button type="submit" class="btn btn-primary">登録確定</button>
+                        </p>
+                    </form>
+                    <a th:href="@{/restaurant/{id}(id=${restaurant.id})}">戻る</a>
+                </div>
+            </div>
+        </div>
+
     </main>
 
     <div th:replace="fragments/fragment :: scriptsAndJs"></div>
