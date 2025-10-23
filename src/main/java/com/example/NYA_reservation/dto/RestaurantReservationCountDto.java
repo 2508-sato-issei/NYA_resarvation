@@ -9,11 +9,13 @@ public class RestaurantReservationCountDto {
 
     private Integer id;
     private String name;
+    private String mainImage;
     private Long count;
 
-    public RestaurantReservationCountDto(Integer id, String name, Long count) {
+    public RestaurantReservationCountDto(Integer id, String name, String mainImage, Long count) {
         this.id = id;
         this.name = name;
+        this.mainImage = mainImage;
         this.count = count;
 
     }

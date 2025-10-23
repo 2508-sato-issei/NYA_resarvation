@@ -43,6 +43,7 @@
     <table th:if="${not #lists.isEmpty(results)}">
         <thead>
         <tr>
+            <th></th>
             <th>名前</th>
             <th>エリア</th>
             <th>ジャンル</th>
@@ -52,6 +53,11 @@
         </thead>
         <tbody>
         <tr th:each="restaurant : ${results}">
+            <td>
+                <img img th:src="${restaurant.mainImage} != null ? @{'/storage/restaurant/' + ${restaurant.mainImage}} : @{/storage/noimage.jpg}"
+                     class="w-100"
+                     alt="店舗画像">
+            </td>
             <td>
                 <a th:href="@{'/restaurant/' + ${restaurant.id}}"
                    th:text="${restaurant.name}">店舗名</a>

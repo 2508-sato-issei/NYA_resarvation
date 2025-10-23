@@ -6,7 +6,6 @@ import com.example.NYA_reservation.controller.error.CustomAuthenticationFailureH
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,7 +45,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/login", "/user/new", "/search", "/restaurant/**").permitAll()
-                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/storage/**").permitAll()
                         .requestMatchers("/mypage/**", "/reservation/**", "/user/edit/**").hasRole("USER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 //                        .requestMatchers(HttpMethod.POST, "/**").authenticated()

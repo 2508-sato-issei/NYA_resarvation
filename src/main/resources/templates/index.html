@@ -63,6 +63,11 @@
         <tbody>
         <tr th:each="popularArea : ${popularAreas}">
             <td th:text="${popularArea.area}"></td>
+            <td>
+                <img img th:src="${popularArea.area} != null ? @{/storage/area/{area}.jpg(area=${popularArea.area})} : @{/storage/noimage.jpg}"
+                     class="w-100"
+                     alt="エリア画像">
+            </td>
         </tr>
         </tbody>
     </table>
@@ -76,6 +81,11 @@
         <tbody>
         <tr th:each="popularGenre : ${popularGenres}">
             <td th:text="${popularGenre.genre}"></td>
+            <td>
+                <img img th:src="${popularGenre.genre} != null ? @{/storage/genre/{genre}.jpg(genre=${popularGenre.genre})} : @{/storage/noimage.jpg}"
+                     class="w-100"
+                     alt="ジャンル画像">
+            </td>
         </tr>
         </tbody>
     </table>
@@ -88,8 +98,15 @@
         </thead>
         <tbody>
         <tr th:each="popularRestaurant : ${popularRestaurants}">
-            <a th:href="@{'/restaurant/' + ${popularRestaurant.id}}"
-               th:text="${popularRestaurant.name}"></a>
+            <td>
+                <a th:href="@{'/restaurant/' + ${popularRestaurant.id}}"
+                   th:text="${popularRestaurant.name}"></a>
+            </td>
+            <td>
+                <img img th:src="${popularRestaurant.mainImage} != null ? @{'/storage/restaurant/' + ${popularRestaurant.mainImage}} : @{/storage/noimage.jpg}"
+                     class="w-100"
+                     alt="店舗画像">
+            </td>
         </tr>
         </tbody>
     </table>
