@@ -8,8 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -34,7 +32,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>
     List<GenreReservationCountDto> findTopGenresByReservationCount(Pageable pageable);
 
     // 人気店舗取得
-    @Query("SELECT new com.example.NYA_reservation.dto.RestaurantReservationCountDto(r.id, r.name, COUNT(res)) " +
+    @Query("SELECT new com.example.NYA_reservation.dto.RestaurantReservationCountDto(r.id, r.name, r.mainImage, COUNT(res)) " +
             "FROM Restaurant r " +
             "JOIN r.reservations res " +
             "GROUP BY r.id, r.name " +
