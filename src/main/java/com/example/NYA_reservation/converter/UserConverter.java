@@ -13,6 +13,7 @@ public class UserConverter {
     // User → UserForm
     public UserForm toForm(User user) {
         UserForm userForm = new UserForm();
+
         userForm.setId(user.getId());
         userForm.setAccount(user.getAccount());
         userForm.setPassword(user.getPassword());
@@ -23,6 +24,7 @@ public class UserConverter {
         userForm.setUpdatedDate(user.getUpdatedDate());
         return userForm;
     }
+
     // List<User> → List<UserForm>
     public List<UserForm> toUserFormList(List<User> userList) {
         List<UserForm> users = new ArrayList<>();

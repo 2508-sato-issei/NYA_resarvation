@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RegularHolidaysRepository extends JpaRepository<RegularHoliday, Integer> {
+public interface RegularHolidayRepository extends JpaRepository<RegularHoliday, Integer> {
     //レストランIDで定休日情報を取得
     List<RegularHoliday> findRegularHolidaysByRestaurantId(Integer restaurantId);
 
