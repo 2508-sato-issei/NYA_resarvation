@@ -21,7 +21,12 @@ public class RegularHolidayService {
         return setRegularHolidaysForm(results);
     }
 
-    //restaurantIdで定休日情報を取得
+    // restaurantIdで定休日情報を取得（店舗詳細画面用）
+    public List<RegularHoliday> findByRestaurantId(Integer restaurantId){
+        return regularHolidayRepository.findRegularHolidaysByRestaurantId(restaurantId);
+    }
+
+    //restaurantIdで定休日情報を取得（管理者画面用）
     public List<RegularHolidayForm> findRegularHolidaysByRestaurantId(Integer restaurantId){
         List<RegularHoliday> result = regularHolidayRepository.findRegularHolidaysByRestaurantId(restaurantId);
         return setRegularHolidaysForm(result);
