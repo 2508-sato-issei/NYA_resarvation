@@ -37,6 +37,7 @@ public class ErrorMessage {
     public static final String E0033 = "ログインしてください";
     public static final String E0034 = "定休日を入力してください";
     public static final String E0035 = "パスワード（確認用）を入力してください";
+    public static final String E0036 = "選択された日付は定休日です";
 
     // インスタンス化防止
     private ErrorMessage() {
