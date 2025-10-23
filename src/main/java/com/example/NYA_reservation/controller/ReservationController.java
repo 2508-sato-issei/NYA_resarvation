@@ -12,12 +12,16 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
+
+import static com.example.NYA_reservation.validation.ErrorMessage.*;
 
 @Controller
 @RequestMapping("/reservation")
@@ -66,6 +70,40 @@ public class ReservationController {
                                        RedirectAttributes redirectAttributes,
                                        @AuthenticationPrincipal LoginUserDetails loginUser){
 
+        //入力された予約日を取得
+        LocalDate reservationDate = reservationForm.getReservationDate();
+        //店舗の定休日情報を取得
+        List<RegularHolidayForm> regularHolidays = regularHolidayService.findRegularHolidaysByRestaurantId(restaurantId);
+        //本日の日付、６０日後の日付を取得
+        LocalDate now = LocalDate.now();
+        LocalDate future = now.plusDays(60);
+
+
+        if(reservationDate != null){
+            //入力された予約日の曜日（インデックス）を取得
+            int intDayOfWeek = reservationDate.getDayOfWeek().getValue();
+            for(RegularHolidayForm regularHoliday : regularHolidays){
+                //定休日チェック
+                if(regularHoliday.getRegularHoliday() == intDayOfWeek){
+                    FieldError error = new FieldError(result.getObjectName(),
+                            "reservationDate", reservationDate,
+                            false,
+                            null,
+                            null, E0036);
+                    result.addError(error);
+                }
+            }
+            //予約日が過去じゃないor２か月以内かチェック
+            if(reservationDate.isAfter(future) || reservationDate.isBefore(now)){
+                FieldError error = new FieldError(result.getObjectName(),
+                        "reservationDate", reservationDate,
+                        false,
+                        null,
+                        null, E0007);
+                result.addError(error);
+            }
+        }
+
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.formModel", result);
             redirectAttributes.addFlashAttribute("formModel", reservationForm);
@@ -78,8 +116,7 @@ public class ReservationController {
 
         reservationService.saveReservation(reservationForm);
 
-        //一時的にリダイレクト先をホーム画面に設定　マイページ完成後はマイページにリダイレクトする。
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/mypage");
 
     }
 

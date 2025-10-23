@@ -1,6 +1,7 @@
 package com.example.NYA_reservation.controller.form;
 
 import com.example.NYA_reservation.repository.entity.Restaurant;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
