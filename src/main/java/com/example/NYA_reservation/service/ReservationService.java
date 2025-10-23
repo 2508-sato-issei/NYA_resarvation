@@ -54,7 +54,7 @@ public class ReservationService {
 
     //マイページ画面に予約一覧を表示
     public List<ReservationForm> findByUserId(Integer userId) {
-        List<Reservation> results = reservationRepository.findByUserIdOrderByIdDesc(userId);
+        List<Reservation> results = reservationRepository.findByUserIdOrderByReservationDateAsc(userId);
         return setReservationForm(results);
     }
 
