@@ -9,7 +9,11 @@
     <title>ユーザー一覧</title>
 </head>
 <body>
+<header>
+    <div th:replace="fragments/navbar :: navbar"></div>
+</header>
 <main>
+
     <table>
         <caption>ユーザー 一覧</caption>
         <thead>
@@ -59,6 +63,7 @@
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/admin}">戻る</a>
 </main>
 <!-- webjar -->
 <script th:href="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>

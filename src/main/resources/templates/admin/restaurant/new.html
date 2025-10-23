@@ -8,7 +8,11 @@
     <title>店舗登録</title>
 </head>
 <body>
+<header>
+    <div th:replace="fragments/navbar :: navbar"></div>
+</header>
 <main>
+
     <h2>店舗登録</h2>
     <form method="post" th:action="@{/admin/restaurant/add}" th:object="${formModel}">
         <!-- CSRFトークン -->

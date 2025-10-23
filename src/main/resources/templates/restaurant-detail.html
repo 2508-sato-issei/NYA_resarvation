@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <th>定休日</th>
-                <td th:text="${#lists.isEmpty(holidayNames) ? 'なし' : #strings.arrayJoin(holidayNames, '・')}">定休日</td>
+                <td th:text="${#lists.isEmpty(holidayNames) ? 'なし' : #strings.arrayJoin(holidayNames, '、')}">定休日</td>
             </tr>
             <tr>
                 <th>説明</th>
@@ -73,9 +73,11 @@
             </tr>
             <tr>
                 <th>営業時間</th>
-                <!-- 営業日 -->
                 <td th:text="${#temporals.format(restaurant.startBusiness, 'HH:mm')} + ' ～ ' + ${#temporals.format(restaurant.endBusiness, 'HH:mm')}">営業時間</td>
-                <!-- 定休日 -->
+            </tr>
+            <tr>
+                <th>定休日</th>
+                <td th:text="${#lists.isEmpty(holidayNames) ? 'なし' : #strings.arrayJoin(holidayNames, '・')}">定休日</td>
             </tr>
             <tr>
                 <th>予算</th>

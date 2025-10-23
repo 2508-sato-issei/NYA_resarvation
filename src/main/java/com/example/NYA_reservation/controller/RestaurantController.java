@@ -36,6 +36,7 @@ public class RestaurantController {
                     case 5 -> "金";
                     case 6 -> "土";
                     case 7 -> "日";
+                    case 8 -> "祝日";
                     default -> "";
                 })
                 .toList();

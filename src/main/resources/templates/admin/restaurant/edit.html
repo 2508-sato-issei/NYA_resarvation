@@ -8,6 +8,9 @@
     <title>店舗編集</title>
 </head>
 <body>
+<header>
+    <div th:replace="fragments/navbar :: navbar"></div>
+</header>
 <main>
     <h2>店舗編集</h2>
     <form th:method="put" th:action="@{/admin/restaurant/update/{id}(id = ${formModel.id})}" th:object="${formModel}">
