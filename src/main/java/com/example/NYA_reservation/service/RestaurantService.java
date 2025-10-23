@@ -1,6 +1,15 @@
 package com.example.NYA_reservation.service;
 
 import com.example.NYA_reservation.controller.form.RestaurantForm;
+import com.example.NYA_reservation.repository.RestaurantRepository;
+import com.example.NYA_reservation.repository.entity.Restaurant;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 import com.example.NYA_reservation.controller.form.SearchForm;
 import com.example.NYA_reservation.dto.AreaReservationCountDto;
 import com.example.NYA_reservation.dto.GenreReservationCountDto;
@@ -25,6 +34,12 @@ public class RestaurantService {
     @Autowired
     RestaurantRepository restaurantRepository;
 
+    //全件取得
+    public List<RestaurantForm> findAllRestaurants(){
+        List<Restaurant> results = restaurantRepository.findAll();
+        return setRestaurantForm(results);
+    }
+
     // 検索結果取得
     public Page<Restaurant> searchRestaurants(SearchForm searchForm, Pageable pageable) {
         String area = searchForm.getArea();
@@ -47,14 +62,29 @@ public class RestaurantService {
         return restaurantRepository.findById(id).orElse(null);
     }
 
+
     //IDでレストラン情報を取得(予約用)
-    public RestaurantForm findRestaurantById(Integer id) {
+    public RestaurantForm findRestaurantById(Integer id){
         Restaurant result = restaurantRepository.findById(id).orElse(null);
 
         List<Restaurant> restaurants = new ArrayList<>();
         restaurants.add(result);
         List<RestaurantForm> restaurant = setRestaurantForm(restaurants);
         return restaurant.get(0);
+    }
+
+    //店舗登録・更新処理
+    public RestaurantForm addRestaurant(RestaurantForm restaurantForm){
+        Restaurant restaurant = setRestaurantEntity(restaurantForm);
+        Restaurant savedRestaurant = restaurantRepository.save(restaurant);
+        List<Restaurant> savedRestaurants = new ArrayList<>();
+        savedRestaurants.add(savedRestaurant);
+        return setRestaurantForm(savedRestaurants).get(0);
+    }
+
+    //店舗情報削除
+    public void deleteRestaurant(Integer id){
+        restaurantRepository.deleteById(id);
     }
 
     //DBから取得したレストラン情報をEntityからFormに詰め替え
@@ -80,6 +110,30 @@ public class RestaurantService {
             restaurants.add(restaurant);
         }
         return restaurants;
+    }
+
+    //Formの値をEntityに詰め替え
+    private Restaurant setRestaurantEntity(RestaurantForm restaurantForm){
+        Restaurant restaurant = new Restaurant();
+
+        restaurant.setName(restaurantForm.getName());
+        restaurant.setTelephone(restaurantForm.getTelephone());
+        restaurant.setAddress(restaurantForm.getAddress());
+        restaurant.setArea(restaurantForm.getArea());
+        restaurant.setGenre(restaurantForm.getGenre());
+        restaurant.setExplanation(restaurantForm.getExplanation());
+        restaurant.setStartBusiness(restaurantForm.getStartBusiness());
+        restaurant.setEndBusiness(restaurantForm.getEndBusiness());
+        restaurant.setCapacity(restaurantForm.getCapacity());
+        restaurant.setMinAmount(restaurantForm.getMinAmount());
+        restaurant.setMaxAmount(restaurantForm.getMaxAmount());
+
+        if(restaurantForm.getId() != null){
+            restaurant.setId(restaurantForm.getId());
+            restaurant.setUpdatedDate(Timestamp.valueOf(LocalDateTime.now()));
+        }
+
+        return restaurant;
     }
 
     // 人気エリア取得

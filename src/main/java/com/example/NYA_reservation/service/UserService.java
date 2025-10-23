@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -85,6 +86,18 @@ public class UserService {
 
         userRepository.save(updateUser);
         return true;
+    }
+
+    //ユーザー情報全件取得
+    public List<UserForm> findAllUser() {
+        List<User> results = userRepository.findAll();
+        return userConverter.toUserFormList(results);
+    }
+
+    //ユーザー停止・有効切り替え
+    public void changeIsStopped(Integer id, boolean isStopped) {
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        userRepository.changeIsStopped(id, isStopped, ts);
     }
 
 }
