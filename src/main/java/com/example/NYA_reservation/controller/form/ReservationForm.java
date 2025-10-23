@@ -4,6 +4,7 @@ import com.example.NYA_reservation.repository.entity.Restaurant;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -17,9 +18,11 @@ public class ReservationForm {
     private Integer id;
 
     @NotNull(message = E0004)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate reservationDate;
 
     @NotNull(message = E0005)
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime reservationTime;
 
     @NotNull(message = E0006)

@@ -3,6 +3,7 @@ package com.example.NYA_reservation.repository.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.sql.Time;
 import java.sql.Timestamp;

@@ -11,6 +11,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (startTime && endTime) {
             generateTimeOptions(timeSelect, startTime, endTime, 30);
         }
+
+        // 予約済み時間を選択状態にする
+        const currentTimeElement = document.getElementById("currentTime");
+        if (currentTimeElement && currentTimeElement.value) {
+            timeSelect.value = currentTimeElement.value;
+        }
     }
 });
 

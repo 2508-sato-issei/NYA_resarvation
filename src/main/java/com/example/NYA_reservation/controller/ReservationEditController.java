@@ -32,7 +32,7 @@ public class ReservationEditController {
     //予約変更画面表示
     @GetMapping("/reservation/edit/{id}")
     public ModelAndView reservationEdit(@PathVariable String id, RedirectAttributes redirectAttributes,
-                                        @AuthenticationPrincipal LoginUserDetails loginUser, Model model){
+                                        @AuthenticationPrincipal LoginUserDetails loginUser){
 
         List<String> errorMessages = new ArrayList<>();
 
@@ -60,12 +60,7 @@ public class ReservationEditController {
         }
 
         ModelAndView mav = new ModelAndView("reservation/edit");
-
-        if(!model.containsAttribute("formModel")){
-            //modelにformModelがない場合、編集元のユーザー情報を表示(formModelが存在するとき=エラーでリダイレクト処理した時)
-            mav.addObject("formModel", reservation);
-        }
-
+        mav.addObject("formModel", reservation);
         mav.addObject("restaurant", restaurant);
         mav.addObject("loginUser", loginUser);
         return mav;
@@ -104,7 +99,7 @@ public class ReservationEditController {
             return new ModelAndView("redirect:/reservation/edit/" + id);
         }
 
-        reservationService.saveReservation(reservationForm);
+        reservationService.updateReservation(reservationForm);
         return new ModelAndView("redirect:/mypage");
     }
 
