@@ -9,6 +9,8 @@
     <div th:replace="fragments/navbar :: navbar"></div>
 </header>
 <main>
+    <div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+
     <h2>店舗一覧</h2>
 
     <a th:href="@{/admin/restaurant/new}">店舗登録</a>
@@ -36,7 +38,7 @@
                 <span th:case=7 th:text="日曜日"></span>
             </th:block>
         </span>
-            <a th:href="@{/admin/restaurant/edit/{id}(id=${restaurant.id})}">編集</a>
+            <a th:href="@{/admin/restaurant/edit/{id}(id=${restaurant.id}, referer=${currentUrl})}">編集</a>
             <form th:action="@{/admin/restaurant/delete/{id}(id=${restaurant.id})}" th:method="delete" onSubmit="return CheckDelete()">
                 <!-- CSRFトークン -->
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

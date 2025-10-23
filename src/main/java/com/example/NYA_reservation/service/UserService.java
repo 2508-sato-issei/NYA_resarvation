@@ -1,5 +1,6 @@
 package com.example.NYA_reservation.service;
 
+import com.example.NYA_reservation.controller.error.RecordNotFoundException;
 import com.example.NYA_reservation.controller.form.UserForm;
 import com.example.NYA_reservation.converter.UserConverter;
 import com.example.NYA_reservation.repository.UserRepository;
@@ -12,6 +13,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import static com.example.NYA_reservation.validation.ErrorMessage.E0011;
 
 @Service
 public class UserService {
@@ -44,7 +47,8 @@ public class UserService {
 
     // IDからユーザー取得
     public User findById(Integer id) {
-        return userRepository.findById(id).orElse(null);
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(E0011));
     }
 
     //総会員数取得
