@@ -49,12 +49,12 @@
                         <!-- 入力フォーム -->
                         <div class="form-group row mb-3">
                             <label class="form-label" for="date">予約日</label>
-                            <div th:if="${#fields.hasErrors('reservationDate')}" th:errors="*{reservationDate}"></div>
+                            <div class="text-danger" th:if="${#fields.hasErrors('reservationDate')}" th:errors="*{reservationDate}"></div>
                             <input type="date" class="form-control" id="date" th:field="*{reservationDate}">
                         </div>
                         <div class="form-group row mb-3">
                             <label class="form-label" for="timeSelect">予約時間（営業終了1時間前まで予約可）</label>
-                        <div th:if="${#fields.hasErrors('reservationTime')}" th:errors="*{reservationTime}"></div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('reservationTime')}" th:errors="*{reservationTime}"></div>
                         <select class="form-select"
                                 id="timeSelect"
                                 th:field="*{reservationTime}"
@@ -64,7 +64,7 @@
                         </div>
                         <div class="form-group row mb-3">
                             <label class="form-label" for="headcount">予約人数</label>
-                        <div th:if="${#fields.hasErrors('headcount')}" th:errors="*{headcount}"></div>
+                        <div class="text-danger" th:if="${#fields.hasErrors('headcount')}" th:errors="*{headcount}"></div>
                         <input class="form-control" id="headcount" type="number" min="1" th:max="${restaurant.capacity}" th:field="*{headcount}">
                         </div>
                         <p>
