@@ -11,7 +11,6 @@
 <!--左側サイドバー-->
 <div class="sidebar">
     <h2 class="text-center mt-3">マイページ</h2>
-    <a th:href="@{/}">🏠 ホーム</a>
     <a th:href="@{/user/edit/{id}(id=${loginUser.id})}">👤 会員情報編集</a>
     <a th:href="@{/mypage}">🔍 マイページTOP</a>
 </div>
@@ -22,45 +21,52 @@
     <hr>
 
     <h5>予約一覧</h5>
-    <table class="table table-striped mt-3">
-        <thead class="table-light">
-        <tr>
-            <th>予約日</th>
-            <th>予約時間</th>
-            <th>店舗名</th>
-            <th>人数</th>
-            <th>操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="r : ${reservations}">
-            <td th:text="${r.reservationDate}"></td>
-            <td th:text="${r.reservationTime}"></td>
-            <td>
-                <a th:href="@{/restaurant/{id}(id=${r.restaurant.id})}"
-                   th:text="${r.restaurant.name}"
-                   class="text-decoration-none text-primary">
-                </a>
-            </td>
-            <td th:text="${r.headcount}"></td>
-            <td>
-                <div th:if="${!isAlreadyReservation[r.id]}">
-                    <a th:href="@{'/reservation/edit/' + ${r.id}}" class="btn btn-sm btn-primary">予約変更</a>
-                    <form th:action="@{/reservation/cancel/{id}(id=${r.id})}" method="post" style="display:inline;">
-                        <input type="hidden" name="_method" value="delete" />
-                        <button type="submit" class="btn btn-sm btn-danger"
-                                onclick="return confirm('この予約をキャンセルしますか？');">キャンセル</button>
-                    </form>
-                </div>
 
-                <!-- 当日・過去予約には注意文 -->
-                <div th:if="${isAlreadyReservation[r.id]}">
-                    <span class="text-muted">※ 当日の変更・キャンセルは店舗へお電話ください</span>
+    <div th:if="${successMessage}" class="alert alert-success mt-3" role="alert"
+         th:text="${successMessage}">
+    </div>
+
+    <div class="accordion mt-3" id="reservationAccordion">
+        <div class="accordion-item" th:each="r : ${reservations}">
+            <h2 class="accordion-header" th:attr="id='heading' + ${r.id}">
+                <button class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        aria-expanded="false"
+                        th:attr="data-bs-target='#collapse' + ${r.id}, aria-controls='collapse' + ${r.id}">
+                    <span th:text="${r.reservationDate} + '　' + ${r.restaurant.name}"></span>
+                </button>
+            </h2>
+
+            <div th:attr="id='collapse' + ${r.id}, aria-labelledby='heading' + ${r.id}"
+                 class="accordion-collapse collapse"
+                 data-bs-parent="#reservationAccordion">
+                <div class="accordion-body">
+                    <p><strong>予約時間：</strong><span th:text="${r.reservationTime}"></span></p>
+                    <p><strong>人数：</strong><span th:text="${r.headcount}"></span> 名</p>
+                    <p>
+                        <strong>店舗情報はこちら：</strong>
+                        <a th:href="@{/restaurant/{id}(id=${r.restaurant.id})}"
+                           th:text="${r.restaurant.name}"
+                           class="text-decoration-none text-primary"></a>
+                    </p>
+
+                    <div th:if="${!isAlreadyReservation[r.id]}">
+                        <a th:href="@{'/reservation/edit/' + ${r.id}}" class="btn btn-sm btn-primary">予約変更</a>
+                        <form th:action="@{/reservation/cancel/{id}(id=${r.id})}" method="post" style="display:inline;">
+                            <input type="hidden" name="_method" value="delete" />
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('この予約をキャンセルしますか？');">キャンセル</button>
+                        </form>
+                    </div>
+
+                    <div th:if="${isAlreadyReservation[r.id]}">
+                        <span class="text-muted">※ 当日の変更・キャンセルは店舗へお電話ください</span>
+                    </div>
                 </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- 🔹 スクリプト -->

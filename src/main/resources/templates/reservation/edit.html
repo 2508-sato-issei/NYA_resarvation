@@ -24,7 +24,7 @@
 
         <!-- 予約日 -->
         <label for="reservationDate">予約日</label>
-        <input type="date" id="reservationDate" th:field="*{reservationDate}" required>
+        <input type="date" id="reservationDate" th:field="*{reservationDate}">
         <div class="error" th:if="${#fields.hasErrors('reservationDate')}" th:errors="*{reservationDate}"></div>
 
         <!-- 予約時間 -->
@@ -39,7 +39,7 @@
         <!-- 人数 -->
         <label for="headcount">人数</label>
         <input type="number" id="headcount" th:field="*{headcount}" min="1"
-               th:max="${restaurant.capacity}" required>
+               th:max="${restaurant.capacity}">
         <div class="error" th:if="${#fields.hasErrors('headcount')}" th:errors="*{headcount}"></div>
 
         <!-- ボタン -->
