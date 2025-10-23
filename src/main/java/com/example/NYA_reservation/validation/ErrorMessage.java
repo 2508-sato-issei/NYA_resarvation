@@ -27,14 +27,16 @@ public class ErrorMessage {
     public static final String E0023 = "説明を入力してください";
     public static final String E0024 = "営業開始時間を入力してください";
     public static final String E0025 = "営業終了時間を入力してください";
-    public static final String E0026 = "無効な定員を入力してくださいアクセスです";
+    public static final String E0026 = "定員を入力してください";
     public static final String E0027 = "最低利用料金を入力してください";
     public static final String E0028 = "最高利用料金を入力してください";
     public static final String E0029 = "店舗名は50文字以下で入力してください";
     public static final String E0030 = "説明は500文字以下で入力してください";
-    public static final String E0031 = "正しい電話番号形式で入力してください。";
+    public static final String E0031 = "正しい電話番号形式で入力してください";
     public static final String E0032 = "入力された時間は予約できません";
     public static final String E0033 = "ログインしてください";
+    public static final String E0034 = "定休日を入力してください";
+    public static final String E0035 = "パスワード（確認用）を入力してください";
 
     // インスタンス化防止
     private ErrorMessage() {

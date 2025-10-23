@@ -24,12 +24,20 @@ function generateTimeOptions(selectElement, start, end, interval) {
     const [startHour, startMin] = start.split(":").map(Number);
     const [endHour, endMin] = end.split(":").map(Number);
 
-    const startTotalMinutes = startHour * 60 + startMin;
-    const endTotalMinutes = endHour * 60 + endMin;
+    let startTotalMinutes = startHour * 60 + startMin;
+    let endTotalMinutes = endHour * 60 + endMin;
 
-    for (let minutes = startTotalMinutes; minutes <= endTotalMinutes; minutes += interval) {
-        const hour = Math.floor(minutes / 60).toString().padStart(2, '0');
-        const min = (minutes % 60).toString().padStart(2, '0');
+    if (endTotalMinutes <= startTotalMinutes) {
+        endTotalMinutes += 24 * 60;
+    }
+
+    const limitMinutes = endTotalMinutes - 60;
+
+    for (let minutes = startTotalMinutes; minutes <= limitMinutes; minutes += interval) {
+        const displayMinutes = minutes % (24 * 60);
+
+        const hour = Math.floor(displayMinutes / 60).toString().padStart(2, '0');
+        const min = (displayMinutes % 60).toString().padStart(2, '0');
         const timeStr = `${hour}:${min}`;
 
         const option = document.createElement("option");
@@ -38,4 +46,13 @@ function generateTimeOptions(selectElement, start, end, interval) {
 
         selectElement.appendChild(option);
     }
+}
+
+//店舗削除確認
+function CheckDelete(){
+	if(confirm('店舗を削除しますか？')){
+		return true;
+	} else{
+		return false;
+	}
 }
