@@ -11,7 +11,6 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 <!--左側サイドバー-->
 <div class="sidebar">
-    <!-- 🧍‍♂️ 会員情報 -->
     <div class="user-info text-center mb-4 border-bottom pb-3">
         <p class="fw-bold mb-1" th:text="${user.name} + ' さん'"></p>
         <p class="text-muted small"
@@ -20,7 +19,6 @@
         <a th:href="@{/user/edit/{id}(id=${loginUser.id})}" class="btn btn-sm btn-outline-secondary mt-2">会員情報編集</a>
     </div>
 
-    <!-- 📅 次回予約 -->
     <div class="next-reservation mb-4 border-bottom pb-3">
         <h6 class="fw-bold">📅 次回の予約</h6>
         <div th:if="${nextReservation != null}">
@@ -32,7 +30,6 @@
         </div>
     </div>
 
-    <!-- 📰 お知らせ -->
     <div class="news">
         <h6 class="fw-bold">🗞 お知らせ</h6>
         <ul class="list-unstyled small mt-2">
@@ -41,7 +38,7 @@
             <li>💡 ご予約は2か月先まで可能です</li>
         </ul>
     </div>
-    <a th:href="@{/mypage}">🔍 マイページTOP</a>
+    <a th:href="@{/history}">📜 過去の予約履歴</a>
 </div>
 
 <!--右側メインエリア -->
