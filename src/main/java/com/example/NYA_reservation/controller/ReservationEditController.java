@@ -86,11 +86,11 @@ public class ReservationEditController {
             if (reservationDate.isBefore(now)) {
                 result.addError(new FieldError(
                         result.getObjectName(), "reservationDate",
-                        reservationDate, false, null, null, "過去の日付は選択できません"));
+                        reservationDate, false, null, null, E0007));
             } else if (reservationDate.isAfter(future)) {
                 result.addError(new FieldError(
                         result.getObjectName(), "reservationDate",
-                        reservationDate, false, null, null, "予約日は2か月以内で選択してください"));
+                        reservationDate, false, null, null, E0007));
             }
         }
 
