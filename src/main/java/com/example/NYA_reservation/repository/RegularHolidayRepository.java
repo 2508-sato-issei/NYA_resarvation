@@ -13,4 +13,6 @@ public interface RegularHolidayRepository extends JpaRepository<RegularHoliday, 
 
     //レストランIDで定休日情報を削除
     void deleteByRestaurantId(Integer id);
+
+    List<RegularHoliday> findByRestaurantId(Integer restaurantId);
 }
