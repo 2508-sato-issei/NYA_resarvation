@@ -17,6 +17,8 @@
     </nav>
 </header>
 <main>
+    <div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+
     <h2>店舗一覧</h2>
     <a th:href="@{/admin/restaurant/new}">店舗登録</a>
     <div th:each="restaurant, stat : ${restaurants}">

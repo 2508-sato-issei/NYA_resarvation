@@ -4,11 +4,13 @@ import com.example.NYA_reservation.repository.entity.RegularHoliday;
 import com.example.NYA_reservation.repository.entity.Restaurant;
 import com.example.NYA_reservation.service.RegularHolidayService;
 import com.example.NYA_reservation.service.RestaurantService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,7 +23,10 @@ public class RestaurantController {
     RegularHolidayService regularHolidayService;
 
     @GetMapping("/restaurant/{id}")
-    public String showRestaurantDetail(@PathVariable Integer id, Model model) {
+    public String showRestaurantDetail(@PathVariable Integer id,
+                                       @RequestParam(required = false) String referer,
+                                       HttpSession session,
+                                       Model model) {
 
         Restaurant restaurant = restaurantService.findById(id);
         List<RegularHoliday> holidays = regularHolidayService.findByRestaurantId(id);
@@ -40,6 +45,11 @@ public class RestaurantController {
                     default -> "";
                 })
                 .toList();
+
+        // referer をセッションに保存
+        if (referer != null) {
+            session.setAttribute("lastPage", referer);
+        }
 
         model.addAttribute("restaurant", restaurant);
         model.addAttribute("holidayNames", holidayNames);

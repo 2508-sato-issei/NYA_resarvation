@@ -5,6 +5,7 @@ import com.example.NYA_reservation.repository.entity.User;
 import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.ReservationService;
 import com.example.NYA_reservation.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,8 @@ public class MypageController {
     UserService userService;
 
     @GetMapping("/mypage")
-    public ModelAndView showMypage(@AuthenticationPrincipal LoginUserDetails loginUser){
+    public ModelAndView showMypage(@AuthenticationPrincipal LoginUserDetails loginUser,
+                                   HttpServletRequest request){
         ModelAndView mav = new ModelAndView("mypage");
 
         List<ReservationForm> reservations = reservationService.findByUserId(loginUser.getId());
@@ -58,6 +60,8 @@ public class MypageController {
         mav.addObject("isAlreadyReservation", nowReservations);
         mav.addObject("nextReservation", nextReservation);
         mav.addObject("loginUser", loginUser);
+        mav.addObject("nextReservation", nextReservation);
+        mav.addObject("currentUrl", request.getRequestURI());
         return mav;
     }
 

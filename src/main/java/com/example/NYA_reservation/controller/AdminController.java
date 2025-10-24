@@ -8,6 +8,8 @@ import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.RegularHolidayService;
 import com.example.NYA_reservation.service.RestaurantService;
 import com.example.NYA_reservation.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -59,7 +61,7 @@ public class AdminController {
      * 店舗一覧画面表示
      */
     @GetMapping("/restaurant-list")
-    public ModelAndView showRestaurants(){
+    public ModelAndView showRestaurants(HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
 
         //店舗情報を取得
@@ -71,6 +73,7 @@ public class AdminController {
         mav.setViewName("admin/restaurant/index");
         mav.addObject("restaurants", restaurants);
         mav.addObject("regularHolidays", regularHolidays);
+        mav.addObject("currentUrl", request.getRequestURI());
         return mav;
     }
 
@@ -136,7 +139,9 @@ public class AdminController {
      */
     @GetMapping("/restaurant/edit/{id}")
     public ModelAndView editRestaurant(Model model,
-                                       @PathVariable("id")Integer id){
+                                       @PathVariable("id")Integer id,
+                                       @RequestParam(required = false) String referer,
+                                       HttpSession session){
 
         ModelAndView mav = new ModelAndView();
 
@@ -144,6 +149,11 @@ public class AdminController {
             //idで変更元のレストラン情報を取得
             RestaurantForm restaurant = restaurantService.findRestaurantById(id);
             mav.addObject("formModel", restaurant);
+        }
+
+        // referer をセッションに保存
+        if (referer != null) {
+            session.setAttribute("lastPage", referer);
         }
 
         mav.setViewName("admin/restaurant/edit");

@@ -10,6 +10,8 @@
 <!-- 共通メニューバーの読み込み -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
+<div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+
 <h1>ホーム</h1>
 
 <!-- 検索フォーム -->
@@ -62,7 +64,10 @@
         </thead>
         <tbody>
         <tr th:each="popularArea : ${popularAreas}">
-            <td th:text="${popularArea.area}"></td>
+            <td>
+                <a th:href="@{/search(area=${popularArea.area})}"
+                   th:text="${popularArea.area}"></a>
+            </td>
             <td>
                 <img img th:src="${popularArea.area} != null ? @{/storage/area/{area}.jpg(area=${popularArea.area})} : @{/storage/noimage.jpg}"
                      class="w-100"
@@ -80,7 +85,10 @@
         </thead>
         <tbody>
         <tr th:each="popularGenre : ${popularGenres}">
-            <td th:text="${popularGenre.genre}"></td>
+            <td>
+                <a th:href="@{/search(genre=${popularGenre.genre})}"
+                   th:text="${popularGenre.genre}"></a>
+            </td>
             <td>
                 <img img th:src="${popularGenre.genre} != null ? @{/storage/genre/{genre}.jpg(genre=${popularGenre.genre})} : @{/storage/noimage.jpg}"
                      class="w-100"
@@ -99,7 +107,7 @@
         <tbody>
         <tr th:each="popularRestaurant : ${popularRestaurants}">
             <td>
-                <a th:href="@{'/restaurant/' + ${popularRestaurant.id}}"
+                <a th:href="@{/restaurant/{id}(id=${popularRestaurant.id})}"
                    th:text="${popularRestaurant.name}"></a>
             </td>
             <td>

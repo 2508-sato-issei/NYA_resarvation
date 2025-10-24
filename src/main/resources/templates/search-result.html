@@ -10,6 +10,7 @@
 <!-- 共通メニューバーの読み込み -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
+<div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
 
 <h1>検索結果</h1>
 
@@ -59,7 +60,7 @@
                      alt="店舗画像">
             </td>
             <td>
-                <a th:href="@{'/restaurant/' + ${restaurant.id}}"
+                <a th:href="@{/restaurant/{id}(id=${restaurant.id})}"
                    th:text="${restaurant.name}">店舗名</a>
             </td>
             <td th:text="${restaurant.area}">エリア</td>

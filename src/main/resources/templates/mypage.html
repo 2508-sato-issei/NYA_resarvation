@@ -16,7 +16,7 @@
         <p class="text-muted small"
            th:if="${user.createdDate != null}"
            th:text="'登録日：' + ${#dates.format(user.createdDate, 'yyyy/MM/dd')}"></p>
-        <a th:href="@{/user/edit/{id}(id=${loginUser.id})}" class="btn btn-sm btn-outline-secondary mt-2">会員情報編集</a>
+        <a th:href="@{/user/edit/{id}(id=${loginUser.id}, referer=${currentUrl})}" class="btn btn-sm btn-outline-secondary mt-2">会員情報編集</a>
     </div>
 
     <div class="next-reservation mb-4 border-bottom pb-3">
@@ -43,6 +43,8 @@
 
 <!--右側メインエリア -->
 <div class="content">
+    <div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+
     <h4 th:text="'ようこそ、' + ${user.name} + 'さん'"></h4>
     <hr>
 

@@ -14,7 +14,7 @@
 <form th:action="@{/user/add}" method="post" th:object="${userForm}">
     <div>
         <p>
-            <div th:if="${accountError != null}" th:text="${accountError}"></div>
+            <div th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></div>
             <div th:if="${accountError != null}" th:text="${accountError}"></div>
             <label for="account">アカウント：</label><br>
             <input type="text" id="account" th:field="*{account}">

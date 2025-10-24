@@ -1,17 +1,22 @@
 package com.example.NYA_reservation.controller;
 
+import com.example.NYA_reservation.controller.error.UnauthorizedAccessException;
 import com.example.NYA_reservation.controller.form.UserForm;
 import com.example.NYA_reservation.repository.entity.User;
+import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.UserService;
 import com.example.NYA_reservation.validation.CreateGroup;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import static com.example.NYA_reservation.validation.ErrorMessage.E0011;
 import static com.example.NYA_reservation.validation.ErrorMessage.E0016;
 
 @Controller
@@ -53,10 +58,22 @@ public class UserController {
 
     // 会員情報編集画面表示
     @GetMapping("/edit/{id}")
-    public String showUserEditForm(@PathVariable Integer id, Model model) {
+    public String showUserEditForm(@PathVariable Integer id,
+                                   @RequestParam(required = false) String referer,
+                                   HttpSession session,
+                                   @AuthenticationPrincipal LoginUserDetails loginUser,
+                                   Model model) {
+
+        if(!loginUser.getId().equals(id)) {
+            throw new UnauthorizedAccessException(E0011);
+        }
 
         User user = userService.findById(id);
         UserForm userForm = userService.convertToForm(user);
+
+        if (referer != null) {
+            session.setAttribute("lastPage", referer);
+        }
 
         model.addAttribute("userForm", userForm);
         return "user/edit";
