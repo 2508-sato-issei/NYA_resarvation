@@ -70,6 +70,11 @@ public class ReservationController {
                                        RedirectAttributes redirectAttributes,
                                        @AuthenticationPrincipal LoginUserDetails loginUser){
 
+        //店舗の定員を取得
+        RestaurantForm restaurant = restaurantService.findRestaurantById(restaurantId);
+        Integer capacity = restaurant.getCapacity();
+        //入力された予約人数を取得
+        Integer headcount = reservationForm.getHeadcount();
         //入力された予約日を取得
         LocalDate reservationDate = reservationForm.getReservationDate();
         //店舗の定休日情報を取得
@@ -102,6 +107,25 @@ public class ReservationController {
                         null, E0007);
                 result.addError(error);
             }
+        }
+
+        //予約人数チェック
+        if((headcount != null) && (headcount > capacity)){
+            FieldError error = new FieldError(result.getObjectName(),
+                    "headcount", headcount,
+                    false,
+                    null,
+                    null,
+                    E0009);
+            result.addError(error);
+        } else if ((headcount != null) && (headcount == 0)) {
+            FieldError error = new FieldError(result.getObjectName(),
+                    "headcount", headcount,
+                    false,
+                    null,
+                    null,
+                    E0008);
+            result.addError(error);
         }
 
         if (result.hasErrors()) {

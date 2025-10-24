@@ -22,8 +22,8 @@ public class RestaurantForm {
     @Size(max=50, message = E0029)
     private String name;
 
-    @NotNull(message = E0019)
-    @Pattern(regexp = "[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}", message = E0031)
+    @NotEmpty(message = E0019)
+    @Pattern(regexp = "$|[0-9]{2}-[0-9]{4}-[0-9]{4}|[0-9]{3}-[0-9]{3}-[0-9]{4}|[0-9]{3}-[0-9]{4}-[0-9]{4}", message = E0031)
     private String telephone;
 
     @NotEmpty(message = E0020)
