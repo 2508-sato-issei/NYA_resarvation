@@ -25,6 +25,9 @@ public class RestaurantController {
     @GetMapping("/restaurant/{id}")
     public String showRestaurantDetail(@PathVariable Integer id,
                                        @RequestParam(required = false) String referer,
+                                       @RequestParam(required = false) String area,
+                                       @RequestParam(required = false) String genre,
+                                       @RequestParam(required = false) String headcount,
                                        HttpSession session,
                                        Model model) {
 
@@ -51,6 +54,9 @@ public class RestaurantController {
             session.setAttribute("lastPage", referer);
         }
 
+        model.addAttribute("area", area);
+        model.addAttribute("genre", genre);
+        model.addAttribute("headcount", headcount);
         model.addAttribute("restaurant", restaurant);
         model.addAttribute("holidayNames", holidayNames);
         return "restaurant-detail";

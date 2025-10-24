@@ -41,7 +41,7 @@ public class AdminController {
      * サイト管理者画面表示
      */
     @GetMapping
-    public ModelAndView show(){
+    public ModelAndView show() {
         ModelAndView mav = new ModelAndView();
         //総会員数取得
         Long totalUsers = userService.countUsers();
@@ -62,7 +62,7 @@ public class AdminController {
      * 店舗一覧画面表示
      */
     @GetMapping("/restaurant-list")
-    public ModelAndView showRestaurants(HttpServletRequest request){
+    public ModelAndView showRestaurants(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView();
 
         //店舗情報を取得
@@ -82,10 +82,10 @@ public class AdminController {
      * 店舗登録画面表示
      */
     @GetMapping("/restaurant/new")
-    public ModelAndView newRestaurant(Model model){
+    public ModelAndView newRestaurant(Model model) {
         ModelAndView mav = new ModelAndView();
 
-        if(!model.containsAttribute("formModel")){
+        if (!model.containsAttribute("formModel")) {
             RestaurantForm restaurantForm = new RestaurantForm();
             mav.addObject("formModel", restaurantForm);
         }
@@ -106,19 +106,19 @@ public class AdminController {
     public ModelAndView addRestaurant(@ModelAttribute("formModel") @Validated RestaurantForm restaurantForm,
                                       BindingResult result,
                                       @RequestParam(value = "regularHoliday", required = false) List<Integer> regularHolidays,
-                                      RedirectAttributes redirectAttributes){
+                                      RedirectAttributes redirectAttributes) {
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.formModel", result);
             redirectAttributes.addFlashAttribute("formModel", restaurantForm);
-            if(regularHolidays == null){
+            if (regularHolidays == null) {
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
             } else {
                 redirectAttributes.addFlashAttribute("dayOfWeeks", regularHolidays);
             }
             return new ModelAndView("redirect:/admin/restaurant/new");
         } else {
-            if(regularHolidays == null){
+            if (regularHolidays == null) {
                 redirectAttributes.addFlashAttribute("formModel", restaurantForm);
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
                 return new ModelAndView("redirect:/admin/restaurant/new");
@@ -126,11 +126,11 @@ public class AdminController {
         }
 
         //店舗情報をDBに登録し、その情報を取得
-        RestaurantForm savedRestaurant= restaurantService.addRestaurant(restaurantForm);
+        RestaurantForm savedRestaurant = restaurantService.addRestaurant(restaurantForm);
 
         //定休日、レストランIDをregularHolidaysFormにセット
         List<RegularHolidayForm> regularHolidayForms = new ArrayList<>();
-        for(Integer regularHoliday : regularHolidays){
+        for (Integer regularHoliday : regularHolidays) {
             RegularHolidayForm regularHolidayForm = new RegularHolidayForm();
             regularHolidayForm.setRegularHoliday(regularHoliday);
             regularHolidayForm.setRestaurantId(savedRestaurant.getId());
@@ -147,13 +147,13 @@ public class AdminController {
      */
     @GetMapping("/restaurant/edit/{id}")
     public ModelAndView editRestaurant(Model model,
-                                       @PathVariable("id")Integer id,
+                                       @PathVariable("id") Integer id,
                                        @RequestParam(required = false) String referer,
-                                       HttpSession session){
+                                       HttpSession session) {
 
         ModelAndView mav = new ModelAndView();
 
-        if(!model.containsAttribute("formModel")){
+        if (!model.containsAttribute("formModel")) {
             //idで変更元のレストラン情報を取得
             RestaurantForm restaurant = restaurantService.findRestaurantById(id);
             mav.addObject("formModel", restaurant);
@@ -185,19 +185,19 @@ public class AdminController {
                                          BindingResult result,
                                          @RequestParam(value = "regularHoliday", required = false) List<Integer> regularHolidays,
                                          RedirectAttributes redirectAttributes,
-                                         @PathVariable("id") Integer id){
+                                         @PathVariable("id") Integer id) {
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.formModel", result);
             redirectAttributes.addFlashAttribute("formModel", restaurantForm);
-            if(regularHolidays == null){
+            if (regularHolidays == null) {
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
             } else {
                 redirectAttributes.addFlashAttribute("dayOfWeeks", regularHolidays);
             }
             return new ModelAndView("redirect:/admin/restaurant/edit/" + id);
         } else {
-            if(regularHolidays == null){
+            if (regularHolidays == null) {
                 redirectAttributes.addFlashAttribute("formModel", restaurantForm);
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
                 return new ModelAndView("redirect:/admin/restaurant/edit/" + id);
@@ -207,14 +207,14 @@ public class AdminController {
         restaurantForm.setId(id);
 
         //店舗情報をDBに登録し、その情報を取得
-        RestaurantForm savedRestaurant= restaurantService.addRestaurant(restaurantForm);
+        RestaurantForm savedRestaurant = restaurantService.addRestaurant(restaurantForm);
 
         //元々の定休日情報を削除
         regularHolidayService.deleteByRestaurantId(id);
 
         //新しい定休日、レストランIDをregularHolidaysFormにセット
         List<RegularHolidayForm> regularHolidayForms = new ArrayList<>();
-        for(Integer regularHoliday : regularHolidays){
+        for (Integer regularHoliday : regularHolidays) {
             RegularHolidayForm regularHolidayForm = new RegularHolidayForm();
             regularHolidayForm.setRegularHoliday(regularHoliday);
             regularHolidayForm.setRestaurantId(savedRestaurant.getId());
@@ -232,7 +232,7 @@ public class AdminController {
      */
 
     @DeleteMapping("/restaurant/delete/{id}")
-    public ModelAndView deleteRestaurant(@PathVariable("id") Integer id){
+    public ModelAndView deleteRestaurant(@PathVariable("id") Integer id) {
         //店舗情報を削除
         restaurantService.deleteRestaurant(id);
         //定休日情報も削除
@@ -244,7 +244,7 @@ public class AdminController {
      * ユーザー一覧表示
      */
     @GetMapping("/user-list")
-    public ModelAndView showUsers(@AuthenticationPrincipal LoginUserDetails loginUser){
+    public ModelAndView showUsers(@AuthenticationPrincipal LoginUserDetails loginUser) {
         ModelAndView mav = new ModelAndView();
 
         List<UserForm> users = userService.findAllUser();
@@ -260,7 +260,7 @@ public class AdminController {
      */
     @PutMapping("/user/change/{id}")
     public ModelAndView changeIsStopped(@PathVariable("id") Integer id,
-                                        @RequestParam("isStopped") boolean isStopped){
+                                        @RequestParam("isStopped") boolean isStopped) {
         userService.changeIsStopped(id, isStopped);
 
         return new ModelAndView("redirect:/admin/user-list");

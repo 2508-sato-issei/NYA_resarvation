@@ -7,40 +7,77 @@
     <title>会員情報編集</title>
 </head>
 <body>
+<header>
+    <!-- 共通メニューバーの読み込み -->
+    <div th:replace="fragments/navbar :: navbar"></div>
 
-<h1>会員情報編集</h1>
+    <!--パンくずリスト-->
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb p-3 bg-light rounded-2">
+            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/mypage}">マイページ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">会員情報編集</li>
+        </ol>
+    </nav>
+</header>
 
-<!-- 会員情報編集フォーム -->
-<form th:action="@{'/user/update/' + ${userForm.id}}" method="post" th:object="${userForm}">
-    <div>
-        <p>
-            <div th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></div>
-            <div th:if="${accountError != null}" th:text="${accountError}"></div>
-            <label for="account">アカウント：</label><br>
-            <input type="text" id="account" th:field="*{account}">
-        </p>
-        <p>
-            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
-            <label for="password">パスワード：</label><br>
-            <input type="password" id="password" th:field="*{password}">
-        </p>
-        <p>
-            <label for="confirmPassword">パスワード（確認用）：</label><br>
-            <input type="password" id="confirmPassword" th:field="*{confirmPassword}">
-        </p>
-        <p>
-            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-            <label for="name">氏名：</label><br>
-            <input type="text" id="name" th:field="*{name}">
-        </p>
-        <p>
-            <button type="submit">更新</button>
-        </p>
-    </div>
-</form>
+<main>
+    <div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
 
+    <h1>会員情報編集</h1>
+
+    <!-- 会員情報編集フォーム -->
+    <form th:action="@{'/user/update/' + ${userForm.id}}" method="post" th:object="${userForm}">
+        <div>
+            <p>
+                <div th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></div>
+                <div th:if="${accountError != null}" th:text="${accountError}"></div>
+                <label for="account">アカウント：</label><br>
+                <input type="text" id="account" th:field="*{account}">
+            </p>
+
+            <p>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                <label for="password">パスワード：</label><br>
+                <input type="password" id="password" th:field="*{password}">
+            </p>
+
+            <p>
+                <label for="confirmPassword">パスワード（確認用）：</label><br>
+                <input type="password" id="confirmPassword" th:field="*{confirmPassword}">
+            </p>
+
+            <p>
+                <input id="pwVisible" class="pwVisible" type="checkbox" onclick="passwordVisibility()" >
+                <label>パスワード表示</label>
+            </p>
+
+            <p>
+                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                <label for="name">氏名：</label><br>
+                <input type="text" id="name" th:field="*{name}">
+            </p>
+
+            <p>
+                <button type="submit">更新</button>
+            </p>
+        </div>
+    </form>
+</main>
+
+<!-- パスワード表示切替 -->
 <script>
-    // パスワード確認チェック
+    function passwordVisibility() {
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirmPassword");
+        const checkbox = document.getElementById("pwVisible");
+        password.type = checkbox.checked ? "text" : "password";
+        confirmPassword.type = checkbox.checked ? "text" : "password";
+    }
+</script>
+
+<!-- パスワード確認チェック -->
+<script>
     document.querySelector("form").addEventListener("submit", function(e) {
         const pw = document.getElementById("password").value;
         const confirmPw = document.getElementById("confirmPassword").value;
