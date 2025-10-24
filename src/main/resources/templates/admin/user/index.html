@@ -7,25 +7,32 @@
 <body>
 <header>
     <div th:replace="fragments/navbar :: navbar"></div>
+    <!--パンくずリスト-->
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb p-3 bg-light rounded-2">
+            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/admin}">サイト管理者画面</a></li>
+            <li class="breadcrumb-item active" aria-current="page">ユーザー一覧</li>
+        </ol>
+    </nav>
 </header>
 <main>
 
-    <table>
-        <caption>ユーザー 一覧</caption>
+    <h2>ユーザー一覧</h2>
+    <table class="table">
         <thead>
         <tr>
-            <th>アカウント</th>
-            <th>氏名</th>
-            <th>権限</th>
-            <th>登録日時<br/><hr>更新日時</th>
-            <th>有効/停止</th>
+            <th scope="col">アカウント</th>
+            <th scope="col">氏名</th>
+            <th scope="col">権限</th>
+            <th scope="col">登録日時</th>
+            <th scope="col">更新日時</th>
+            <th scope="col">有効/停止</th>
         </tr>
         </thead>
         <tbody>
         <tr th:classappend="${user.isStopped} ? 'stopped-user' : '' " th:each="user : ${users}">
-            <td class="td-idAccount"><!-- アカウント表示 -->
-                <span name="account" th:text="${user.account}"></span>
-            </td>
+            <th scope="row"><span name="account" th:text="${user.account}"></span></th>
             <td class="td-name"><!-- 氏名表示 -->
                 <span name="name" th:text="${user.name}"></span>
             </td>
@@ -36,8 +43,9 @@
                 </th:block>
             </td>
             <td>
-                <span th:text="${#dates.format(user.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span><br/>
-                <hr>
+                <span th:text="${#dates.format(user.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            </td>
+            <td>
                 <span th:text="${#dates.format(user.updatedDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
             </td>
             <td class="td-status">

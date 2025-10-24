@@ -7,20 +7,20 @@
 <body>
     <header>
         <div th:replace="fragments/navbar :: navbar"></div>
+        <!--パンくずリスト-->
+        <nav aria-label="breadcrumb" role="navigation">
+            <ol class="breadcrumb p-3 bg-light rounded-2">
+                <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/restaurant/{id}(id=${restaurant.id})}">店舗詳細</a></li>
+                <li class="breadcrumb-item active" aria-current="page">予約</li>
+            </ol>
+        </nav>
+
     </header>
     <main>
         <div class="container pt-4 pb-5 nya-container">
             <div class="row justify-content-center">
                 <div class="col-xxl-9 col-xl-10 col-lg-11">
-                    <!--パンくずリスト-->
-                    <nav aria-label="breadcrumb" role="navigation">
-                        <ol class="breadcrumb p-3 bg-light rounded-2">
-                            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
-                            <li class="breadcrumb-item"><a th:href="@{/restaurant/{id}(id=${restaurant.id})}">店舗詳細</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">予約</li>
-                        </ol>
-                    </nav>
-
                     <h2 class="mb-4 text-center" th:text="${restaurant.name + ' の予約'}"></h2>
                     <div>
                         <span th:text="${'営業時間(L.Oは営業終了30分前)：' + restaurant.startBusiness + '~' + restaurant.endBusiness}"></span>
