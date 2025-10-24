@@ -176,12 +176,12 @@ public class AdminController {
             if(regularHolidays == null){
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
             }
-            return new ModelAndView("redirect:/admin/restaurant/edit" + id);
+            return new ModelAndView("redirect:/admin/restaurant/edit/" + id);
         } else {
             if(regularHolidays == null){
                 redirectAttributes.addFlashAttribute("formModel", restaurantForm);
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
-                return new ModelAndView("redirect:/admin/restaurant/edit" + id);
+                return new ModelAndView("redirect:/admin/restaurant/edit/" + id);
             }
         }
 

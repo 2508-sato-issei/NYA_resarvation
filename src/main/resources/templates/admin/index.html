@@ -7,15 +7,24 @@
 <body>
 <header>
     <div th:replace="fragments/navbar :: navbar"></div>
+    <!--パンくずリスト-->
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb p-3 bg-light rounded-2">
+            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+            <li class="breadcrumb-item active" aria-current="page">サイト管理者画面</li>
+        </ol>
+    </nav>
 </header>
 <main>
     <div class="container pt-4 pb-5 nya-container">
         <div class="row justify-content-center">
             <div class="col-3">
-                <div class="list-group">
-                    <a th:href="@{/admin/user-list}" class="list-group-item list-group-item-action">ユーザー一覧</a>
-                    <a th:href="@{/admin/restaurant-list}" class="list-group-item list-group-item-action">店舗一覧</a>
-                    <a th:href="@{/}" class="list-group-item list-group-item-action">戻る</a>
+                <div class="admin-sidebar">
+                    <div class="list-group">
+                        <a th:href="@{/admin/user-list}" class="list-group-item list-group-item-action">ユーザー一覧</a>
+                        <a th:href="@{/admin/restaurant-list}" class="list-group-item list-group-item-action">店舗一覧</a>
+                        <a th:href="@{/}" class="list-group-item list-group-item-action">戻る</a>
+                    </div>
                 </div>
             </div>
 

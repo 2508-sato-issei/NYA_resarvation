@@ -7,6 +7,15 @@
 <body>
 <header>
     <div th:replace="fragments/navbar :: navbar"></div>
+    <!--パンくずリスト-->
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb p-3 bg-light rounded-2">
+            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/admin}">サイト管理者画面</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/admin/restaurant-list}">店舗一覧</a></li>
+            <li class="breadcrumb-item active" aria-current="page">店舗登録</li>
+        </ol>
+    </nav>
 </header>
 <main>
 
@@ -18,21 +27,21 @@
         <!-- 入力フォーム -->
         <p>
             <label>店舗名</label>
-            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             <input type="text" th:field="*{name}">
         </p>
         <p>
             <label>電話番号(ハイフンあり)</label>
-            <div th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></div>
             <input type="tel" pattern="[0-9]{2,4}-[0-9]{3,4}-[0-9]{4}" th:field="*{telephone}">
         </p>
         <p>
             <label>住所</label>
-            <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
             <input type="text" th:field="*{address}">
         </p>
         <p>
-            <div th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></div>
             <select th:field="*{area}">
                 <option value="" selected>エリアを選択</option>
                 <option value="東京">東京</option>
@@ -44,7 +53,7 @@
             </select>
         </p>
         <p>
-            <div th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
             <select th:field="*{genre}">
                 <option value="" selected>ジャンルを選択</option>
                 <option value="焼肉">焼肉</option>
@@ -57,37 +66,37 @@
         </p>
         <p>
             <label>説明</label>
-            <div th:if="${#fields.hasErrors('explanation')}" th:errors="*{explanation}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('explanation')}" th:errors="*{explanation}"></div>
             <textarea th:field="*{explanation}"></textarea>
         </p>
         <p>
             <label>営業開始</label>
-            <div th:if="${#fields.hasErrors('startBusiness')}" th:errors="*{startBusiness}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('startBusiness')}" th:errors="*{startBusiness}"></div>
             <input type="time" th:field="*{startBusiness}">
         </p>
         <p>
             <label>営業終了</label>
-            <div th:if="${#fields.hasErrors('endBusiness')}" th:errors="*{endBusiness}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('endBusiness')}" th:errors="*{endBusiness}"></div>
             <input type="time" th:field="*{endBusiness}">
         </p>
         <p>
             <label>定員</label>
-            <div th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
             <input type="number" min="1" th:field="*{capacity}">
         </p>
         <p>
             <label>最低利用料金</label>
-            <div th:if="${#fields.hasErrors('minAmount')}" th:errors="*{minAmount}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('minAmount')}" th:errors="*{minAmount}"></div>
             <input type="number" min="1" th:field="*{minAmount}">
         </p>
         <p>
             <label>最高利用料金</label>
-            <div th:if="${#fields.hasErrors('maxAmount')}" th:errors="*{maxAmount}"></div>
+            <div class="text-danger" th:if="${#fields.hasErrors('maxAmount')}" th:errors="*{maxAmount}"></div>
             <input type="number" min="1" th:field="*{maxAmount}">
         </p>
         <p>
             <label>定休日</label>
-            <span th:text="${errorMessage}"></span>
+            <span class="text-danger" th:text="${errorMessage}"></span>
             <input type="checkbox" name="regularHoliday" value="1">月曜日
             <input type="checkbox" name="regularHoliday" value="2">火曜日
             <input type="checkbox" name="regularHoliday" value="3">水曜日
