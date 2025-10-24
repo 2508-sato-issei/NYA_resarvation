@@ -15,126 +15,179 @@
 <h1>ホーム</h1>
 
 <!-- 検索フォーム -->
-<div>
-    <form th:action="@{/search}" method="get">
+<div class="conteiner my-4">
+    <div class="card shadow-sm p-4">
+        <form th:action="@{/search}" method="get" class="row g-3 align-items-end">
 
-        <label for="area">エリア：</label>
-        <select name="area" id="area" th:value="${searchForm.area}">
-            <option value=""></option>
-            <option value="東京" th:selected="${searchForm.area == '東京'}">東京</option>
-            <option value="神奈川" th:selected="${searchForm.area == '神奈川'}">神奈川</option>
-            <option value="愛知" th:selected="${searchForm.area == '愛知'}">愛知</option>
-            <option value="大阪" th:selected="${searchForm.area == '大阪'}">大阪</option>
-            <option value="京都" th:selected="${searchForm.area == '京都'}">京都</option>
-            <option value="福岡" th:selected="${searchForm.area == '福岡'}">福岡</option>
-        </select>
+            <div class="col-md-3">
+                <select name="area" id="area" class="form-select select-placeholder" th:value="${searchForm.area}">
+                    <option value="" disabled selected hidden>エリアを選択</option>
+                    <option value="東京" th:selected="${searchForm.area == '東京'}">東京</option>
+                    <option value="神奈川" th:selected="${searchForm.area == '神奈川'}">神奈川</option>
+                    <option value="愛知" th:selected="${searchForm.area == '愛知'}">愛知</option>
+                    <option value="大阪" th:selected="${searchForm.area == '大阪'}">大阪</option>
+                    <option value="京都" th:selected="${searchForm.area == '京都'}">京都</option>
+                    <option value="福岡" th:selected="${searchForm.area == '福岡'}">福岡</option>
+                </select>
+            </div>
 
-        <label for="genre">ジャンル：</label>
-        <select name="genre" id="genre" th:value="${searchForm.genre}">
-            <option value=""></option>
-            <option value="焼肉" th:selected="${searchForm.genre == '焼肉'}">焼肉</option>
-            <option value="寿司" th:selected="${searchForm.genre == '寿司'}">寿司</option>
-            <option value="居酒屋" th:selected="${searchForm.genre == '居酒屋'}">居酒屋</option>
-            <option value="イタリアン" th:selected="${searchForm.genre == 'イタリアン'}">イタリアン</option>
-            <option value="ラーメン" th:selected="${searchForm.genre == 'ラーメン'}">ラーメン</option>
-            <option value="カフェ" th:selected="${searchForm.genre == 'カフェ'}">カフェ</option>
-        </select>
+            <div class="col-md-3">
+                <select name="genre" id="genre" class="form-select select-placeholder" th:value="${searchForm.genre}">
+                    <option value="" disabled selected hidden>ジャンルを選択</option>
+                    <option value="焼肉" th:selected="${searchForm.genre == '焼肉'}">焼肉</option>
+                    <option value="寿司" th:selected="${searchForm.genre == '寿司'}">寿司</option>
+                    <option value="居酒屋" th:selected="${searchForm.genre == '居酒屋'}">居酒屋</option>
+                    <option value="イタリアン" th:selected="${searchForm.genre == 'イタリアン'}">イタリアン</option>
+                    <option value="ラーメン" th:selected="${searchForm.genre == 'ラーメン'}">ラーメン</option>
+                    <option value="カフェ" th:selected="${searchForm.genre == 'カフェ'}">カフェ</option>
+                </select>
+            </div>
 
-        <label for="headcount">人数：</label>
-        <select name="headcount" id="headcount" th:value="${searchForm.headcount}">
-            <option value=""></option>
-            <option th:each="i : ${#numbers.sequence(1, 99)}"
-                    th:value="${i}"
-                    th:text="${i} + '名'"
-                    th:selected="${searchForm.headcount == i}">
-            </option>
-        </select>
+            <div class="col-md-3">
+                <select name="headcount" id="headcount" class="form-select select-placeholder" th:value="${searchForm.headcount}">
+                    <option value="" disabled selected hidden>人数を選択</option>
+                    <option th:each="i : ${#numbers.sequence(1, 99)}"
+                            th:value="${i}"
+                            th:text="${i} + '名'"
+                            th:selected="${searchForm.headcount == i}">
+                    </option>
+                </select>
+            </div>
 
-        <button type="submit">検索</button>
-    </form>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-warning w-100">🔍 検索</button>
+            </div>
+        </form>
+    </div>
 </div>
 
-<!-- 人気エリア・ジャンル・店舗 -->
-<div>
-    <table>
-        <thead>
-        <tr>
-            <th>人気エリア</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="popularArea : ${popularAreas}">
-            <td>
-                <a th:href="@{/search(area=${popularArea.area})}"
-                   th:text="${popularArea.area}"></a>
-            </td>
-            <td>
-                <img img th:src="${popularArea.area} != null ? @{/storage/area/{area}.jpg(area=${popularArea.area})} : @{/storage/noimage.jpg}"
-                     class="w-100"
-                     alt="エリア画像">
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <table>
-        <thead>
-        <tr>
-            <th>人気ジャンル</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="popularGenre : ${popularGenres}">
-            <td>
-                <a th:href="@{/search(genre=${popularGenre.genre})}"
-                   th:text="${popularGenre.genre}"></a>
-            </td>
-            <td>
-                <img img th:src="${popularGenre.genre} != null ? @{/storage/genre/{genre}.jpg(genre=${popularGenre.genre})} : @{/storage/noimage.jpg}"
-                     class="w-100"
-                     alt="ジャンル画像">
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <table>
-        <thead>
-        <tr>
-            <th>人気店舗</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="popularRestaurant : ${popularRestaurants}">
-            <td>
-                <a th:href="@{/restaurant/{id}(id=${popularRestaurant.id})}"
-                   th:text="${popularRestaurant.name}"></a>
-            </td>
-            <td>
-                <img img th:src="${popularRestaurant.mainImage} != null ? @{'/storage/restaurant/' + ${popularRestaurant.mainImage}} : @{/storage/noimage.jpg}"
-                     class="w-100"
-                     alt="店舗画像">
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<!-- 人気エリア -->
+<div class="container my-5">
+    <h2>人気エリア</h2>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+        <div class="col" th:each="popularArea : ${popularAreas}">
+            <div class="card restaurant-card h-100">
+                <img th:src="${popularArea.area} != null ? @{/storage/area/{area}.jpg(area=${popularArea.area})} : @{/storage/noimage.jpg}"
+                     alt="エリア画像" class="card-img-top">
+                <div class="card-body">
+                    <a th:href="@{/search(area=${popularArea.area})}"
+                       th:text="${popularArea.area}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-
-<div th:if="${#authorization.expression('isAuthenticated()')}" class="d-flex gap-2">
-    <form th:action="@{/mypage}" method="get">
-        <button type="submit" class="btn btn-outline-primary">マイページ</button>
-    </form>
-    <form th:action="@{/logout}" method="post">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <button type="submit" class="btn btn-outline-danger">ログアウト</button>
-    </form>
+<!-- 人気ジャンル -->
+<div class="container my-5">
+    <h2>人気ジャンル</h2>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+        <div class="col" th:each="popularGenre : ${popularGenres}">
+            <div class="card restaurant-card h-100">
+                <img th:src="${popularGenre.genre} != null ? @{/storage/genre/{genre}.jpg(genre=${popularGenre.genre})} : @{/storage/noimage.jpg}"
+                     alt="ジャンル画像" class="card-img-top">
+                <div class="card-body">
+                    <a th:href="@{/search(genre=${popularGenre.genre})}"
+                       th:text="${popularGenre.genre}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- 未ログイン時のみ表示 -->
-<div th:if="${!#authorization.expression('isAuthenticated()')}">
-    <a th:href="@{/login}" class="btn btn-primary me-2">ログイン</a>
+<!-- 人気店舗 -->
+<div class="container my-5">
+    <h2>人気店舗</h2>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+        <div class="col" th:each="popularRestaurant : ${popularRestaurants}">
+            <div class="card restaurant-card h-100">
+                <img th:src="${popularRestaurant.mainImage} != null ? @{'/storage/restaurant/' + ${popularRestaurant.mainImage}} : @{/storage/noimage.jpg}"
+                     alt="店舗画像" class="card-img-top">
+                <div class="card-body">
+                    <a th:href="@{/restaurant/{id}(id=${popularRestaurant.id})}"
+                       th:text="${popularRestaurant.name}"></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    h2 {
+        font-weight: 600;
+        border-left: 6px solid #ff9800;
+        padding-left: 10px;
+        margin-bottom: 20px;
+    }
+
+    .form-select:invalid {
+        color: #6c757d; /* グレー文字で“プレースホルダー感” */
+    }
+
+    /* すべてのセレクトに適用 */
+    .select-placeholder {
+        color: #adb5bd; /* 初期状態（薄いグレー） */
+    }
+
+    /* ドロップダウン内の項目は通常色 */
+    .select-placeholder option {
+        color: #212529;
+    }
+
+    /* 値が選択された後（:invalidではなくなる）に通常色へ */
+    .select-placeholder:not(:invalid) {
+        color: #212529;
+    }
+
+    .select-placeholder option[disabled] {
+    display: none;
+    }
+
+    /* --- カード共通スタイル --- */
+    .restaurant-card {
+        height: 220px; /* ← カードの高さを固定 */
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: none;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .restaurant-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .restaurant-card img {
+        height: 130px; /* ← 画像部分の高さを統一 */
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .restaurant-card .card-body {
+        text-align: center;
+        padding: 8px 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(220px - 130px); /* 残り部分の高さを自動調整 */
+    }
+
+    .restaurant-card a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        display: block;
+        width: 100%;
+    }
+
+    .restaurant-card a:hover {
+        color: #ff9800;
+    }
+</style>
 
 <!-- webjar -->
 <script th:href="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
