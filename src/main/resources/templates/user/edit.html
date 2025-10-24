@@ -19,28 +19,48 @@
             <label for="account">アカウント：</label><br>
             <input type="text" id="account" th:field="*{account}">
         </p>
+
         <p>
             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
             <label for="password">パスワード：</label><br>
             <input type="password" id="password" th:field="*{password}">
         </p>
+
         <p>
             <label for="confirmPassword">パスワード（確認用）：</label><br>
             <input type="password" id="confirmPassword" th:field="*{confirmPassword}">
         </p>
+
+        <p>
+            <input id="pwVisible" class="pwVisible" type="checkbox" onclick="passwordVisibility()" >
+            <label>パスワード表示</label>
+        </p>
+
         <p>
             <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             <label for="name">氏名：</label><br>
             <input type="text" id="name" th:field="*{name}">
         </p>
+
         <p>
             <button type="submit">更新</button>
         </p>
     </div>
 </form>
 
+<!-- パスワード表示切替 -->
 <script>
-    // パスワード確認チェック
+    function passwordVisibility() {
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirmPassword");
+        const checkbox = document.getElementById("pwVisible");
+        password.type = checkbox.checked ? "text" : "password";
+        confirmPassword.type = checkbox.checked ? "text" : "password";
+    }
+</script>
+
+<!-- パスワード確認チェック -->
+<script>
     document.querySelector("form").addEventListener("submit", function(e) {
         const pw = document.getElementById("password").value;
         const confirmPw = document.getElementById("confirmPassword").value;

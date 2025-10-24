@@ -20,7 +20,7 @@
 
         <label for="area">エリア：</label>
         <select name="area" id="area" th:value="${searchForm.area}">
-            <option value="">-- 選択してください --</option>
+            <option value=""></option>
             <option value="東京" th:selected="${searchForm.area == '東京'}">東京</option>
             <option value="神奈川" th:selected="${searchForm.area == '神奈川'}">神奈川</option>
             <option value="愛知" th:selected="${searchForm.area == '愛知'}">愛知</option>
@@ -31,7 +31,7 @@
 
         <label for="genre">ジャンル：</label>
         <select name="genre" id="genre" th:value="${searchForm.genre}">
-            <option value="">-- 選択してください --</option>
+            <option value=""></option>
             <option value="焼肉" th:selected="${searchForm.genre == '焼肉'}">焼肉</option>
             <option value="寿司" th:selected="${searchForm.genre == '寿司'}">寿司</option>
             <option value="居酒屋" th:selected="${searchForm.genre == '居酒屋'}">居酒屋</option>
@@ -42,7 +42,7 @@
 
         <label for="headcount">人数：</label>
         <select name="headcount" id="headcount" th:value="${searchForm.headcount}">
-            <option value="">-- 選択してください --</option>
+            <option value=""></option>
             <option th:each="i : ${#numbers.sequence(1, 99)}"
                     th:value="${i}"
                     th:text="${i} + '名'"
