@@ -7,99 +7,114 @@
     <title th:text="${restaurant.name} + 'の店舗詳細'">店舗詳細</title>
 </head>
 <body>
-<!-- 共通メニューバーの読み込み -->
-<div th:replace="fragments/navbar :: navbar"></div>
+<header>
+    <!-- 共通メニューバーの読み込み -->
+    <div th:replace="fragments/navbar :: navbar"></div>
 
-<h1>店舗詳細</h1>
+    <!--パンくずリスト-->
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb p-3 bg-light rounded-2">
+            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/search(area=${area}, genre=${genre}, headcount=${headcount})}">検索結果</a></li>
+            <li class="breadcrumb-item active" aria-current="page">店舗詳細</li>
+        </ol>
+    </nav>
+</header>
 
-<!-- 店舗紹介 -->
-    <section>
-        <h2 th:text="${restaurant.name}">店舗名</h2>
+<main>
+    <div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
 
-        <img img th:src="${restaurant.mainImage} != null ? @{'/storage/restaurant/' + ${restaurant.mainImage}} : @{/storage/noimage.jpg}"
-                 class="w-100"
-                 alt="店舗画像">
+    <h1>店舗詳細</h1>
 
-        <table>
-            <tr>
-                <th>エリア</th>
-                <td th:text="${restaurant.area}">エリア</td>
-            </tr>
-            <tr>
-                <th>ジャンル</th>
-                <td th:text="${restaurant.genre}">ジャンル</td>
-            </tr>
-            <tr>
-                <th>予算</th>
-                <td th:text="${#numbers.formatInteger(restaurant.minAmount, 0, 'COMMA')} + '円～' + ${#numbers.formatInteger(restaurant.maxAmount, 0, 'COMMA')} + '円'">予算</td>
-            </tr>
-            <tr>
-                <th>定休日</th>
-                <td th:text="${#lists.isEmpty(holidayNames) ? 'なし' : #strings.arrayJoin(holidayNames, '、')}">定休日</td>
-            </tr>
-            <tr>
-                <th>説明</th>
-                <td th:text="${restaurant.explanation}">説明</td>
-            </tr>
-        </table>
+    <!-- 店舗紹介 -->
+        <section>
+            <h2 th:text="${restaurant.name}">店舗名</h2>
 
-        <!-- 予約ページへのリンク -->
-        <div>
-            <form th:action="@{'/reservation/new/' + ${restaurant.id}}" method="get">
-                <button type="submit" class="button">予約する</button>
-            </form>
-        </div>
-    </section>
-</div>
+            <img img th:src="${restaurant.mainImage} != null ? @{'/storage/restaurant/' + ${restaurant.mainImage}} : @{/storage/noimage.jpg}"
+                     class="w-100"
+                     alt="店舗画像">
 
-<!-- 店舗詳細情報 -->
-<div>
-    <section>
-        <h3>店舗詳細情報</h3>
+            <table>
+                <tr>
+                    <th>エリア</th>
+                    <td th:text="${restaurant.area}">エリア</td>
+                </tr>
+                <tr>
+                    <th>ジャンル</th>
+                    <td th:text="${restaurant.genre}">ジャンル</td>
+                </tr>
+                <tr>
+                    <th>予算</th>
+                    <td th:text="${#numbers.formatInteger(restaurant.minAmount, 0, 'COMMA')} + '円～' + ${#numbers.formatInteger(restaurant.maxAmount, 0, 'COMMA')} + '円'">予算</td>
+                </tr>
+                <tr>
+                    <th>定休日</th>
+                    <td th:text="${#lists.isEmpty(holidayNames) ? 'なし' : #strings.arrayJoin(holidayNames, '、')}">定休日</td>
+                </tr>
+                <tr>
+                    <th>説明</th>
+                    <td th:text="${restaurant.explanation}">説明</td>
+                </tr>
+            </table>
 
-        <table>
-            <tr>
-                <th>店舗名</th>
-                <td th:text="${restaurant.name}">店舗名</td>
-            </tr>
-            <tr>
-                <th>ジャンル</th>
-                <td th:text="${restaurant.genre}">ジャンル</td>
-            </tr>
-            <tr>
-                <th>電話番号</th>
-                <td th:text="${restaurant.telephone}">電話番号</td>
-            </tr>
-            <tr>
-                <th>住所</th>
-                <td th:text="${restaurant.address}">住所</td>
-            </tr>
-            <tr>
-                <th>営業時間</th>
-                <td th:text="${#temporals.format(restaurant.startBusiness, 'HH:mm')} + ' ～ ' + ${#temporals.format(restaurant.endBusiness, 'HH:mm')}">営業時間</td>
-            </tr>
-            <tr>
-                <th>定休日</th>
-                <td th:text="${#lists.isEmpty(holidayNames) ? 'なし' : #strings.arrayJoin(holidayNames, '・')}">定休日</td>
-            </tr>
-            <tr>
-                <th>予算</th>
-                <td th:text="${#numbers.formatInteger(restaurant.minAmount, 0, 'COMMA')} + '円～' + ${#numbers.formatInteger(restaurant.maxAmount, 0, 'COMMA')} + '円'">予算</td>
-            </tr>
-            <tr>
-                <th>定員</th>
-                <td th:text="${restaurant.capacity} + ' 名'">定員</td>
-            </tr>
-        </table>
+            <!-- 予約ページへのリンク -->
+            <div>
+                <form th:action="@{'/reservation/new/' + ${restaurant.id}}" method="get">
+                    <button type="submit" class="button">予約する</button>
+                </form>
+            </div>
+        </section>
+    </div>
 
-        <!-- 予約ページへのリンク -->
-        <div>
-            <form th:action="@{'/reservation/new/' + ${restaurant.id}}" method="get">
-                <button type="submit" class="button">予約する</button>
-            </form>
-        </div>
-    </section>
-</div>
+    <!-- 店舗詳細情報 -->
+    <div>
+        <section>
+            <h3>店舗詳細情報</h3>
+
+            <table>
+                <tr>
+                    <th>店舗名</th>
+                    <td th:text="${restaurant.name}">店舗名</td>
+                </tr>
+                <tr>
+                    <th>ジャンル</th>
+                    <td th:text="${restaurant.genre}">ジャンル</td>
+                </tr>
+                <tr>
+                    <th>電話番号</th>
+                    <td th:text="${restaurant.telephone}">電話番号</td>
+                </tr>
+                <tr>
+                    <th>住所</th>
+                    <td th:text="${restaurant.address}">住所</td>
+                </tr>
+                <tr>
+                    <th>営業時間</th>
+                    <td th:text="${#temporals.format(restaurant.startBusiness, 'HH:mm')} + ' ～ ' + ${#temporals.format(restaurant.endBusiness, 'HH:mm')}">営業時間</td>
+                </tr>
+                <tr>
+                    <th>定休日</th>
+                    <td th:text="${#lists.isEmpty(holidayNames) ? 'なし' : #strings.arrayJoin(holidayNames, '・')}">定休日</td>
+                </tr>
+                <tr>
+                    <th>予算</th>
+                    <td th:text="${#numbers.formatInteger(restaurant.minAmount, 0, 'COMMA')} + '円～' + ${#numbers.formatInteger(restaurant.maxAmount, 0, 'COMMA')} + '円'">予算</td>
+                </tr>
+                <tr>
+                    <th>定員</th>
+                    <td th:text="${restaurant.capacity} + ' 名'">定員</td>
+                </tr>
+            </table>
+
+            <!-- 予約ページへのリンク -->
+            <div>
+                <form th:action="@{'/reservation/new/' + ${restaurant.id}}" method="get">
+                    <button type="submit" class="button">予約する</button>
+                </form>
+            </div>
+        </section>
+    </div>
+</main>
 
 <!-- webjar -->
 <script th:href="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
