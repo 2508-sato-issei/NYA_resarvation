@@ -7,6 +7,17 @@
     <title>予約変更画面</title>
 </head>
 <body class="bg-light">
+<header>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <!--パンくずリスト-->
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb p-3 bg-light rounded-2">
+            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/mypage}">マイページ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">予約変更画面</li>
+        </ol>
+    </nav>
+</header>
 <div class="container">
     <h2>予約変更</h2>
 
@@ -16,7 +27,7 @@
     </div>
 
     <!-- 予約変更フォーム -->
-    <form th:action="@{/reservation/update/{id}(id=${formModel.id})}" th:object="${formModel}" th:method="post">
+    <form th:action="@{/reservation/update/{id}(id=${formModel.id})}" th:object="${formModel}" th:method="post" novalidate>
         <input type="hidden" name="_method" value="put"/>
 
         <input type="hidden" th:field="*{restaurantId}">
@@ -44,8 +55,7 @@
 
         <!-- ボタン -->
         <div class="button-area">
-            <a th:href="@{/mypage}" class="button">戻る</a>
-            <button type="submit">変更を確定</button>
+            <button type="submit">変更</button>
         </div>
     </form>
 </div>

@@ -44,8 +44,8 @@ public class SecurityConfig {
                         .clearAuthentication(true)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/user/new", "/search", "/restaurant/**").permitAll()
-                        .requestMatchers("/css/**", "/js/**", "/storage/**").permitAll()
+                        .requestMatchers("/", "/login", "/user/new", "/user/add", "/search", "/restaurant/**").permitAll()
+                        .requestMatchers("/webjars/**", "/css/**", "/js/**", "/storage/**").permitAll()
                         .requestMatchers("/mypage/**", "/reservation/**", "/user/edit/**").hasRole("USER")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
 //                        .requestMatchers(HttpMethod.POST, "/**").authenticated()
