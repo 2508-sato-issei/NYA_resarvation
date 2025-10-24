@@ -1,5 +1,6 @@
 package com.example.NYA_reservation.controller;
 
+import com.example.NYA_reservation.controller.form.RegularHolidayForm;
 import com.example.NYA_reservation.controller.form.ReservationForm;
 import com.example.NYA_reservation.repository.entity.Restaurant;
 import com.example.NYA_reservation.security.LoginUserDetails;
@@ -81,16 +82,30 @@ public class ReservationEditController {
         //本日の日付、６０日後の日付を取得
         LocalDate now = LocalDate.now();
         LocalDate future = now.plusDays(60);
+        // 定休日一覧を取得（サービス層から）
+        List<RegularHolidayForm> regularHolidays =
+                reservationService.getRegularHolidaysByRestaurantId(reservationForm.getRestaurantId());
 
         if (reservationDate != null) {
-            if (reservationDate.isBefore(now)) {
-                result.addError(new FieldError(
-                        result.getObjectName(), "reservationDate",
-                        reservationDate, false, null, null, E0007));
-            } else if (reservationDate.isAfter(future)) {
-                result.addError(new FieldError(
-                        result.getObjectName(), "reservationDate",
-                        reservationDate, false, null, null, E0007));
+
+            // --- 定休日チェック ---
+            int intDayOfWeek = reservationDate.getDayOfWeek().getValue();
+            if (regularHolidays != null && !regularHolidays.isEmpty()) {
+                for (RegularHolidayForm regularHoliday : regularHolidays) {
+                    if (regularHoliday.getRegularHoliday() != null &&
+                            regularHoliday.getRegularHoliday() == intDayOfWeek) {
+                        result.addError(new FieldError(result.getObjectName(), "reservationDate",
+                                reservationDate, false, null, null, E0036
+                        ));
+                        break;
+                    }
+                }
+            }
+            // --- 過去日／60日超過チェック ---
+            if (reservationDate.isBefore(now) || reservationDate.isAfter(future)) {
+                result.addError(new FieldError(result.getObjectName(), "reservationDate",
+                        reservationDate, false, null, null, E0007
+                ));
             }
         }
 

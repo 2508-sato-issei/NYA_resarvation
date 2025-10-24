@@ -1,8 +1,11 @@
 package com.example.NYA_reservation.service;
 
+import com.example.NYA_reservation.controller.form.RegularHolidayForm;
 import com.example.NYA_reservation.controller.form.ReservationForm;
+import com.example.NYA_reservation.repository.RegularHolidayRepository;
 import com.example.NYA_reservation.repository.ReservationRepository;
 import com.example.NYA_reservation.repository.RestaurantRepository;
+import com.example.NYA_reservation.repository.entity.RegularHoliday;
 import com.example.NYA_reservation.repository.entity.Reservation;
 import com.example.NYA_reservation.repository.entity.Restaurant;
 import jakarta.transaction.Transactional;
@@ -20,6 +23,8 @@ public class ReservationService {
     ReservationRepository reservationRepository;
     @Autowired
     RestaurantRepository restaurantRepository;
+    @Autowired
+    RegularHolidayRepository regularHolidayRepository;
 
     /*
      * 予約登録処理
@@ -133,4 +138,18 @@ public class ReservationService {
                 reservation.getReservationDate().isEqual(LocalDate.now());
     }
 
+    public List<RegularHolidayForm> getRegularHolidaysByRestaurantId(Integer restaurantId) {
+        List<RegularHoliday> holidays = regularHolidayRepository.findByRestaurantId(restaurantId);
+
+        List<RegularHolidayForm> forms = new ArrayList<>();
+        for (RegularHoliday holiday : holidays) {
+            RegularHolidayForm form = new RegularHolidayForm();
+            form.setId(holiday.getId());
+            form.setRestaurantId(holiday.getRestaurantId());
+            form.setRegularHoliday(holiday.getRegularHoliday());
+            forms.add(form);
+        }
+
+        return forms;
+    }
 }
