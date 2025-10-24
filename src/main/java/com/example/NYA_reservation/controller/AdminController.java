@@ -8,6 +8,7 @@ import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.RegularHolidayService;
 import com.example.NYA_reservation.service.RestaurantService;
 import com.example.NYA_reservation.service.UserService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +90,11 @@ public class AdminController {
             mav.addObject("formModel", restaurantForm);
         }
 
+        if(!model.containsAttribute("dayOfWeeks")){
+            List<Integer> dayOfWeeks = new ArrayList<>();
+            mav.addObject("dayOfWeeks", dayOfWeeks);
+        }
+
         mav.setViewName("admin/restaurant/new");
         return mav;
     }
@@ -107,6 +113,8 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("formModel", restaurantForm);
             if(regularHolidays == null){
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
+            } else {
+                redirectAttributes.addFlashAttribute("dayOfWeeks", regularHolidays);
             }
             return new ModelAndView("redirect:/admin/restaurant/new");
         } else {
@@ -151,12 +159,21 @@ public class AdminController {
             mav.addObject("formModel", restaurant);
         }
 
+        //定休日情報を取得し、定休日インデックスをリストに詰める
+        List<RegularHolidayForm> regularHolidays = regularHolidayService.findRegularHolidaysByRestaurantId(id);
+        List<Integer> dayOfWeeks = new ArrayList<>();
+        for(RegularHolidayForm regularHoliday : regularHolidays){
+            Integer dayOfWeek = regularHoliday.getRegularHoliday();
+            dayOfWeeks.add(dayOfWeek);
+        }
+
         // referer をセッションに保存
         if (referer != null) {
             session.setAttribute("lastPage", referer);
         }
 
         mav.setViewName("admin/restaurant/edit");
+        mav.addObject("dayOfWeeks", dayOfWeeks);
         return mav;
     }
 
@@ -175,6 +192,8 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("formModel", restaurantForm);
             if(regularHolidays == null){
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
+            } else {
+                redirectAttributes.addFlashAttribute("dayOfWeeks", regularHolidays);
             }
             return new ModelAndView("redirect:/admin/restaurant/edit/" + id);
         } else {

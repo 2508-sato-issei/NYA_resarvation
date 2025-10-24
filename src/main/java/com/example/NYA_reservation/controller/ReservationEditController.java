@@ -2,6 +2,7 @@ package com.example.NYA_reservation.controller;
 
 import com.example.NYA_reservation.controller.form.RegularHolidayForm;
 import com.example.NYA_reservation.controller.form.ReservationForm;
+import com.example.NYA_reservation.controller.form.RestaurantForm;
 import com.example.NYA_reservation.repository.entity.Restaurant;
 import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.ReservationService;
@@ -77,6 +78,11 @@ public class ReservationEditController {
             RedirectAttributes redirectAttributes){
 
         List<String> errorMessages = new ArrayList<>();
+        //店舗の定員を取得
+        RestaurantForm restaurant = restaurantService.findRestaurantById(reservationForm.getRestaurantId());
+        Integer capacity = restaurant.getCapacity();
+        //入力された予約人数を取得
+        Integer headcount = reservationForm.getHeadcount();
         //入力された予約日を取得
         LocalDate reservationDate = reservationForm.getReservationDate();
         //本日の日付、６０日後の日付を取得
@@ -114,12 +120,11 @@ public class ReservationEditController {
             result.getAllErrors().forEach(error -> errorMessages.add(error.getDefaultMessage()));
         }
 
-        //定員を超える場合
-        if (reservationForm.getRestaurantId() != null && reservationForm.getHeadcount() != null) {
-            Integer capacity = reservationService.getRestaurantCapacity(reservationForm.getRestaurantId());
-            if (reservationForm.getHeadcount() > capacity) {
-                errorMessages.add(E0009);
-            }
+        //予約人数チェック
+        if((headcount != null) && (headcount > capacity)){
+            errorMessages.add(E0009);
+        } else if ((headcount != null) && (headcount == 0)) {
+            errorMessages.add(E0008);
         }
 
         if (!errorMessages.isEmpty()) {

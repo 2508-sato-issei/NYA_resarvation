@@ -16,7 +16,7 @@
     </div>
 
     <!-- 予約変更フォーム -->
-    <form th:action="@{/reservation/update/{id}(id=${formModel.id})}" th:object="${formModel}" th:method="post">
+    <form th:action="@{/reservation/update/{id}(id=${formModel.id})}" th:object="${formModel}" th:method="post" novalidate>
         <input type="hidden" name="_method" value="put"/>
 
         <input type="hidden" th:field="*{restaurantId}">
