@@ -15,20 +15,20 @@ public class RestaurantConverter {
     public RestaurantForm toRestaurantForm(Restaurant restaurant) {
         RestaurantForm restaurantForm = new RestaurantForm();
 
-            restaurant.setId(restaurant.getId());
-            restaurant.setName(restaurant.getName());
-            restaurant.setTelephone(restaurant.getTelephone());
-            restaurant.setAddress(restaurant.getAddress());
-            restaurant.setArea(restaurant.getArea());
-            restaurant.setGenre(restaurant.getGenre());
-            restaurant.setExplanation(restaurant.getExplanation());
-            restaurant.setStartBusiness(restaurant.getStartBusiness());
-            restaurant.setEndBusiness(restaurant.getEndBusiness());
-            restaurant.setCapacity(restaurant.getCapacity());
-            restaurant.setMinAmount(restaurant.getMinAmount());
-            restaurant.setMaxAmount(restaurant.getMaxAmount());
-            restaurant.setCreatedDate(restaurant.getCreatedDate());
-            restaurant.setUpdatedDate(restaurant.getUpdatedDate());
+            restaurantForm.setId(restaurant.getId());
+            restaurantForm.setName(restaurant.getName());
+            restaurantForm.setTelephone(restaurant.getTelephone());
+            restaurantForm.setAddress(restaurant.getAddress());
+            restaurantForm.setArea(restaurant.getArea());
+            restaurantForm.setGenre(restaurant.getGenre());
+            restaurantForm.setExplanation(restaurant.getExplanation());
+            restaurantForm.setStartBusiness(restaurant.getStartBusiness());
+            restaurantForm.setEndBusiness(restaurant.getEndBusiness());
+            restaurantForm.setCapacity(restaurant.getCapacity());
+            restaurantForm.setMinAmount(restaurant.getMinAmount());
+            restaurantForm.setMaxAmount(restaurant.getMaxAmount());
+            restaurantForm.setCreatedDate(restaurant.getCreatedDate());
+            restaurantForm.setUpdatedDate(restaurant.getUpdatedDate());
             return restaurantForm;
     }
 
@@ -37,22 +37,22 @@ public class RestaurantConverter {
         List<RestaurantForm> restaurants = new ArrayList<>();
 
         for (Restaurant result : results) {
-            RestaurantForm restaurant = new RestaurantForm();
-            restaurant.setId(result.getId());
-            restaurant.setName(result.getName());
-            restaurant.setTelephone(result.getTelephone());
-            restaurant.setAddress(result.getAddress());
-            restaurant.setArea(result.getArea());
-            restaurant.setGenre(result.getGenre());
-            restaurant.setExplanation(result.getExplanation());
-            restaurant.setStartBusiness(result.getStartBusiness());
-            restaurant.setEndBusiness(result.getEndBusiness());
-            restaurant.setCapacity(result.getCapacity());
-            restaurant.setMinAmount(result.getMinAmount());
-            restaurant.setMaxAmount(result.getMaxAmount());
-            restaurant.setCreatedDate(result.getCreatedDate());
-            restaurant.setUpdatedDate(result.getUpdatedDate());
-            restaurants.add(restaurant);
+            RestaurantForm restaurantForm = new RestaurantForm();
+            restaurantForm.setId(result.getId());
+            restaurantForm.setName(result.getName());
+            restaurantForm.setTelephone(result.getTelephone());
+            restaurantForm.setAddress(result.getAddress());
+            restaurantForm.setArea(result.getArea());
+            restaurantForm.setGenre(result.getGenre());
+            restaurantForm.setExplanation(result.getExplanation());
+            restaurantForm.setStartBusiness(result.getStartBusiness());
+            restaurantForm.setEndBusiness(result.getEndBusiness());
+            restaurantForm.setCapacity(result.getCapacity());
+            restaurantForm.setMinAmount(result.getMinAmount());
+            restaurantForm.setMaxAmount(result.getMaxAmount());
+            restaurantForm.setCreatedDate(result.getCreatedDate());
+            restaurantForm.setUpdatedDate(result.getUpdatedDate());
+            restaurants.add(restaurantForm);
         }
         return restaurants;
     }
