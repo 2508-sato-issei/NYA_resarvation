@@ -32,8 +32,11 @@ public class ReservationEditController {
 
     //予約変更画面表示
     @GetMapping("/reservation/edit/{id}")
-    public ModelAndView reservationEdit(@PathVariable String id, RedirectAttributes redirectAttributes,
-                                        @AuthenticationPrincipal LoginUserDetails loginUser){
+    public ModelAndView reservationEdit(
+            @PathVariable String id,
+            @ModelAttribute("formModel") ReservationForm form,
+            RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal LoginUserDetails loginUser) {
 
         List<String> errorMessages = new ArrayList<>();
 
@@ -44,25 +47,30 @@ public class ReservationEditController {
             return new ModelAndView("redirect:/mypage");
         }
 
-        //予約情報取得
-        ReservationForm reservation = reservationService.findById(Integer.parseInt(id));
-        if(reservation == null){
-            errorMessages.add(E0011);
-            redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
-            return new ModelAndView("redirect:/mypage");
-        }
-
-        //店舗情報取得
-        Restaurant restaurant = restaurantService.findById(reservation.getRestaurantId());
-        if (restaurant == null) {
-            errorMessages.add(E0011);
-            redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
-            return new ModelAndView("redirect:/mypage");
-        }
-
         ModelAndView mav = new ModelAndView("reservation/edit");
-        mav.addObject("formModel", reservation);
-        mav.addObject("restaurant", restaurant);
+
+        if (form == null || form.getReservationDate() == null) {
+            ReservationForm reservation = reservationService.findById(Integer.parseInt(id));
+            if (reservation == null) {
+                errorMessages.add(E0011);
+                redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
+                return new ModelAndView("redirect:/mypage");
+            }
+            mav.addObject("formModel", reservation);
+                // 店舗情報を取得
+            Restaurant restaurant = restaurantService.findById(reservation.getRestaurantId());
+            if (restaurant == null) {
+                errorMessages.add(E0011);
+                redirectAttributes.addFlashAttribute("errorMessages", errorMessages);
+                return new ModelAndView("redirect:/mypage");
+            }
+            mav.addObject("restaurant", restaurant);
+        } else {
+            // 予約情報を取得
+            Restaurant restaurant = restaurantService.findById(form.getRestaurantId());
+            mav.addObject("formModel", form);
+            mav.addObject("restaurant", restaurant);
+        }
         mav.addObject("loginUser", loginUser);
         return mav;
     }
