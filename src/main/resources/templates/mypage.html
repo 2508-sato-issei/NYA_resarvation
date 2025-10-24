@@ -27,7 +27,7 @@
            th:if="${user.createdDate != null}"
            th:text="'登録日：' + ${#dates.format(user.createdDate, 'yyyy/MM/dd')}"></p>
         <a th:href="@{/user/edit/{id}(id=${loginUser.id}, referer=${currentUrl})}"
-           class="btn btn-sm btn-outline-light mt-2">会員情報編集</a>
+           class="btn edit-btn mt-2">会員情報編集</a>
     </div>
 
     <div class="next-reservation mb-4 border-bottom pb-3">
@@ -46,7 +46,7 @@
         <h6 class="fw-bold">🗞 お知らせ</h6>
         <ul class="list-unstyled small mt-2">
             <li>🎍 年末年始の営業情報を掲載しました</li>
-            <li>🍷 新店舗「イタリアン・ソーレ」オープン！</li>
+            <li>🍖 新店舗「焼肉　小町苑」オープン！</li>
             <li>💡 ご予約は2か月先まで可能です</li>
         </ul>
     </div>
