@@ -16,49 +16,37 @@
     </nav>
 </header>
 <main>
-    <div class="container pt-4 pb-5 nya-container">
-        <div class="row justify-content-center">
-            <div class="col-3">
-                <div class="admin-sidebar">
-                    <div class="list-group">
-                        <a th:href="@{/admin/user-list}" class="list-group-item list-group-item-action">ユーザー一覧</a>
-                        <a th:href="@{/admin/restaurant-list}" class="list-group-item list-group-item-action">店舗一覧</a>
-                        <a th:href="@{/}" class="list-group-item list-group-item-action">戻る</a>
+    <div class="admin-sidebar">
+        <div class="list-group">
+            <a th:href="@{/admin/user-list}" class="list-group-item list-group-item-action">ユーザー一覧</a>
+            <a th:href="@{/admin/restaurant-list}" class="list-group-item list-group-item-action">店舗一覧</a>
+        </div>
+    </div>
+    <div class="admin-main">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">総会員数</h5>
+                            <p class="card-text" th:text="${totalUsers} + '名'"></p>
+                        </div>
+                    </div>
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">店舗登録数</h5>
+                            <p class="card-text" th:text="${totalRestaurants} + '件'"></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col container">
-                <div class="row justify-content-center">
-                    <div class="col-xxl-9 col-xl-10 col-lg-11">
-                        <div class="row row-cols-md-3 row-cols-2 g-3 mb-5">
-                            <div class="col">
-                                <div class="card bg-light">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title">総会員数</h5>
-                                        <p class="card-text" th:text="${totalUsers} + '名'"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card bg-light">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title">店舗登録数</h5>
-                                        <p class="card-text" th:text="${totalRestaurants} + '件'"></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="card bg-light">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title">予約人気店舗</h5>
-                                        <p th:each="popularRestaurant : ${popularRestaurants}">
-                                            <a th:href="@{'/restaurant/' + ${popularRestaurant.id}}"
-                                               th:text="${popularRestaurant.name}"></a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-4">
+                    <div class="card bg-light">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">予約人気店舗</h5>
+                            <p th:each="popularRestaurant : ${popularRestaurants}">
+                                <a th:href="@{'/restaurant/' + ${popularRestaurant.id}}"
+                                   th:text="${popularRestaurant.name}"></a>
+                            </p>
                         </div>
                     </div>
                 </div>
