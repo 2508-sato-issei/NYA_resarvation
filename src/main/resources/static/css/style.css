@@ -71,6 +71,14 @@ body {
     margin-bottom: 30px;
 }
 
+/*予約画面*/
+.nya-container {
+    border-radius: 20px;
+}
+.restaurant-info {
+    margin-bottom: 20px;
+}
+
 /* ▼予約変更ページのみ適用▼ */
 .reservation-page {
     background-color: #f9f9f9;

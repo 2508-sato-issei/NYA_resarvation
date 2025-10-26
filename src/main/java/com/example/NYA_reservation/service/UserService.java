@@ -6,6 +6,7 @@ import com.example.NYA_reservation.converter.UserConverter;
 import com.example.NYA_reservation.repository.UserRepository;
 import com.example.NYA_reservation.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -99,7 +100,8 @@ public class UserService {
 
     //ユーザー情報全件取得
     public List<UserForm> findAllUser() {
-        List<User> results = userRepository.findAll();
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        List<User> results = userRepository.findAll(sort);
         return userConverter.toUserFormList(results);
     }
 

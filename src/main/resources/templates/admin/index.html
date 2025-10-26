@@ -26,13 +26,13 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-4">
-                    <div class="card bg-light">
+                    <div class="card bg-light admin-card">
                         <div class="card-body text-center">
                             <h5 class="card-title">総会員数</h5>
                             <p class="card-text" th:text="${totalUsers} + '名'"></p>
                         </div>
                     </div>
-                    <div class="card bg-light">
+                    <div class="card bg-light admin-card">
                         <div class="card-body text-center">
                             <h5 class="card-title">店舗登録数</h5>
                             <p class="card-text" th:text="${totalRestaurants} + '件'"></p>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="col-4">
-                    <div class="card bg-light">
+                    <div class="card bg-light admin-card">
                         <div class="card-body text-center">
                             <h5 class="card-title">予約人気店舗</h5>
                             <p th:each="popularRestaurant : ${popularRestaurants}">
