@@ -5,23 +5,97 @@
     <!-- Bootstrap CSS -->
     <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
     <title>ホーム</title>
+    <style>
+        body {
+            background-color: #eeece4;
+        }
+
+        h1 {
+            text-align: center;
+            font-weight: 700;
+            margin-top: 1.5rem;
+        }
+
+        h2 {
+            font-weight: 600;
+            border-left: 6px solid #ff9800;
+            padding-left: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* --- 検索フォーム --- */
+        .search-card {
+            background-color: #fff;
+            border-radius: 8px;
+            max-width: 1000px;
+            margin: 0 auto; /* 中央寄せ */
+        }
+
+        /* --- カード共通スタイル --- */
+        .restaurant-card {
+            height: 220px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .restaurant-card img {
+            height: 130px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .restaurant-card .card-body {
+            text-align: center;
+            padding: 8px 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(220px - 130px);
+        }
+
+        .restaurant-card a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            display: block;
+            width: 100%;
+        }
+
+        .restaurant-card a:hover {
+            color: #ff9800;
+        }
+
+        /* セクション間の余白統一 */
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-<!-- 共通メニューバーの読み込み -->
+<!-- 共通メニューバー -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+<div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger py-2"></div>
 
-<h1>ホーム</h1>
+<h1>お店を探す</h1>
 
 <!-- 検索フォーム -->
-<div class="conteiner my-4">
-    <div class="card shadow-sm p-4">
-        <form th:action="@{/search}" method="get" class="row g-3 align-items-end">
+<div class="container my-4">
+    <div class="card shadow-sm p-4 search-card">
+        <form th:action="@{/search}" method="get" class="row g-3 align-items-end justify-content-center">
 
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-6">
                 <select name="area" id="area" class="form-select select-placeholder" th:value="${searchForm.area}">
-                    <option value="" disabled selected hidden>エリアを選択</option>
+                    <option value="">エリアを選択</option>
                     <option value="東京" th:selected="${searchForm.area == '東京'}">東京</option>
                     <option value="神奈川" th:selected="${searchForm.area == '神奈川'}">神奈川</option>
                     <option value="愛知" th:selected="${searchForm.area == '愛知'}">愛知</option>
@@ -31,9 +105,9 @@
                 </select>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-6">
                 <select name="genre" id="genre" class="form-select select-placeholder" th:value="${searchForm.genre}">
-                    <option value="" disabled selected hidden>ジャンルを選択</option>
+                    <option value="">ジャンルを選択</option>
                     <option value="焼肉" th:selected="${searchForm.genre == '焼肉'}">焼肉</option>
                     <option value="寿司" th:selected="${searchForm.genre == '寿司'}">寿司</option>
                     <option value="居酒屋" th:selected="${searchForm.genre == '居酒屋'}">居酒屋</option>
@@ -43,9 +117,9 @@
                 </select>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-6">
                 <select name="headcount" id="headcount" class="form-select select-placeholder" th:value="${searchForm.headcount}">
-                    <option value="" disabled selected hidden>人数を選択</option>
+                    <option value="">人数を選択</option>
                     <option th:each="i : ${#numbers.sequence(1, 99)}"
                             th:value="${i}"
                             th:text="${i} + '名'"
@@ -54,7 +128,7 @@
                 </select>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-6">
                 <button type="submit" class="btn btn-warning w-100">🔍 検索</button>
             </div>
         </form>
@@ -62,9 +136,9 @@
 </div>
 
 <!-- 人気エリア -->
-<div class="container my-5">
+<div class="container section my-5">
     <h2>人気エリア</h2>
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
         <div class="col" th:each="popularArea : ${popularAreas}">
             <div class="card restaurant-card h-100">
                 <img th:src="${popularArea.area} != null ? @{/storage/area/{area}.jpg(area=${popularArea.area})} : @{/storage/noimage.jpg}"
@@ -79,9 +153,9 @@
 </div>
 
 <!-- 人気ジャンル -->
-<div class="container my-5">
+<div class="container section my-5">
     <h2>人気ジャンル</h2>
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
         <div class="col" th:each="popularGenre : ${popularGenres}">
             <div class="card restaurant-card h-100">
                 <img th:src="${popularGenre.genre} != null ? @{/storage/genre/{genre}.jpg(genre=${popularGenre.genre})} : @{/storage/noimage.jpg}"
@@ -96,9 +170,9 @@
 </div>
 
 <!-- 人気店舗 -->
-<div class="container my-5">
+<div class="container section my-5">
     <h2>人気店舗</h2>
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
         <div class="col" th:each="popularRestaurant : ${popularRestaurants}">
             <div class="card restaurant-card h-100">
                 <img th:src="${popularRestaurant.mainImage} != null ? @{'/storage/restaurant/' + ${popularRestaurant.mainImage}} : @{/storage/noimage.jpg}"
@@ -112,85 +186,8 @@
     </div>
 </div>
 
-<style>
-    body {
-        background-color: #f8f9fa;
-    }
-
-    h2 {
-        font-weight: 600;
-        border-left: 6px solid #ff9800;
-        padding-left: 10px;
-        margin-bottom: 20px;
-    }
-
-    .form-select:invalid {
-        color: #6c757d; /* グレー文字で“プレースホルダー感” */
-    }
-
-    /* すべてのセレクトに適用 */
-    .select-placeholder {
-        color: #adb5bd; /* 初期状態（薄いグレー） */
-    }
-
-    /* ドロップダウン内の項目は通常色 */
-    .select-placeholder option {
-        color: #212529;
-    }
-
-    /* 値が選択された後（:invalidではなくなる）に通常色へ */
-    .select-placeholder:not(:invalid) {
-        color: #212529;
-    }
-
-    .select-placeholder option[disabled] {
-    display: none;
-    }
-
-    /* --- カード共通スタイル --- */
-    .restaurant-card {
-        height: 220px; /* ← カードの高さを固定 */
-        transition: transform 0.2s, box-shadow 0.2s;
-        border: none;
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    .restaurant-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-
-    .restaurant-card img {
-        height: 130px; /* ← 画像部分の高さを統一 */
-        object-fit: cover;
-        width: 100%;
-    }
-
-    .restaurant-card .card-body {
-        text-align: center;
-        padding: 8px 4px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: calc(220px - 130px); /* 残り部分の高さを自動調整 */
-    }
-
-    .restaurant-card a {
-        text-decoration: none;
-        color: #333;
-        font-weight: 500;
-        display: block;
-        width: 100%;
-    }
-
-    .restaurant-card a:hover {
-        color: #ff9800;
-    }
-</style>
-
 <!-- webjar -->
-<script th:href="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
-<script th:href="@{/webjars/bootstrap/5.1.3/js/bootstrap.min.js}"></script>
+<script th:src="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>
