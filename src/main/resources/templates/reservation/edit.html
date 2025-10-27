@@ -27,6 +27,25 @@
             <p class="mb-0" th:each="err : ${errorMessages}" th:text="${err}"></p>
         </div>
 
+        <div class="restaurant-info">
+            <div th:text="${'営業時間(L.Oは営業終了30分前)：' + restaurant.startBusiness + '~' + restaurant.endBusiness}"></div>
+            <div th:text="${'定員：' + restaurant.capacity + '席'}"></div>
+            <div>
+                定休日：<span th:each="regularHoliday : ${regularHolidays}">
+                                        <th:block th:switch="${regularHoliday.regularHoliday}">
+                                            <span th:case=1 th:text="月曜日"></span>
+                                            <span th:case=2 th:text="火曜日"></span>
+                                            <span th:case=3 th:text="水曜日"></span>
+                                            <span th:case=4 th:text="木曜日"></span>
+                                            <span th:case=5 th:text="金曜日"></span>
+                                            <span th:case=6 th:text="土曜日"></span>
+                                            <span th:case=7 th:text="日曜日"></span>
+                                        </th:block>
+                                    </span>
+            </div>
+            <hr/>
+        </div>
+
         <form th:action="@{/reservation/update/{id}(id=${formModel.id})}"
               th:object="${formModel}" th:method="post" novalidate>
             <input type="hidden" name="_method" value="put"/>

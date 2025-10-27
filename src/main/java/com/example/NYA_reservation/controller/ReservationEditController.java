@@ -5,6 +5,7 @@ import com.example.NYA_reservation.controller.form.ReservationForm;
 import com.example.NYA_reservation.controller.form.RestaurantForm;
 import com.example.NYA_reservation.repository.entity.Restaurant;
 import com.example.NYA_reservation.security.LoginUserDetails;
+import com.example.NYA_reservation.service.RegularHolidayService;
 import com.example.NYA_reservation.service.ReservationService;
 import com.example.NYA_reservation.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class ReservationEditController {
     ReservationService reservationService;
     @Autowired
     RestaurantService restaurantService;
+    @Autowired
+    RegularHolidayService regularHolidayService;
 
     //予約変更画面表示
     @GetMapping("/reservation/edit/{id}")
@@ -66,12 +69,16 @@ public class ReservationEditController {
                 return new ModelAndView("redirect:/mypage");
             }
             mav.addObject("restaurant", restaurant);
+            List<RegularHolidayForm> regularHolidays =
+                    regularHolidayService.findRegularHolidaysByRestaurantId(reservation.getRestaurantId());
+            mav.addObject("regularHolidays", regularHolidays);
         } else {
             // 予約情報を取得
             Restaurant restaurant = restaurantService.findById(form.getRestaurantId());
             mav.addObject("formModel", form);
             mav.addObject("restaurant", restaurant);
         }
+
         mav.addObject("loginUser", loginUser);
         return mav;
     }
