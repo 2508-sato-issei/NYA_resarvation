@@ -9,7 +9,7 @@ body {
 /* 左メニュー（固定サイドバー） */
 .sidebar {
     height: 100vh;
-    width: 230px;
+    width: 250px;
     position: fixed;
     top: 100px;
     left: 0;
@@ -211,7 +211,69 @@ body {
   color: #fff !important;
 }
 
-/* ▼サイドバー内の区切り線を濃くする ▼ */
 .sidebar .border-bottom {
-  border-bottom: 2px solid #b0b0b0 !important; /* ← 少し濃いグレー */
+  border-bottom: 2px solid #b0b0b0 !important;
+}
+
+/* マイページ画面の予約一覧*/
+.mypage-reservation-card {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #e5e0d3;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 16px;
+  margin: 0 auto 20px auto;
+  transition: 0.2s;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.restaurant-img {
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 16px;
+}
+
+.reservation-info {
+  flex: 1;
+}
+
+.reservation-info h5 {
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.reservation-info p {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.reservation-actions .btn {
+  font-weight: 600;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.btn-change {
+  background-color: #fa0;
+  color: #fff;
+  border: none;
+}
+
+.btn-change:hover {
+  background-color: #e69100;
+}
+
+.btn-cancel {
+  background-color: #e57373;
+  color: #fff;
+  border: none;
+}
+
+.btn-cancel:hover {
+  background-color: #d9534f;
 }
