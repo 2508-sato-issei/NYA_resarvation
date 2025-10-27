@@ -27,7 +27,7 @@
     <h1>会員情報編集</h1>
 
     <!-- 会員情報編集フォーム -->
-    <form th:action="@{'/user/update/' + ${userForm.id}}" method="post" th:object="${userForm}">
+    <form id="editForm" th:action="@{'/user/update/' + ${userForm.id}}" method="post" th:object="${userForm}">
         <div>
             <p>
                 <div th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></div>
@@ -78,13 +78,21 @@
 
 <!-- パスワード確認チェック -->
 <script>
-    document.querySelector("form").addEventListener("submit", function(e) {
-        const pw = document.getElementById("password").value;
-        const confirmPw = document.getElementById("confirmPassword").value;
-        if (pw !== confirmPw) {
-            alert("パスワードと確認用パスワードが一致しません");
-            e.preventDefault();
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("editForm");
+        if (!form) {
+            console.error("編集フォームが見つかりません");
+            return;
         }
+
+        form.addEventListener("submit", function(e) {
+            const pw = document.getElementById("password").value;
+            const confirmPw = document.getElementById("confirmPassword").value;
+            if (pw !== confirmPw) {
+                alert("パスワードと確認用パスワードが一致しません");
+                e.preventDefault();
+            }
+        });
     });
 </script>
 
