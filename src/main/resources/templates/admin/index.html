@@ -11,7 +11,7 @@
     <nav aria-label="breadcrumb" role="navigation">
         <ol class="breadcrumb p-3 bg-light rounded-2">
             <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
-            <li class="breadcrumb-item active" aria-current="page">サイト管理者画面</li>
+            <li class="breadcrumb-item active" aria-current="page">サイト管理者</li>
         </ol>
     </nav>
 </header>
@@ -25,6 +25,25 @@
     <div class="admin-main">
         <div class="container">
             <div class="row justify-content-center">
+                <div class="card bg-light admin-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">予約人気店舗</h5>
+                        <div class="row justify-content-center row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+                            <div class="col" th:each="popularRestaurant : ${popularRestaurants}">
+                                <a th:href="@{/restaurant/{id}(id=${popularRestaurant.id})}" class="card admin-restaurant-card h-100">
+                                    <img th:src="${popularRestaurant.mainImage} != null ? @{'/storage/restaurant/' + ${popularRestaurant.mainImage}} : @{/storage/noimage.jpg}"
+                                         alt="店舗画像" class="card-img-admin">
+                                    <div class="card-body">
+                                        <p th:text="${popularRestaurant.name}"></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="container">
+            <div class="row justify-content-center">
                 <div class="col-4">
                     <div class="card bg-light admin-card">
                         <div class="card-body text-center">
@@ -32,6 +51,8 @@
                             <p class="card-text" th:text="${totalUsers} + '名'"></p>
                         </div>
                     </div>
+                </div>
+                <div class="col-4">
                     <div class="card bg-light admin-card">
                         <div class="card-body text-center">
                             <h5 class="card-title">店舗登録数</h5>
@@ -42,15 +63,13 @@
                 <div class="col-4">
                     <div class="card bg-light admin-card">
                         <div class="card-body text-center">
-                            <h5 class="card-title">予約人気店舗</h5>
-                            <p th:each="popularRestaurant : ${popularRestaurants}">
-                                <a th:href="@{'/restaurant/' + ${popularRestaurant.id}}"
-                                   th:text="${popularRestaurant.name}"></a>
-                            </p>
+                            <h5 class="card-title">総予約数</h5>
+                            <p class="card-text" th:text="${totalReservations} + '件'"></p>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 

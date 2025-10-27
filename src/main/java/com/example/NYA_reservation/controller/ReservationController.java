@@ -89,7 +89,7 @@ public class ReservationController {
             int intDayOfWeek = reservationDate.getDayOfWeek().getValue();
             for(RegularHolidayForm regularHoliday : regularHolidays){
                 //定休日チェック
-                if(regularHoliday.getRegularHoliday() == intDayOfWeek){
+                if((regularHoliday.getRegularHoliday() == intDayOfWeek) && (!reservationDate.isBefore(now))){
                     FieldError error = new FieldError(result.getObjectName(),
                             "reservationDate", reservationDate,
                             false,

@@ -26,21 +26,21 @@
         <!-- 入力フォーム -->
         <p>
             <label>店舗名</label>
-        <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
         <input type="text" th:field="*{name}">
         </p>
         <p>
             <label>電話番号(ハイフンあり)</label>
-        <div class="text-danger" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></div>
         <input type="tel" th:field="*{telephone}">
         </p>
         <p>
             <label>住所</label>
-        <div class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
         <input type="text" th:field="*{address}">
         </p>
         <p>
-        <div class="text-danger" th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></div>
         <select th:field="*{area}">
             <option value="" selected>エリアを選択</option>
             <option value="東京">東京</option>
@@ -52,7 +52,7 @@
         </select>
         </p>
         <p>
-        <div class="text-danger" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
         <select th:field="*{genre}">
             <option value="" selected>ジャンルを選択</option>
             <option value="焼肉">焼肉</option>
@@ -65,37 +65,37 @@
         </p>
         <p>
             <label>説明</label>
-        <div class="text-danger" th:if="${#fields.hasErrors('explanation')}" th:errors="*{explanation}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('explanation')}" th:errors="*{explanation}"></div>
         <textarea th:field="*{explanation}"></textarea>
         </p>
         <p>
             <label>営業開始</label>
-        <div class="text-danger" th:if="${#fields.hasErrors('startBusiness')}" th:errors="*{startBusiness}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('startBusiness')}" th:errors="*{startBusiness}"></div>
         <input type="time" th:field="*{startBusiness}">
         </p>
         <p>
             <label>営業終了</label>
-        <div class="text-danger" th:if="${#fields.hasErrors('endBusiness')}" th:errors="*{endBusiness}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('endBusiness')}" th:errors="*{endBusiness}"></div>
         <input type="time" th:field="*{endBusiness}">
         </p>
         <p>
             <label>定員</label>
-        <div class="text-danger" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
         <input type="number" min="1" th:field="*{capacity}">
         </p>
         <p>
             <label>最低利用料金</label>
-        <div class="text-danger" th:if="${#fields.hasErrors('minAmount')}" th:errors="*{minAmount}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('minAmount')}" th:errors="*{minAmount}"></div>
         <input type="number" min="1" th:field="*{minAmount}">
         </p>
         <p>
             <label>最高利用料金</label>
-        <div class="text-danger" th:if="${#fields.hasErrors('maxAmount')}" th:errors="*{maxAmount}"></div>
+        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('maxAmount')}" th:errors="*{maxAmount}"></div>
         <input type="number" min="1" th:field="*{maxAmount}">
         </p>
         <p>
             <label>定休日</label>
-            <span class="text-danger" th:text="${errorMessage}"></span>
+            <span class="alert alert-danger py-2" th:text="${errorMessage}"></span>
             <input type="checkbox" name="regularHoliday" value="1" th:checked="${dayOfWeeks.contains(1)}">月曜日
             <input type="checkbox" name="regularHoliday" value="2" th:checked="${dayOfWeeks.contains(2)}">火曜日
             <input type="checkbox" name="regularHoliday" value="3" th:checked="${dayOfWeeks.contains(3)}">水曜日

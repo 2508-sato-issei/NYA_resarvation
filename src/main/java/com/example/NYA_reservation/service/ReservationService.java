@@ -35,6 +35,13 @@ public class ReservationService {
     }
 
     /*
+     * 予約件数取得
+     */
+    public Long countReservations(){
+        return reservationRepository.count();
+    }
+
+    /*
      * フォームで送られた値をEntityに詰め替え
      */
     private Reservation setReservationEntity(ReservationForm reservationForm){

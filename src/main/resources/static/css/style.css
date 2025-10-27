@@ -71,6 +71,12 @@ body {
     margin-bottom: 30px;
 }
 
+.card-img-admin {
+    height: 80px;
+    object-fit: cover;
+    width: 100%;
+}
+
 /*予約画面*/
 .nya-container {
     border-radius: 20px;

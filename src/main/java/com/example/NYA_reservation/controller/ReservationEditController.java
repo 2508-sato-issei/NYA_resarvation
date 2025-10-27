@@ -106,8 +106,8 @@ public class ReservationEditController {
             int intDayOfWeek = reservationDate.getDayOfWeek().getValue();
             if (regularHolidays != null && !regularHolidays.isEmpty()) {
                 for (RegularHolidayForm regularHoliday : regularHolidays) {
-                    if (regularHoliday.getRegularHoliday() != null &&
-                            regularHoliday.getRegularHoliday() == intDayOfWeek) {
+                    if ((regularHoliday.getRegularHoliday() != null) &&
+                            (regularHoliday.getRegularHoliday() == intDayOfWeek) && (!reservationDate.isBefore(now))) {
                         result.addError(new FieldError(result.getObjectName(), "reservationDate",
                                 reservationDate, false, null, null, E0036
                         ));
