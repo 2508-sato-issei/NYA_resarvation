@@ -21,7 +21,7 @@
     <div class="card shadow-sm p-4 w-100" style="max-width: 420px;">
         <h4 class="text-center mb-4 fw-bold">ログイン</h4>
 
-        <div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+        <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger py-2"></div>
 
         <div th:if="${errorMessages}" class="alert alert-danger py-2">
             <div th:each="msg : ${errorMessages}" th:text="${msg}"></div>
