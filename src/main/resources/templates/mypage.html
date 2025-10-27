@@ -84,37 +84,39 @@
             <div id="collapseAll" class="accordion-collapse collapse"
                  aria-labelledby="headingAll"
                  data-bs-parent="#reservationAccordion">
-                <div class="accordion-body">
+                <div th:each="r : ${reservations}" class="mypage-reservation-card">
+                    <img th:src="${r.restaurant.mainImage} != null ? @{'/storage/restaurant/' + ${r.restaurant.mainImage}} : @{/storage/noimage.jpg}"
+                         alt="店舗画像" class="restaurant-img">
 
-                    <div th:each="r : ${reservations}" class="mb-4 border-bottom pb-3">
-                        <p><strong>日付：</strong><span th:text="${r.reservationDate}"></span></p>
-                        <p><strong>店舗：</strong>
+                    <div class="reservation-info">
+                        <h5>
                             <a th:href="@{/restaurant/{id}(id=${r.restaurant.id})}"
                                th:text="${r.restaurant.name}"
-                               class="text-decoration-none text-primary"></a>
+                               class="text-decoration-none text-primary fw-bold"></a>
+                        </h5>
+                        <p class="mb-1">
+                            📅 <span th:text="${r.reservationDate}"></span>　
+                            <span th:text="${r.reservationTime}"></span>
                         </p>
-                        <p><strong>時間：</strong><span th:text="${r.reservationTime}"></span></p>
-                        <p><strong>人数：</strong><span th:text="${r.headcount}"></span> 名</p>
+                        <p class="mb-1">👥 <span th:text="${r.headcount}"></span> 名様</p>
 
-                        <div th:if="${!isAlreadyReservation[r.id]}">
+                        <div th:if="${!isAlreadyReservation[r.id]}" class="reservation-actions">
                             <a th:href="@{'/reservation/edit/' + ${r.id}}"
-                               class="btn btn-sm btn-primary">予約変更</a>
+                               class="btn btn-sm btn-change">予約変更</a>
                             <form th:action="@{/reservation/cancel/{id}(id=${r.id})}"
-                                  method="post"
-                                  class="d-inline">
+                                  method="post" class="d-inline">
                                 <input type="hidden" name="_method" value="delete"/>
-                                <button type="submit" class="btn btn-sm btn-danger"
+                                <button type="submit" class="btn btn-sm btn-cancel"
                                         onclick="return confirm('この予約をキャンセルしますか？');">
                                     キャンセル
                                 </button>
                             </form>
                         </div>
 
-                        <div th:if="${isAlreadyReservation[r.id]}">
-                            <span class="text-muted">※ 当日の変更・キャンセルは店舗へお電話ください</span>
+                        <div th:if="${isAlreadyReservation[r.id]}" class="text-muted small mt-2">
+                            ※当日の変更・キャンセルは直接店舗へお電話ください
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
