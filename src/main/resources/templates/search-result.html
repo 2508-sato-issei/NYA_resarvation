@@ -217,12 +217,14 @@
 
     <!-- 検索結果 -->
     <div class="results-container" th:if="${not #lists.isEmpty(results)}">
-        <div th:each="restaurant : ${results}" class="restaurant-card">
+        <div th:each="restaurant : ${results}" class="restaurant-card position-relative">
             <img th:src="${restaurant.mainImage} != null ? @{'/storage/restaurant/' + ${restaurant.mainImage}} : @{/storage/noimage.jpg}"
                  class="restaurant-image" alt="店舗画像">
 
             <div class="restaurant-info">
-                <a th:href="@{/restaurant/{id}(id=${restaurant.id})}" th:text="${restaurant.name}">店舗名</a>
+                <a th:href="@{/restaurant/{id}(id=${restaurant.id})}"
+                   th:text="${restaurant.name}"
+                   class="stretched-link text-decoration-none text-dark fw-bold">店舗名</a>
                 <div class="meta">
                     <span th:text="${restaurant.area}">エリア</span> |
                     <span th:text="${restaurant.genre}">ジャンル</span> |
@@ -232,10 +234,6 @@
                      th:text="${#numbers.formatInteger(restaurant.minAmount,0,'COMMA')} + '円〜' + ${#numbers.formatInteger(restaurant.maxAmount,0,'COMMA')} + '円'">
                     予算
                 </div>
-            </div>
-
-            <div class="restaurant-action">
-                <a th:href="@{/restaurant/{id}(id=${restaurant.id})}" class="btn">詳細を見る</a>
             </div>
         </div>
     </div>
