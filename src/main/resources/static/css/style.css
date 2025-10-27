@@ -1,7 +1,7 @@
 
 /* マイページ画面　*/
 body {
-    background-color: #f8f9fa;
+    background-color: #eeece4;
     margin: 0;
     font-family: "Helvetica Neue", Arial, sans-serif;
 }
@@ -11,9 +11,9 @@ body {
     height: 100vh;
     width: 250px;
     position: fixed;
-    top: 100px;
+    top: 187px;
     left: 0;
-    background-color: #eeece4;
+    background-color: #ffffff;
     color: #black;
     padding-top: 20px;
     z-index: 1000;
@@ -110,10 +110,13 @@ body {
 
 /* ▼予約変更ページのみ適用▼ */
 .reservation-page {
-    background-color: #f9f9f9;
-    font-family: "Noto Sans JP", "メイリオ", sans-serif;
-    color: #333;
+  background-color: #eeece4;
+  font-family: "Noto Sans JP", "メイリオ", sans-serif;
+  color: #333;
+  min-height: 100vh;
+  margin: 0;
 }
+
 
 .reservation-page h2 {
     font-size: 1.8rem;
