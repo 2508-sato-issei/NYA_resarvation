@@ -37,13 +37,13 @@ public class RestaurantController {
         // 数値から曜日文字列に変換
         List<String> holidayNames = holidays.stream()
                 .map(h -> switch (h.getRegularHoliday()) {
-                    case 1 -> "月";
-                    case 2 -> "火";
-                    case 3 -> "水";
-                    case 4 -> "木";
-                    case 5 -> "金";
-                    case 6 -> "土";
-                    case 7 -> "日";
+                    case 1 -> "月曜日";
+                    case 2 -> "火曜日";
+                    case 3 -> "水曜日";
+                    case 4 -> "木曜日";
+                    case 5 -> "金曜日";
+                    case 6 -> "土曜日";
+                    case 7 -> "日曜日";
                     case 8 -> "祝日";
                     default -> "";
                 })
