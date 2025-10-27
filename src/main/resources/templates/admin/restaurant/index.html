@@ -17,62 +17,75 @@
     </nav>
 </header>
 <main>
-    <div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+    <div class="container pt-3 pb-4 bg-white">
+        <div class="row justify-content-center">
+            <div class="col-xxl-9 col-xl-10 col-lg-11 text-center">
+                <div th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
 
-    <h2>店舗一覧</h2>
-    <a th:href="@{/admin/restaurant/new}">店舗登録</a>
-    <div th:each="restaurant, stat : ${restaurants}">
-        <div class="accordion" th:id="'accordion-' + ${stat.index}">
-            <div class="accordion-item">
-                <h2 class="accordion-header" th:id="'heading-' + ${stat.index}">
-                    <button class="accordion-button collapsed"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            th:attr="data-bs-target='#collapse-' + ${stat.index},
+                <h2>店舗一覧</h2>
+                <div class="text-start">
+                    <a th:href="@{/admin/restaurant/new}" class="btn mb-3 restaurant-register-btn">店舗登録</a>
+                </div>
+                <div th:each="restaurant, stat : ${restaurants}">
+                    <div class="accordion" th:id="'accordion-' + ${stat.index}">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" th:id="'heading-' + ${stat.index}">
+                                <button class="accordion-button collapsed restaurant-accordion"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        th:attr="data-bs-target='#collapse-' + ${stat.index},
                                      aria-controls='collapse-' + ${stat.index}"
-                            aria-expanded="false"
-                            th:text="${restaurant.name}">
-                    </button>
-                </h2>
-                <div th:id="'collapse-' + ${stat.index}"
-                     class="accordion-collapse collapse"
-                     th:attr="aria-labelledby='heading-' + ${stat.index},
+                                        aria-expanded="false"
+                                        th:text="${restaurant.name}">
+                                </button>
+                            </h2>
+                            <div th:id="'collapse-' + ${stat.index}"
+                                 class="accordion-collapse collapse"
+                                 th:attr="aria-labelledby='heading-' + ${stat.index},
                               data-bs-parent='#accordion-' + ${stat.index}">
-                    <div class="accordion-body">
-                        <p th:text="'電話番号：' + ${restaurant.telephone}"></p>
-                        <p th:text="'住所：' + ${restaurant.address}"></p>
-                        <p th:text="'エリア：' + ${restaurant.area}"></p>
-                        <p th:text="'ジャンル：' + ${restaurant.genre}"></p>
-                        <p th:text="'説明：' + ${restaurant.explanation}"></p>
-                        <p th:text="'営業時間：' + ${restaurant.startBusiness} + '~' + ${restaurant.endBusiness}"></p>
-                        <p th:text="'定員：' + ${restaurant.capacity}"></p>
-                        <p th:text="'予算：' + ${restaurant.minAmount} + '~' + ${restaurant.maxAmount}"></p>
-                        <p>定休日：
-                            <span th:each="regularHoliday : ${regularHolidays}">
-                                <th:block th:if="${restaurant.id == regularHoliday.restaurantId}" th:switch="${regularHoliday.regularHoliday}">
-                                    <span th:case=1 th:text="月曜日"></span>
-                                    <span th:case=2 th:text="火曜日"></span>
-                                    <span th:case=3 th:text="水曜日"></span>
-                                    <span th:case=4 th:text="木曜日"></span>
-                                    <span th:case=5 th:text="金曜日"></span>
-                                    <span th:case=6 th:text="土曜日"></span>
-                                    <span th:case=7 th:text="日曜日"></span>
-                                </th:block>
-                            </span>
-                        </p>
+                                <div class="accordion-body text-start">
+                                    <p th:text="'電話番号：' + ${restaurant.telephone}"></p>
+                                    <p th:text="'住所：' + ${restaurant.address}"></p>
+                                    <p th:text="'エリア：' + ${restaurant.area}"></p>
+                                    <p th:text="'ジャンル：' + ${restaurant.genre}"></p>
+                                    <p th:text="'説明：' + ${restaurant.explanation}"></p>
+                                    <p th:text="'営業時間：' + ${restaurant.startBusiness} + '~' + ${restaurant.endBusiness}"></p>
+                                    <p th:text="'定員：' + ${restaurant.capacity}"></p>
+                                    <p th:text="'予算：' + ${restaurant.minAmount} + '~' + ${restaurant.maxAmount}"></p>
+                                    <p>定休日：
+                                        <span th:each="regularHoliday : ${regularHolidays}">
+                                            <th:block th:if="${restaurant.id == regularHoliday.restaurantId}" th:switch="${regularHoliday.regularHoliday}">
+                                                <span th:case=1 th:text="月曜日"></span>
+                                                <span th:case=2 th:text="火曜日"></span>
+                                                <span th:case=3 th:text="水曜日"></span>
+                                                <span th:case=4 th:text="木曜日"></span>
+                                                <span th:case=5 th:text="金曜日"></span>
+                                                <span th:case=6 th:text="土曜日"></span>
+                                                <span th:case=7 th:text="日曜日"></span>
+                                            </th:block>
+                                        </span>
+                                    </p>
+                                    <div class="restaurant-action">
+                                        <a th:href="@{/admin/restaurant/edit/{id}(id=${restaurant.id})}" class="btn btn-primary mb-3 restaurant-edit-btn">編集</a>
+                                        <form th:action="@{/admin/restaurant/delete/{id}(id=${restaurant.id})}" th:method="delete" onSubmit="return CheckDelete()">
+                                            <!-- CSRFトークン -->
+                                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                            <input type="submit" value="削除">
+                                        </form>
+                                    </div>
 
-                        <a th:href="@{/admin/restaurant/edit/{id}(id=${restaurant.id})}">編集</a>
-                        <form th:action="@{/admin/restaurant/delete/{id}(id=${restaurant.id})}" th:method="delete" onSubmit="return CheckDelete()">
-                            <!-- CSRFトークン -->
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                            <input type="submit" value="削除">
-                        </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+<footer>
+    <div th:replace="fragments/fragment :: footer"></div>
+</footer>
 
 <div th:replace="fragments/fragment :: scriptsAndJs"></div>
 </body>

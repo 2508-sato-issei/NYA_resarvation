@@ -12,6 +12,24 @@
 </head>
 <body>
 
+<div th:fragment="footer" th:remove="tag">
+    <footer class="py-4">
+        <div class="container text-center">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">ホーム</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/mypage}" th:if="${#authorization.expression('isAuthenticated()')}">マイページ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/admin}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">サイト管理者</a>
+                </li>
+            </ul>
+        </div>
+            <p class="text-center text-muted small mb-0">&copy; NYA All rights reserved.</p>
+    </footer>
+</div>
 
 <!-- webjarのフラグメント化 -->
 <div th:fragment="scriptsAndJs" th:remove="tag">
