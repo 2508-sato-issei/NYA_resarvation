@@ -6,6 +6,7 @@ import com.example.NYA_reservation.controller.form.UserForm;
 import com.example.NYA_reservation.dto.RestaurantReservationCountDto;
 import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.RegularHolidayService;
+import com.example.NYA_reservation.service.ReservationService;
 import com.example.NYA_reservation.service.RestaurantService;
 import com.example.NYA_reservation.service.UserService;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -36,6 +37,8 @@ public class AdminController {
     RegularHolidayService regularHolidayService;
     @Autowired
     UserService userService;
+    @Autowired
+    ReservationService reservationService;
 
     /*
      * サイト管理者画面表示
@@ -47,6 +50,8 @@ public class AdminController {
         Long totalUsers = userService.countUsers();
         //総店舗数取得
         Long totalRestaurants = restaurantService.countRestaurants();
+        //総予約数取得
+        Long totalReservations = reservationService.countReservations();
         //人気店舗取得
         List<RestaurantReservationCountDto> popularRestaurants = restaurantService.selectTopRestaurantsByReservationCount();
 
@@ -54,6 +59,7 @@ public class AdminController {
         mav.setViewName("admin/index");
         mav.addObject("totalUsers", totalUsers);
         mav.addObject("totalRestaurants", totalRestaurants);
+        mav.addObject("totalReservations", totalReservations);
         mav.addObject("popularRestaurants", popularRestaurants);
         return mav;
     }

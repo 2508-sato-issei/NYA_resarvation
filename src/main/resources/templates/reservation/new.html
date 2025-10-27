@@ -48,13 +48,13 @@
                         <!-- 入力フォーム -->
                         <div class="form-group row mb-3 justify-content-center text-center">
                             <label class="form-label" for="date">✅予約日</label>
-                            <div class="text-danger" th:if="${#fields.hasErrors('reservationDate')}" th:errors="*{reservationDate}"></div>
+                            <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('reservationDate')}" th:errors="*{reservationDate}"></div>
                             <input type="date" class="form-control w-auto" id="date" th:field="*{reservationDate}">
                             <span class="help-block text-secondary">予約は2か月先まで可</span>
                         </div>
                         <div class="form-group row mb-3 justify-content-center text-center">
                             <label class="form-label" for="timeSelect">✅予約時間</label>
-                        <div class="text-danger" th:if="${#fields.hasErrors('reservationTime')}" th:errors="*{reservationTime}"></div>
+                        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('reservationTime')}" th:errors="*{reservationTime}"></div>
                         <select class="form-select w-auto"
                                 id="timeSelect"
                                 th:field="*{reservationTime}"
@@ -65,7 +65,7 @@
                         </div>
                         <div class="form-group row mb-5 justify-content-center text-center">
                             <label class="form-label" for="headcount">✅予約人数</label>
-                        <div class="text-danger" th:if="${#fields.hasErrors('headcount')}" th:errors="*{headcount}"></div>
+                        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('headcount')}" th:errors="*{headcount}"></div>
                         <input class="form-control w-auto" id="headcount" type="number" min="1" th:max="${restaurant.capacity}" th:field="*{headcount}">
                         </div>
                         <p class="text-center mt-2">

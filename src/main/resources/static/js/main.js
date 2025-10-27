@@ -92,3 +92,22 @@ function CheckDelete(){
 		return false;
 	}
 }
+
+
+//ユーザー有効確認
+function CheckValid(){
+	if(confirm('ユーザーを有効にしますか？')){
+		return true;
+	} else{
+		return false;
+	}
+}
+
+//ユーザー有効確認
+function CheckStop(){
+	if(confirm('ユーザーを停止しますか？')){
+		return true;
+	} else{
+		return false;
+	}
+}
