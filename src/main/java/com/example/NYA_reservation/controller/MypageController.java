@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Controller
@@ -30,12 +31,14 @@ public class MypageController {
 
         List<ReservationForm> reservations = reservationService.findByUserId(loginUser.getId());
         User user = userService.findById(loginUser.getId());
-
         List<ReservationForm> futureReservations = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
 
         for (ReservationForm reservation : reservations) {
-            LocalDate date = reservation.getReservationDate();
-            if (!date.isBefore(LocalDate.now())) {
+            LocalDateTime reservationDateTime = LocalDateTime.of(
+                    reservation.getReservationDate(),
+                    reservation.getReservationTime());
+            if (reservationDateTime.isAfter(now)) {
                 futureReservations.add(reservation);
             }
         }
@@ -55,12 +58,12 @@ public class MypageController {
         if (!futureReservations.isEmpty()) {
             nextReservation = futureReservations.get(0);
         }
+
         mav.addObject("user", user);
         mav.addObject("reservations", futureReservations);
         mav.addObject("isAlreadyReservation", nowReservations);
         mav.addObject("nextReservation", nextReservation);
         mav.addObject("loginUser", loginUser);
-        mav.addObject("nextReservation", nextReservation);
         mav.addObject("currentUrl", request.getRequestURI());
         return mav;
     }
@@ -72,11 +75,13 @@ public class MypageController {
         User user = userService.findById(loginUser.getId());
         List<ReservationForm> reservations = reservationService.findByUserId(loginUser.getId());
         List<ReservationForm> pastReservations = new ArrayList<>();
+        LocalDateTime now = LocalDateTime.now();
 
-        LocalDate today = LocalDate.now();
         for (ReservationForm reservation : reservations) {
-            LocalDate date = reservation.getReservationDate();
-            if (date.isBefore(today)) {
+            LocalDateTime reservationDateTime = LocalDateTime.of(
+                    reservation.getReservationDate(),
+                    reservation.getReservationTime());
+            if (reservationDateTime.isBefore(now)) {
                 pastReservations.add(reservation);
             }
         }
@@ -84,7 +89,7 @@ public class MypageController {
         pastReservations.sort(Comparator
                 .comparing(ReservationForm::getReservationDate)
                 .reversed());
-        // 表示用データをセット
+
         mav.addObject("user", user);
         mav.addObject("pastReservations", pastReservations);
         mav.addObject("loginUser", loginUser);
