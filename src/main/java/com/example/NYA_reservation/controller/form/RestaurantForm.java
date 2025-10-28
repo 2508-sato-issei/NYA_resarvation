@@ -36,8 +36,8 @@ public class RestaurantForm {
     @NotEmpty(message = E0022)
     private String genre;
 
-    @NotEmpty(message = E0023)
-    @Pattern(regexp = "^(?:$|.*[^\\s　].*)$", message = E0023)
+    @NotNull(message = E0023)
+    @Pattern(regexp = "(?s)^(?![\\s　]*$).+", message = E0023)
     @Size(max=500, message = E0030)
     private String explanation;
 

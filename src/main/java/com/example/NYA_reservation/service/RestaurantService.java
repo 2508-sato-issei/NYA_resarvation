@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,7 +33,8 @@ public class RestaurantService {
 
     //全件取得
     public List<RestaurantForm> findAllRestaurants(){
-        List<Restaurant> results = restaurantRepository.findAll();
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        List<Restaurant> results = restaurantRepository.findAll(sort);
         return restaurantConverter.toRestaurantFormList(results);
     }
 
@@ -74,6 +76,7 @@ public class RestaurantService {
 
     //店舗登録・更新処理
     public RestaurantForm addRestaurant(RestaurantForm restaurantForm){
+
         Restaurant savedRestaurant =
                 restaurantRepository.save(restaurantConverter.toRestaurantEntity(restaurantForm));
         return restaurantConverter.toRestaurantForm(savedRestaurant);

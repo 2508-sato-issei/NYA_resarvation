@@ -18,7 +18,7 @@
 <main>
     <div class="admin-sidebar">
         <div class="list-group">
-            <a th:href="@{/admin/user-list}" class="list-group-item list-group-item-action">ユーザー一覧</a>
+            <a th:href="@{/admin/user-list}" class="list-group-item list-group-item-action">サイト会員一覧</a>
             <a th:href="@{/admin/restaurant-list}" class="list-group-item list-group-item-action">店舗一覧</a>
         </div>
     </div>
@@ -47,7 +47,7 @@
                 <div class="col-4">
                     <div class="card bg-white admin-card">
                         <div class="card-body text-center">
-                            <h5 class="card-title">総ユーザー数</h5>
+                            <h5 class="card-title">総会員数</h5>
                             <p class="card-text" th:text="${totalUsers} + '名'"></p>
                         </div>
                     </div>

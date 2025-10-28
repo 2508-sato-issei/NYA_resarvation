@@ -2,8 +2,10 @@ package com.example.NYA_reservation.controller;
 
 import com.example.NYA_reservation.controller.form.RegularHolidayForm;
 import com.example.NYA_reservation.controller.form.RestaurantForm;
+import com.example.NYA_reservation.controller.form.SearchForm;
 import com.example.NYA_reservation.controller.form.UserForm;
 import com.example.NYA_reservation.dto.RestaurantReservationCountDto;
+import com.example.NYA_reservation.repository.entity.Restaurant;
 import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.RegularHolidayService;
 import com.example.NYA_reservation.service.ReservationService;
@@ -13,6 +15,8 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -258,13 +262,23 @@ public class AdminController {
      * ユーザー一覧表示
      */
     @GetMapping("/user-list")
-    public ModelAndView showUsers(@AuthenticationPrincipal LoginUserDetails loginUser) {
+    public ModelAndView showUsers(@AuthenticationPrincipal LoginUserDetails loginUser, @RequestParam(defaultValue = "0") int page) {
         ModelAndView mav = new ModelAndView();
 
-        List<UserForm> users = userService.findAllUser();
+        Page<UserForm> resultPage = userService.pageUser(PageRequest.of(page, 10));
+
+        int totalPages = resultPage.getTotalPages();
+        int currentPage = resultPage.getNumber();
+        int displayRange = 5;
+        int startPage = Math.max(0, currentPage - displayRange);
+        int endPage = Math.min(totalPages - 1, currentPage + displayRange);
 
         mav.setViewName("admin/user/index");
-        mav.addObject("users", users);
+        // ページネーション
+        mav.addObject("users", resultPage.getContent());
+        mav.addObject("page", resultPage);
+        mav.addObject("startPage", startPage);
+        mav.addObject("endPage", endPage);
         mav.addObject("loginUser", loginUser);
         return mav;
     }

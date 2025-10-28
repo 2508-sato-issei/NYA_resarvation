@@ -276,6 +276,15 @@ a.text-primary:hover {
 }
 
 /* 店舗一覧画面 */
+.description-line {
+  display: flex;
+  align-items: flex-start;
+}
+
+.text-area {
+    word-break: break-word;
+    white-space: pre-wrap;
+}
 .restaurant-register-btn {
     background-color: #fa0;
     color: #fff;
