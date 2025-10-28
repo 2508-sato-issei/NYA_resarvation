@@ -27,6 +27,11 @@ footer a:hover {
 
 /* パンくず全体 */
 .nya-breadcrumb {
+    position: fixed;
+    top: 80px; /* ナビバー下 */
+    left: 0;
+    width: 100%;
+    z-index: 1000;
     background-color: #fff;
     border: 1px solid #ddd;
     padding: 0.5rem 1rem;
@@ -178,17 +183,10 @@ a.text-primary:hover {
 }
 
 /* サイト管理者画面 */
-.admin-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1030;
-}
 
 .admin-main {
      margin-left: 230px;
-     padding: 220px 20px 20px 20px;
+     padding: 60px 20px 20px 20px;
 }
 
 .admin-sidebar {
@@ -695,6 +693,7 @@ a.text-primary:hover {
     border: none;
     background: none;
     color: #333;
+    font-weight: bold;
 }
 
 .nya-navbar .btn-link.nav-link:hover {
@@ -703,6 +702,5 @@ a.text-primary:hover {
 
 /* 固定ナビバー用に上部余白を確保 */
 body {
-    padding-top: 90px; /* nya-navbar の高さ＋余白分 */
+    padding-top: 140px; /* nya-navbar の高さ＋余白分 */
 }
-

@@ -68,7 +68,8 @@
         }
 
         .restaurant-info a:hover {
-            color: #ff9800;
+            color: #fa0;
+            text-decoration: underline;
         }
 
         .restaurant-info .meta {
@@ -79,7 +80,7 @@
 
         .restaurant-info .budget {
             font-size: 0.95rem;
-            color: #444;
+            color: #777;
             font-weight: 500;
             margin-top: 0.3rem;
         }
@@ -214,7 +215,7 @@
             <div class="restaurant-info">
                 <a th:href="@{/restaurant/{id}(id=${restaurant.id})}"
                    th:text="${restaurant.name}"
-                   class="stretched-link text-decoration-none text-dark fw-bold">店舗名</a>
+                   class="stretched-link">店舗名</a>
                 <div class="meta">
                     <span th:text="${restaurant.area}">エリア</span> |
                     <span th:text="${restaurant.genre}">ジャンル</span> |
