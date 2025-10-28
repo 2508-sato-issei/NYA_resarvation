@@ -15,14 +15,14 @@
         </ol>
     </nav>
 </header>
-<main class="admin-main">
+<main>
     <div class="admin-sidebar">
         <div class="list-group">
             <a th:href="@{/admin/user-list}" class="list-group-item list-group-item-action">サイト会員一覧</a>
             <a th:href="@{/admin/restaurant-list}" class="list-group-item list-group-item-action">店舗一覧</a>
         </div>
     </div>
-    <div class="admin-container">
+    <div class="admin-main">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="card bg-light admin-card">
@@ -42,34 +42,34 @@
                     </div>
                 </div>
             </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-4">
-                    <div class="card bg-white admin-card">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">総会員数</h5>
-                            <p class="card-text" th:text="${totalUsers} + '名'"></p>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <div class="card bg-white admin-card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">総会員数</h5>
+                                <p class="card-text" th:text="${totalUsers} + '名'"></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-4">
-                    <div class="card bg-white admin-card">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">店舗登録数</h5>
-                            <p class="card-text" th:text="${totalRestaurants} + '件'"></p>
+                    <div class="col-4">
+                        <div class="card bg-white admin-card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">店舗登録数</h5>
+                                <p class="card-text" th:text="${totalRestaurants} + '件'"></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-4">
-                    <div class="card bg-white admin-card">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">総予約数</h5>
-                            <p class="card-text" th:text="${totalReservations} + '件'"></p>
+                    <div class="col-4">
+                        <div class="card bg-white admin-card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">総予約数</h5>
+                                <p class="card-text" th:text="${totalReservations} + '件'"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </div>
 

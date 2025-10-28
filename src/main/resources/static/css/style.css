@@ -119,7 +119,7 @@ a.text-primary:hover {
 
 /* 左メニュー */
 .sidebar {
-  height: 75vh;
+  height: 60vh;
   width: 250px;
   position: absolute;
   top: 187px;
@@ -127,6 +127,9 @@ a.text-primary:hover {
   background-color: #ffffff;
   color: #000;
   padding-top: 20px;
+  border: 1px solid #ddd; /* ← 枠線を追加 */
+  border-radius: 8px;     /* ← 角を少し丸める（任意） */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* ← 軽い影を追加（任意） */
 }
 
 .sidebar a {
@@ -183,20 +186,21 @@ a.text-primary:hover {
 }
 
 /* サイト管理者画面 */
-.admin-main {
-    display: flex;
-    flex-wrap: nowrap; /* 折り返さない */
-    min-height: 100vh;
-    margin-left: 230px;
-    padding: 60px 20px 20px 20px;
-}
 
-.admin-container {
-    padding: 20px 20px 20px 80px;
+.admin-main {
+     margin-left: 230px;
+     padding: 60px 20px 20px 20px;
 }
 
 .admin-sidebar {
-    width: 200px;
+     height: 20vh;
+     width: 230px;
+     position: fixed;
+     top: 220px;
+     left: 0;
+     background-color: #fff;
+     padding-top: 20px;
+     z-index: 1000;
 }
 
 .admin-restaurant-card {
@@ -710,6 +714,5 @@ a.text-primary:hover {
 
 /* 固定ナビバー用に上部余白を確保 */
 body {
-    padding-top: 90px; /* nya-navbar の高さ＋余白分 */
+    padding-top: 140px; /* nya-navbar の高さ＋余白分 */
 }
-
