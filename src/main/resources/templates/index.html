@@ -140,12 +140,13 @@
     <h2>人気エリア</h2>
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
         <div class="col" th:each="popularArea : ${popularAreas}">
-            <div class="card restaurant-card h-100">
+            <div class="card restaurant-card h-100 position-relative">
                 <img th:src="${popularArea.area} != null ? @{/storage/area/{area}.jpg(area=${popularArea.area})} : @{/storage/noimage.jpg}"
                      alt="エリア画像" class="card-img-top">
                 <div class="card-body">
                     <a th:href="@{/search(area=${popularArea.area})}"
-                       th:text="${popularArea.area}"></a>
+                       th:text="${popularArea.area}"
+                       class="stretched-link text-decoration-none text-dark fw-bold"></a>
                 </div>
             </div>
         </div>
@@ -157,12 +158,13 @@
     <h2>人気ジャンル</h2>
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
         <div class="col" th:each="popularGenre : ${popularGenres}">
-            <div class="card restaurant-card h-100">
+            <div class="card restaurant-card h-100 position-relative">
                 <img th:src="${popularGenre.genre} != null ? @{/storage/genre/{genre}.jpg(genre=${popularGenre.genre})} : @{/storage/noimage.jpg}"
                      alt="ジャンル画像" class="card-img-top">
                 <div class="card-body">
                     <a th:href="@{/search(genre=${popularGenre.genre})}"
-                       th:text="${popularGenre.genre}"></a>
+                       th:text="${popularGenre.genre}"
+                       class="stretched-link text-decoration-none text-dark fw-bold"></a>
                 </div>
             </div>
         </div>
@@ -174,20 +176,23 @@
     <h2>人気店舗</h2>
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
         <div class="col" th:each="popularRestaurant : ${popularRestaurants}">
-            <div class="card restaurant-card h-100">
+            <div class="card restaurant-card h-100 position-relative">
                 <img th:src="${popularRestaurant.mainImage} != null ? @{'/storage/restaurant/' + ${popularRestaurant.mainImage}} : @{/storage/noimage.jpg}"
                      alt="店舗画像" class="card-img-top">
                 <div class="card-body">
                     <a th:href="@{/restaurant/{id}(id=${popularRestaurant.id})}"
-                       th:text="${popularRestaurant.name}"></a>
+                       th:text="${popularRestaurant.name}"
+                       class="stretched-link text-decoration-none text-dark fw-bold"></a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- webjar -->
-<script th:src="@{/webjars/jquery/3.3.1/js/jquery.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
+<footer>
+    <div th:replace="fragments/fragment :: footer"></div>
+</footer>
+
+<div th:replace="fragments/fragment :: scriptsAndJs"></div>
 </body>
 </html>

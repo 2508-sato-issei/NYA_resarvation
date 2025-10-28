@@ -35,11 +35,30 @@ footer a:hover {
     text-decoration: underline;
 }
 
+/* ログイン画面　*/
+.form-control:focus {
+  border-color: #fa0 !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 153, 0, 0.3) !important;
+}
+
+.form-control:hover {
+  border-color: #fa0;
+}
+
 /* マイページ画面　*/
 body {
     background-color: #eeece4;
     margin: 0;
     font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+/* 店舗名リンク（通常時・ホバー時） */
+a.text-primary {
+  text-decoration: none;
+}
+
+a.text-primary:hover {
+  color: #fa0 !important;
 }
 
 /* 左メニュー */
@@ -53,6 +72,7 @@ body {
   color: #000;
   padding-top: 20px;
 }
+
 .sidebar a {
     display: block;
     color: #ecf0f1;
@@ -71,7 +91,6 @@ body {
     color: #fff;
 }
 
-/* ▼サイドバー内リンクボタン（予約履歴・マイページTOPなど）▼ */
 .btn-sidebar {
   display: block;
   width: 100%;
@@ -141,7 +160,6 @@ body {
     text-decoration: underline;
 }
 
-
 .list-group-item {
     background-color: #fff;
     border: none;
@@ -152,7 +170,6 @@ body {
     color: #fff;
     border: none;
 }
-
 
 .admin-card {
     margin-bottom: 30px;
@@ -446,14 +463,19 @@ body {
   border-color: #fa0 !important;
   color: #fff !important;
   font-weight: 600;
-  transition: 0.3s;
+  transition: 0.2s;
 }
 
+/* ホバー・フォーカス・アクティブ（クリック時）すべて統一 */
 .btn-orange:hover,
-.btn-orange:focus {
+.btn-orange:focus,
+.btn-orange:active,
+.btn-orange:active:focus {
   background-color: #e69100 !important;
   border-color: #e69100 !important;
   color: #fff !important;
+  box-shadow: 0 0 0 0.25rem rgba(255,153,0,0.3) !important;
+  outline: none !important;
 }
 
 .sidebar .border-bottom {
@@ -526,4 +548,29 @@ body {
 .form-control::placeholder {
   color: #ccc !important;
   opacity: 1;
+}
+
+/*アコーディオンをオレンジ色に*/
+.accordion-button {
+  box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #fff5e6;
+  color: #fa0;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.125);
+  border-color: #fa0 !important;
+}
+
+.accordion-button:focus {
+  border-color: #fa0 !important;
+  box-shadow: 0 0 0 0.25rem rgba(255,153,0,0.25) !important;
+}
+
+.accordion-button::after {
+  filter: invert(64%) sepia(80%) saturate(560%) hue-rotate(360deg) brightness(100%) contrast(95%);
+}
+
+.accordion-button:not(.collapsed)::after {
+  filter: invert(64%) sepia(80%) saturate(560%) hue-rotate(360deg) brightness(100%) contrast(95%);
 }
