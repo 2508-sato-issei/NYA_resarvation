@@ -97,16 +97,6 @@
   padding: 20px;
 }
 
-/* パンくずリスト */
-.breadcrumb-item a {
-  text-decoration: none;
-}
-
-.breadcrumb-item a:hover {
-  color: #fa0;
-  text-decoration: underline;
-}
-
 /* ===========================
    ▼ページネーション
    =========================== */
