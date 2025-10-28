@@ -8,8 +8,8 @@
 <header class="admin-header">
     <div th:replace="fragments/navbar :: navbar"></div>
     <!--パンくずリスト-->
-    <nav aria-label="breadcrumb" role="navigation">
-        <ol class="breadcrumb p-3 bg-light rounded-2">
+    <nav aria-label="breadcrumb" role="navigation" class="nya-breadcrumb">
+        <ol class="breadcrumb">
             <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
             <li class="breadcrumb-item active" aria-current="page">サイト管理者</li>
         </ol>

@@ -5,77 +5,17 @@
     <!-- Bootstrap CSS -->
     <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
     <title>ホーム</title>
-    <style>
-        /* 食べログ風ナビバー */
-        .nya-navbar {
-            background-color: #fff;              /* 背景は白 */
-            border-bottom: 4px solid #fa0;      /* オレンジライン */
-            padding: 0 1rem;
-            font-weight: bold;
-            font-family: "Yu Gothic", sans-serif;
-            height: 50px;                        /* ナビバーの高さ */
-            display: flex;
-            align-items: center;
-        }
-
-        /* ブランド（ロゴ画像） */
-        .nya-navbar .navbar-brand {
-            height: 100%;           /* ナビバーに合わせる */
-            display: flex;
-            align-items: center;
-        }
-
-        /* ナビリンク */
-        .nya-navbar .nav-link {
-            color: #333;
-            margin-left: 1rem;
-            display: flex;
-            align-items: center;
-            transition: color 0.2s;
-            font-size: 1rem;
-        }
-
-        /* ホバー時 */
-        .nya-navbar .nav-link:hover {
-            color: #fa0;
-            text-decoration: underline;
-        }
-
-        /* ログアウトボタンをリンク風に */
-        .nya-navbar .btn-link.nav-link {
-            padding: 0;
-            border: none;
-            background: none;
-            color: #333;
-        }
-
-        .nya-navbar .btn-link.nav-link:hover {
-            color: #fa0;
-        }
-
-        /* モバイル対応：アイコンと文字の余白調整 */
-        @media (max-width: 576px) {
-            .nya-navbar .nav-link {
-                margin-left: 0.5rem;
-                font-size: 0.95rem;
-            }
-        }
-    </style>
 </head>
 <body>
 <!-- fragments/navbar.html -->
-<nav class="navbar navbar-expand-lg nya-navbar" th:fragment="navbar">
+<nav class="navbar navbar-expand-lg nya-navbar fixed-top" th:fragment="navbar">
     <div class="container-fluid">
         <!-- ブランド（画像ロゴ） -->
         <a class="navbar-brand" th:href="@{/}">
             <img th:src="@{/storage/logo.png}" alt="サイトロゴ"
-                 class="img-fluid" style="height: 100px; width: auto;">
+                 class="img-fluid nya-logo me-3">
+            <span class="site-title">レストラン検索・予約サイト</span> <!-- ← サイト名 -->
         </a>
-
-        <!-- ハンバーガーメニュー（モバイル用） -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
 
         <!-- ナビメニュー -->
         <div class="collapse navbar-collapse" id="navbarNav">
