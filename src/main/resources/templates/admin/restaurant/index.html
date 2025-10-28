@@ -44,14 +44,14 @@
                                  th:attr="aria-labelledby='heading-' + ${stat.index},
                               data-bs-parent='#accordion-' + ${stat.index}">
                                 <div class="accordion-body text-start">
-                                    <p th:text="'電話番号：' + ${restaurant.telephone}"></p>
-                                    <p th:text="'住所：' + ${restaurant.address}"></p>
-                                    <p th:text="'エリア：' + ${restaurant.area}"></p>
-                                    <p th:text="'ジャンル：' + ${restaurant.genre}"></p>
-                                    <p th:text="'説明：' + ${restaurant.explanation}"></p>
-                                    <p th:text="'営業時間：' + ${restaurant.startBusiness} + '~' + ${restaurant.endBusiness}"></p>
-                                    <p th:text="'定員：' + ${restaurant.capacity}"></p>
-                                    <p th:text="'予算：' + ${restaurant.minAmount} + '~' + ${restaurant.maxAmount}"></p>
+                                    <p>電話番号：<span th:text="${restaurant.telephone}"></span></p>
+                                    <p>住所：<span th:text="${restaurant.address}"></span></p>
+                                    <p>エリア：<span th:text="${restaurant.area}"></span></p>
+                                    <p>ジャンル：<span th:text="${restaurant.genre}"></span></p>
+                                    <p class="description-line"><span class="label">説明：</span><span class="text-area" th:text="${restaurant.explanation}"></span></p>
+                                    <p>営業時間：<span th:text="${restaurant.startBusiness} + '~' + ${restaurant.endBusiness}"></span></p>
+                                    <p>定員：<span th:text="${restaurant.capacity} + '名'"></span></p>
+                                    <p>予算：<span th:text="${restaurant.minAmount} + '円 ~' + ${restaurant.maxAmount} + '円'"></span></p>
                                     <p>定休日：
                                         <span th:each="regularHoliday : ${regularHolidays}">
                                             <th:block th:if="${restaurant.id == regularHoliday.restaurantId}" th:switch="${regularHoliday.regularHoliday}">

@@ -72,12 +72,12 @@
             <div class="form-group row mb-3">
                 <label class="form-label" for="startBusiness">営業開始</label>
                 <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('startBusiness')}" th:errors="*{startBusiness}"></div>
-                <input type="time" th:field="*{startBusiness}" id="startBusiness" class="form-control">
+                <input type="time" id="startBusiness" class="form-control" name="startBusiness" th:value="${#temporals.format(formModel.startBusiness, 'HH:mm')}">
             </div>
             <div class="form-group row mb-3">
                 <label class="form-label" for="endBusiness">営業終了</label>
                 <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('endBusiness')}" th:errors="*{endBusiness}"></div>
-                <input type="time" th:field="*{endBusiness}" id="endBusiness" class="form-control">
+                <input type="time"  id="endBusiness" class="form-control" name="endBusiness" th:value="${#temporals.format(formModel.endBusiness, 'HH:mm')}">
             </div>
             <div class="form-group row mb-3">
                 <label class="form-label" for="capacity">定員</label>
