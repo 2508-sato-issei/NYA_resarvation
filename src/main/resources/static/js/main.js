@@ -111,3 +111,60 @@ function CheckStop(){
 		return false;
 	}
 }
+
+
+/**
+ * 予約確認モーダル
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    const confirmButton = document.getElementById('confirmButton');
+    const modalSubmitBtn = document.getElementById('modalSubmitBtn');
+    const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    const form = document.getElementById('reservationForm');
+
+    // 「予約確定」ボタンクリック時にモーダルを表示
+    confirmButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('timeSelect').value;
+        const headcount = document.getElementById('headcount').value;
+        document.querySelector('#confirmModal .modal-body').innerHTML =
+            `以下の内容で予約しますか？<br>
+             日時：${date} ${time}<br>
+             人数：${headcount}名`;
+        confirmModal.show();
+    });
+
+    // モーダル内の「予約を確定する」ボタンでフォーム送信
+    modalSubmitBtn.addEventListener('click', function () {
+        form.submit();
+    });
+});
+
+/**
+ * 予約変更モーダル
+ */
+document.addEventListener('DOMContentLoaded', function () {
+    const confirmButton = document.getElementById('confirmButton');
+    const modalSubmitBtn = document.getElementById('modalSubmitBtn');
+    const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    const form = document.getElementById('reservationEditForm');
+
+    // 「予約確定」ボタンクリック時にモーダルを表示
+    confirmButton.addEventListener('click', function (event) {
+        event.preventDefault();
+        const date = document.getElementById('reservationDate').value;
+        const time = document.getElementById('timeSelect').value;
+        const headcount = document.getElementById('headcount').value;
+        document.querySelector('#confirmModal .modal-body').innerHTML =
+            `以下の内容に予約を変更しますか？<br>
+             日時：${date} ${time}<br>
+             人数：${headcount}名`;
+        confirmModal.show();
+    });
+
+    // モーダル内の「予約を確定する」ボタンでフォーム送信
+    modalSubmitBtn.addEventListener('click', function () {
+        form.submit();
+    });
+});

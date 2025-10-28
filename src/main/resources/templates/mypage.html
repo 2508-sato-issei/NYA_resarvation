@@ -45,7 +45,7 @@
     <div class="news">
         <h6 class="fw-bold">🗞 お知らせ</h6>
         <ul class="list-unstyled small mt-2">
-            <li>🍖 新店舗「焼肉　小町苑」オープン！</li>
+            <li>🍖 新店舗「焼肉 小町苑」オープン！</li>
             <li>💡 ご予約は2か月先まで可能です</li>
         </ul>
     </div>
@@ -95,9 +95,10 @@
                         </h5>
                         <p class="mb-1">
                             📅 <span th:text="${r.reservationDate}"></span>　
-                            <span th:text="${r.reservationTime}"></span>
+                            🕰️ <span th:text="${r.reservationTime}"></span>　
+                            👥 <span th:text="${r.headcount}"></span> 名様
                         </p>
-                        <p class="mb-1">👥 <span th:text="${r.headcount}"></span> 名様</p>
+                        <p class="mb-1">🍚 <span th:text="${r.restaurant.explanation}"></span></p>
 
                         <div th:if="${!isAlreadyReservation[r.id]}" class="reservation-actions">
                             <a th:href="@{'/reservation/edit/' + ${r.id}}"

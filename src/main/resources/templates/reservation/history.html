@@ -32,7 +32,7 @@
 
     <div class="next-reservation mb-4 border-bottom pb-3">
         <h6 class="fw-bold">📅 マイページへ</h6>
-        <a th:href="@{/mypage}" class="text-decoration-none small text-primary">← 現在の予約を見る</a>
+        <a th:href="@{/mypage}" class="text-decoration-none small text-dark">← 現在の予約を見る</a>
     </div>
 
     <div class="news">
@@ -86,9 +86,10 @@
                         </h5>
                         <p class="mb-1">
                             📅 <span th:text="${r.reservationDate}"></span>　
-                            <span th:text="${r.reservationTime}"></span>
+                            🕰️ <span th:text="${r.reservationTime}"></span>　
+                            👥 <span th:text="${r.headcount}"></span> 名様　　で来店済み
                         </p>
-                        <p class="mb-1">👥 <span th:text="${r.headcount}"></span> 名様</p>
+                        <p class="mb-1">🍚 <span th:text="${r.restaurant.explanation}"></span></p>
                     </div>
                 </div>
             </div>

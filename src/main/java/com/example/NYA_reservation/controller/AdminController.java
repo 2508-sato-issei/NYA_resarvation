@@ -173,13 +173,16 @@ public class AdminController {
             dayOfWeeks.add(dayOfWeek);
         }
 
+        if(!model.containsAttribute("dayOfWeeks")){
+            mav.addObject("dayOfWeeks", dayOfWeeks);
+        }
+
         // referer をセッションに保存
         if (referer != null) {
             session.setAttribute("lastPage", referer);
         }
 
         mav.setViewName("admin/restaurant/edit");
-        mav.addObject("dayOfWeeks", dayOfWeeks);
         return mav;
     }
 
@@ -193,10 +196,14 @@ public class AdminController {
                                          RedirectAttributes redirectAttributes,
                                          @PathVariable("id") Integer id) {
 
+        List<Integer> noneRegularHoliday = new ArrayList<>();
+        noneRegularHoliday.add(0);
+
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.formModel", result);
             redirectAttributes.addFlashAttribute("formModel", restaurantForm);
             if (regularHolidays == null) {
+                redirectAttributes.addFlashAttribute("dayOfWeeks", noneRegularHoliday);
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
             } else {
                 redirectAttributes.addFlashAttribute("dayOfWeeks", regularHolidays);
@@ -205,6 +212,7 @@ public class AdminController {
         } else {
             if (regularHolidays == null) {
                 redirectAttributes.addFlashAttribute("formModel", restaurantForm);
+                redirectAttributes.addFlashAttribute("dayOfWeeks", noneRegularHoliday);
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
                 return new ModelAndView("redirect:/admin/restaurant/edit/" + id);
             }

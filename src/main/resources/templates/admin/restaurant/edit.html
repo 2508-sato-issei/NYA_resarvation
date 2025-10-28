@@ -18,96 +18,122 @@
     </nav>
 </header>
 <main>
-    <h2>店舗編集</h2>
-    <form th:method="put" th:action="@{/admin/restaurant/update/{id}(id = ${formModel.id})}" th:object="${formModel}">
-        <!-- CSRFトークン -->
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <div class="container my-5 restaurant-register-card">
+        <h2 class="mb-4">店舗編集</h2>
+        <form th:method="put" th:action="@{/admin/restaurant/update/{id}(id = ${formModel.id})}" th:object="${formModel}">
+            <!-- CSRFトークン -->
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-        <!-- 入力フォーム -->
-        <p>
-            <label>店舗名</label>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
-        <input type="text" th:field="*{name}">
-        </p>
-        <p>
-            <label>電話番号(ハイフンあり)</label>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></div>
-        <input type="tel" th:field="*{telephone}">
-        </p>
-        <p>
-            <label>住所</label>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
-        <input type="text" th:field="*{address}">
-        </p>
-        <p>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></div>
-        <select th:field="*{area}">
-            <option value="" selected>エリアを選択</option>
-            <option value="東京">東京</option>
-            <option value="神奈川">神奈川</option>
-            <option value="愛知">愛知</option>
-            <option value="大阪">大阪</option>
-            <option value="京都">京都</option>
-            <option value="福岡">福岡</option>
-        </select>
-        </p>
-        <p>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
-        <select th:field="*{genre}">
-            <option value="" selected>ジャンルを選択</option>
-            <option value="焼肉">焼肉</option>
-            <option value="寿司">寿司</option>
-            <option value="居酒屋">居酒屋</option>
-            <option value="イタリアン">イタリアン</option>
-            <option value="ラーメン">ラーメン</option>
-            <option value="カフェ">カフェ</option>
-        </select>
-        </p>
-        <p>
-            <label>説明</label>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('explanation')}" th:errors="*{explanation}"></div>
-        <textarea th:field="*{explanation}"></textarea>
-        </p>
-        <p>
-            <label>営業開始</label>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('startBusiness')}" th:errors="*{startBusiness}"></div>
-        <input type="time" th:field="*{startBusiness}">
-        </p>
-        <p>
-            <label>営業終了</label>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('endBusiness')}" th:errors="*{endBusiness}"></div>
-        <input type="time" th:field="*{endBusiness}">
-        </p>
-        <p>
-            <label>定員</label>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
-        <input type="number" min="1" th:field="*{capacity}">
-        </p>
-        <p>
-            <label>最低利用料金</label>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('minAmount')}" th:errors="*{minAmount}"></div>
-        <input type="number" min="1" th:field="*{minAmount}">
-        </p>
-        <p>
-            <label>最高利用料金</label>
-        <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('maxAmount')}" th:errors="*{maxAmount}"></div>
-        <input type="number" min="1" th:field="*{maxAmount}">
-        </p>
-        <p>
-            <label>定休日</label>
-            <span class="alert alert-danger py-2" th:text="${errorMessage}"></span>
-            <input type="checkbox" name="regularHoliday" value="1" th:checked="${dayOfWeeks.contains(1)}">月曜日
-            <input type="checkbox" name="regularHoliday" value="2" th:checked="${dayOfWeeks.contains(2)}">火曜日
-            <input type="checkbox" name="regularHoliday" value="3" th:checked="${dayOfWeeks.contains(3)}">水曜日
-            <input type="checkbox" name="regularHoliday" value="4" th:checked="${dayOfWeeks.contains(4)}">木曜日
-            <input type="checkbox" name="regularHoliday" value="5" th:checked="${dayOfWeeks.contains(5)}">金曜日
-            <input type="checkbox" name="regularHoliday" value="6" th:checked="${dayOfWeeks.contains(6)}">土曜日
-            <input type="checkbox" name="regularHoliday" value="7" th:checked="${dayOfWeeks.contains(7)}">日曜日
-        </p>
-        <p>
-            <input type="submit" value="更新">
-        </p>
-    </form>
+            <!-- 入力フォーム -->
+            <div class="form-group row mb-3">
+                <label class="form-label" for="name">店舗名</label>
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                <input type="text" th:field="*{name}" id="name" class="form-control">
+            </div>
+            <div class="form-group row mb-3">
+                <label class="form-label" for="tel">電話番号(ハイフンあり)</label>
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></div>
+                <input type="tel" th:field="*{telephone}" id="tel" class="form-control">
+            </div>
+            <div class="form-group row mb-3">
+                <label class="form-label" for="address">住所</label>
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+                <input type="text" th:field="*{address}" id="address" class="form-control">
+            </div>
+            <div class="form-group row mb-3">
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('area')}" th:errors="*{area}"></div>
+                <select class="form-select" th:field="*{area}">
+                    <option value="" selected>エリアを選択</option>
+                    <option value="東京">東京</option>
+                    <option value="神奈川">神奈川</option>
+                    <option value="愛知">愛知</option>
+                    <option value="大阪">大阪</option>
+                    <option value="京都">京都</option>
+                    <option value="福岡">福岡</option>
+                </select>
+            </div>
+            <div class="form-group row mb-3">
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}"></div>
+                <select class="form-select" th:field="*{genre}">
+                    <option value="" selected>ジャンルを選択</option>
+                    <option value="焼肉">焼肉</option>
+                    <option value="寿司">寿司</option>
+                    <option value="居酒屋">居酒屋</option>
+                    <option value="イタリアン">イタリアン</option>
+                    <option value="ラーメン">ラーメン</option>
+                    <option value="カフェ">カフェ</option>
+                </select>
+            </div>
+            <div class="form-group row mb-3">
+                <label class="form-label" for="explanation">説明</label>
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('explanation')}" th:errors="*{explanation}"></div>
+                <textarea th:field="*{explanation}" id="explanation" class="form-control"></textarea>
+            </div>
+            <div class="form-group row mb-3">
+                <label class="form-label" for="startBusiness">営業開始</label>
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('startBusiness')}" th:errors="*{startBusiness}"></div>
+                <input type="time" th:field="*{startBusiness}" id="startBusiness" class="form-control">
+            </div>
+            <div class="form-group row mb-3">
+                <label class="form-label" for="endBusiness">営業終了</label>
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('endBusiness')}" th:errors="*{endBusiness}"></div>
+                <input type="time" th:field="*{endBusiness}" id="endBusiness" class="form-control">
+            </div>
+            <div class="form-group row mb-3">
+                <label class="form-label" for="capacity">定員</label>
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
+                <input type="number" min="1" th:field="*{capacity}" id="capacity" class="form-control">
+            </div>
+            <div class="form-group row mb-3">
+                <label class="form-label" for="minAmount">最低利用料金</label>
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('minAmount')}" th:errors="*{minAmount}"></div>
+                <input type="number" min="1" th:field="*{minAmount}" id="minAmount" class="form-control">
+            </div>
+            <div class="form-group row mb-3">
+                <label class="form-label" for="maxAmount">最高利用料金</label>
+                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('maxAmount')}" th:errors="*{maxAmount}"></div>
+                <input type="number" min="1" th:field="*{maxAmount}" id="maxAmount" class="form-model">
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label d-block">定休日</label>
+                <div class="alert alert-danger py-2 mb-2" th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+
+                <div class="d-flex flex-wrap">
+                    <div class="form-check me-3">
+                        <input class="form-check-input" type="checkbox" name="regularHoliday" value="1" th:checked="${dayOfWeeks.contains(1)}">
+                        <label class="form-check-label">月曜日</label>
+                    </div>
+                    <div class="form-check me-3">
+                        <input class="form-check-input" type="checkbox" name="regularHoliday" value="2" th:checked="${dayOfWeeks.contains(2)}">
+                        <label class="form-check-label">火曜日</label>
+                    </div>
+                    <div class="form-check me-3">
+                        <input class="form-check-input" type="checkbox" name="regularHoliday" value="3" th:checked="${dayOfWeeks.contains(3)}">
+                        <label class="form-check-label">水曜日</label>
+                    </div>
+                    <div class="form-check me-3">
+                        <input class="form-check-input" type="checkbox" name="regularHoliday" value="4" th:checked="${dayOfWeeks.contains(4)}">
+                        <label class="form-check-label">木曜日</label>
+                    </div>
+                    <div class="form-check me-3">
+                        <input class="form-check-input" type="checkbox" name="regularHoliday" value="5" th:checked="${dayOfWeeks.contains(5)}">
+                        <label class="form-check-label">金曜日</label>
+                    </div>
+                    <div class="form-check me-3">
+                        <input class="form-check-input" type="checkbox" name="regularHoliday" value="6" th:checked="${dayOfWeeks.contains(6)}">
+                        <label class="form-check-label">土曜日</label>
+                    </div>
+                    <div class="form-check me-3">
+                        <input class="form-check-input" type="checkbox" name="regularHoliday" value="7" th:checked="${dayOfWeeks.contains(7)}">
+                        <label class="form-check-label">日曜日</label>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <input class="btn restaurant-register-btn" type="submit" value="更新">
+            </div>
+        </form>
+    </div>
 </main>
 <footer>
     <div th:replace="fragments/fragment :: footer"></div>
