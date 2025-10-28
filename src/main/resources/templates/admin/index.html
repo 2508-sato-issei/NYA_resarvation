@@ -5,7 +5,7 @@
     <title>サイト管理者画面</title>
 </head>
 <body>
-<header>
+<header class="admin-header">
     <div th:replace="fragments/navbar :: navbar"></div>
     <!--パンくずリスト-->
     <nav aria-label="breadcrumb" role="navigation">
@@ -47,7 +47,7 @@
                 <div class="col-4">
                     <div class="card bg-white admin-card">
                         <div class="card-body text-center">
-                            <h5 class="card-title">総会員数</h5>
+                            <h5 class="card-title">総ユーザー数</h5>
                             <p class="card-text" th:text="${totalUsers} + '名'"></p>
                         </div>
                     </div>

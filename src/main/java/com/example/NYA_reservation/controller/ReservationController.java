@@ -140,6 +140,7 @@ public class ReservationController {
 
         reservationService.saveReservation(reservationForm);
 
+        redirectAttributes.addFlashAttribute("successMessage", "予約が完了しました。");
         return new ModelAndView("redirect:/mypage");
 
     }

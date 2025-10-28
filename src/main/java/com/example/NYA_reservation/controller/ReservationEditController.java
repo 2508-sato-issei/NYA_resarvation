@@ -149,6 +149,8 @@ public class ReservationEditController {
         }
 
         reservationService.updateReservation(reservationForm);
+
+        redirectAttributes.addFlashAttribute("successMessage", "予約が変更されました。");
         return new ModelAndView("redirect:/mypage");
     }
 

@@ -25,6 +25,7 @@ footer a:hover {
     text-decoration: underline;
 }
 
+
 /* パンくずリスト　*/
 .breadcrumb-item a {
     text-decoration: none;
@@ -126,9 +127,17 @@ a.text-primary:hover {
 }
 
 /* サイト管理者画面 */
+.admin-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030;
+}
+
 .admin-main {
      margin-left: 230px;
-     padding: 20px;
+     padding: 220px 20px 20px 20px;
 }
 
 .admin-sidebar {
@@ -223,6 +232,12 @@ a.text-primary:hover {
     color: #fff;
     border: none;
 }
+
+.restaurant-register-btn:hover {
+    background-color: #e58900;
+    color: #fff;
+}
+
 .restaurant-action {
     display: flex;
     gap: 10px;
@@ -230,11 +245,11 @@ a.text-primary:hover {
 
 .restaurant-action a.btn,
 .restaurant-action input[type="submit"] {
-    display: flex;           /* flex コンテナにする */
-    align-items: center;     /* 縦中央 */
-    justify-content: center; /* 横中央 */
-    height: 40px;            /* 高さを統一 */
-    padding: 0 16px;         /* 上下パディングを 0 にする */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 16px;
     font-size: 14px;
     border-radius: 4px;
     line-height: normal;
@@ -247,8 +262,23 @@ a.text-primary:hover {
     border: none;
 }
 
+.restaurant-action input[type="submit"]:hover {
+    cursor: pointer;
+    background-color: #b22d35;
+    color: #fff;
+    border: none;
+}
+
+
+
 .restaurant-edit-btn {
-    background-color: #fa0;
+    background-color: #758492;
+    color: #fff;
+    border: none;
+}
+
+.restaurant-edit-btn:hover {
+    background-color: #77787B;
     color: #fff;
     border: none;
 }
@@ -272,12 +302,70 @@ a.text-primary:hover {
     box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
 }
 
+/*店舗登録画面*/
+.restaurant-register-card {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.restaurant-register-card h2 {
+    font-size: 1.8rem;
+    color: #ff9900;
+    font-weight: 700;
+    border-bottom: 2px solid #ffcc66;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.restaurant-register-btn {
+    background-color: #fa0;
+    color: #fff;
+    border: none;
+}
+
+.restaurant-register-btn:hover {
+    background-color: #e58900;
+    color: #fff;
+}
+
 /*予約画面*/
 .nya-container {
     border-radius: 20px;
 }
+
+.nya-container h2 {
+    font-size: 1.8rem;
+    color: #ff9900;
+    font-weight: 700;
+    border-bottom: 2px solid #ffcc66;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
 .restaurant-info {
     margin-bottom: 20px;
+}
+
+.reservation-form:focus {
+    border-color: #ffa500;
+    box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
+}
+
+
+.reservation-btn {
+    background-color: #fa0;
+    color: #fff;
+    border: none;
+}
+
+.reservation-btn:hover {
+    background-color: #e58900;
+    color: #fff;
 }
 
 /* ▼予約変更ページのみ適用▼ */
@@ -335,7 +423,7 @@ a.text-primary:hover {
     margin-top: 2px;
 }
 
-.reservation-page button[type="submit"] {
+#reservationEditForm button[type="button"] {
     background-color: #ff9900;
     border: none;
     color: #fff;
@@ -347,7 +435,7 @@ a.text-primary:hover {
     transition: 0.3s;
 }
 
-.reservation-page button[type="submit"]:hover {
+#reservationEditForm button[type="button"]:hover {
     background-color: #e58900;
 }
 
