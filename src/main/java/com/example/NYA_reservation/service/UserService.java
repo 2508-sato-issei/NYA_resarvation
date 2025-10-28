@@ -6,6 +6,8 @@ import com.example.NYA_reservation.converter.UserConverter;
 import com.example.NYA_reservation.repository.UserRepository;
 import com.example.NYA_reservation.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -99,10 +101,16 @@ public class UserService {
     }
 
     //ユーザー情報全件取得
-    public List<UserForm> findAllUser() {
+//    public List<UserForm> findAllUser() {
+//        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+//        List<User> results = userRepository.findAll(sort);
+//        return userConverter.toUserFormList(results);
+//    }
+
+    public Page<UserForm> pageUser(Pageable pageable) {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
-        List<User> results = userRepository.findAll(sort);
-        return userConverter.toUserFormList(results);
+        Page<User> page = userRepository.findAll(pageable);
+        return page.map(userConverter::toForm);
     }
 
     //ユーザー停止・有効切り替え
