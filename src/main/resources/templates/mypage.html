@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/main.js}"></script>
+    <title>マイページ</title>
+</head>
+<body>
+<header>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <!--パンくずリスト-->
+    <nav aria-label="breadcrumb" role="navigation" class="nya-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+            <li class="breadcrumb-item active" aria-current="page">マイページ</li>
+        </ol>
+    </nav>
+</header>
+<!--左側サイドバー -->
+<div class="sidebar">
+    <div class="user-info text-center mb-4 border-bottom pb-3">
+        <p class="fw-bold mb-1" th:text="${user.name} + ' さん'"></p>
+        <p class="text-muted small"
+           th:if="${user.createdDate != null}"
+           th:text="'登録日：' + ${#dates.format(user.createdDate, 'yyyy/MM/dd')}"></p>
+        <a th:href="@{/user/edit/{id}(id=${loginUser.id}, referer=${currentUrl})}"
+           class="btn edit-btn mt-2">会員情報編集</a>
+    </div>
+
+    <div class="next-reservation mb-4 border-bottom pb-3">
+        <h6 class="fw-bold">📅 次回の予約</h6>
+        <div th:if="${nextReservation != null}">
+            <p class="mb-1"
+               th:text="${#temporals.format(nextReservation.reservationDate, 'M月d日')} + ' ' + ${nextReservation.reservationTime}"></p>
+            <p class="text-muted small" th:text="${nextReservation.restaurant.name}"></p>
+        </div>
+        <div th:if="${nextReservation == null}">
+            <p class="text-muted small mb-0">次回の予約はありません</p>
+        </div>
+    </div>
+
+    <div class="news">
+        <h6 class="fw-bold">📢 お知らせ</h6>
+        <ul class="list-unstyled small mt-2">
+            <li>🍖 新店舗「焼肉 小町苑」オープン！</li>
+            <li>💡 ご予約は2か月先まで可能です</li>
+        </ul>
+    </div>
+
+    <a th:href="@{/history}" class="btn-sidebar mt-3 d-block text-center">過去の予約履歴</a>
+</div>
+
+<!-- 右側メインエリア -->
+<div class="content">
+    <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger"></div>
+
+    <h4 th:text="'ようこそ、' + ${user.name} + 'さん'"></h4>
+    <hr>
+
+    <h5>予約一覧</h5>
+
+    <div th:if="${successMessage}" class="alert alert-success mt-3" role="alert"
+         th:text="${successMessage}">
+    </div>
+
+    <!--アコーディオン -->
+    <div class="accordion mt-3" id="reservationAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingAll">
+                <button class="accordion-button collapsed"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#collapseAll"
+                        aria-expanded="false"
+                        aria-controls="collapseAll">
+                    予約一覧を表示 / 非表示
+                </button>
+            </h2>
+
+            <div id="collapseAll" class="accordion-collapse collapse"
+                 aria-labelledby="headingAll"
+                 data-bs-parent="#reservationAccordion">
+                <div th:each="r : ${reservations}" class="mypage-reservation-card">
+                    <img th:src="${r.restaurant.mainImage} != null ? @{'/storage/restaurant/' + ${r.restaurant.mainImage}} : @{/storage/noimage.jpg}"
+                         alt="店舗画像" class="restaurant-img">
+
+                    <div class="reservation-info">
+                        <h5>
+                            <a th:href="@{/restaurant/{id}(id=${r.restaurant.id})}"
+                               th:text="${r.restaurant.name}"
+                               class="text-decoration-none text-primary fw-bold"></a>
+                        </h5>
+                        <p class="mb-1">
+                            📅 <span th:text="${r.reservationDate}"></span>　
+                            🕰️ <span th:text="${r.reservationTime}"></span>　
+                            👥 <span th:text="${r.headcount}"></span> 名様
+                        </p>
+                        <p class="mb-1">🍚 <span th:text="${r.restaurant.explanation}"></span></p>
+
+                        <div th:if="${!isAlreadyReservation[r.id]}" class="reservation-actions">
+                            <a th:href="@{'/reservation/edit/' + ${r.id}}"
+                               class="btn btn-sm btn-change">予約変更</a>
+                            <form th:action="@{/reservation/cancel/{id}(id=${r.id})}"
+                                  method="post" class="d-inline">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <button type="submit" class="btn btn-sm btn-cancel"
+                                        onclick="return confirm('この予約をキャンセルしますか？');">
+                                    キャンセル
+                                </button>
+                            </form>
+                        </div>
+
+                        <div th:if="${isAlreadyReservation[r.id]}" class="text-muted small mt-2">
+                            ※当日の変更・キャンセルは直接店舗へお電話ください
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div th:replace="fragments/fragment :: footer"></div>
+</footer>
+
+<div th:replace="fragments/fragment :: scriptsAndJs"></div>
+</body>
+</html>

@@ -1,0 +1,718 @@
+/* 全体　*/
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+footer{
+    background-color: #fff;
+    margin-top: auto;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #fa0 !important;
+    text-decoration: underline;
+}
+
+/* パンくず全体 */
+.nya-breadcrumb {
+    position: fixed;
+    top: 80px; /* ナビバー下 */
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+
+    display: flex;
+    align-items: center;   /* 上下中央 */
+}
+
+/* ol.breadcrumb 自体もフレックス化 */
+.nya-breadcrumb .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;   /* 上下中央 */
+    margin-bottom: 0;      /* Bootstrapのデフォルトマージン削除 */
+    padding-left: 0;
+    background-color: transparent;
+}
+
+/* li 中央揃え */
+.nya-breadcrumb .breadcrumb-item {
+    display: flex;
+    align-items: center;   /* 上下中央 */
+}
+
+/* 区切りスラッシュ「/」の中央揃え */
+.nya-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    display: flex;
+    align-items: center;   /* 上下中央 */
+    color: #6c757d;
+    content: "/";
+    margin: 0 0.5rem;      /* 前後の余白 */
+}
+
+/* a リンク文字 */
+.nya-breadcrumb .breadcrumb-item a {
+    display: inline-flex;  /* テキスト中央 */
+    align-items: center;
+    line-height: 1.2;
+    text-decoration: none;
+    color: #007bff;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: color 0.2s;
+}
+
+.nya-breadcrumb .breadcrumb-item a:hover {
+    color: #fa0;
+    text-decoration: underline;
+}
+
+/* 現在ページ（active）の文字 */
+.nya-breadcrumb .breadcrumb-item.active {
+    display: flex;
+    align-items: center;
+    color: #555;
+}
+
+
+/* ログイン画面　*/
+.form-control:focus {
+  border-color: #fa0 !important;
+  box-shadow: 0 0 0 0.25rem rgba(255, 153, 0, 0.3) !important;
+}
+
+.form-control:hover {
+  border-color: #fa0;
+}
+
+/* マイページ画面　*/
+body {
+    background-color: #eeece4;
+    margin: 0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+/* 店舗名リンク（通常時・ホバー時） */
+a.text-primary {
+  text-decoration: none;
+}
+
+a.text-primary:hover {
+  color: #fa0 !important;
+}
+
+/* 左メニュー */
+.sidebar {
+  height: 60vh;
+  width: 250px;
+  position: absolute;
+  top: 187px;
+  left: 0;
+  background-color: #ffffff;
+  color: #000;
+  padding-top: 20px;
+  border: 1px solid #ddd; /* ← 枠線を追加 */
+  border-radius: 8px;     /* ← 角を少し丸める（任意） */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); /* ← 軽い影を追加（任意） */
+}
+
+.sidebar a {
+    display: block;
+    color: #ecf0f1;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.sidebar a:hover {
+    background-color: #fa0;
+    color: #black;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    color: #fff;
+}
+
+.btn-sidebar {
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg, #ffb84d 0%, #ff9900 100%);
+  color: #fff !important;
+  font-weight: 600;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 0;
+  margin: 30px 0;
+  text-decoration: none;
+  transition: 0.3s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  border: none;
+}
+
+.btn-sidebar:hover {
+  background: linear-gradient(90deg, #ffa733 0%, #e58900 100%);
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  color: #fff !important;
+}
+
+.btn-sidebar:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+
+/* 右メインエリア */
+.content {
+    margin-left: 250px;
+    padding: 30px;
+    margin-top: 0px;
+}
+
+/* サイト管理者画面 */
+
+.admin-main {
+     margin-left: 230px;
+     padding: 60px 20px 20px 20px;
+}
+
+.admin-sidebar {
+     height: 20vh;
+     width: 230px;
+     position: fixed;
+     top: 220px;
+     left: 0;
+     background-color: #fff;
+     padding-top: 20px;
+     z-index: 1000;
+}
+
+.admin-restaurant-card {
+    text-decoration: none;
+}
+.breadcrumb-item a:hover,
+ .admin-restaurant-card:hover {
+    color: #fa0;
+    text-decoration: underline;
+}
+
+.list-group-item {
+    background-color: #fff;
+    border: none;
+}
+
+.list-group-item:hover {
+    background-color: #fa0;
+    color: #fff;
+    border: none;
+}
+
+.admin-card {
+    margin-bottom: 30px;
+}
+
+.card-img-admin {
+    height: 80px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* ユーザー一覧画面 */
+.user-table thead {
+    border-bottom: 2px solid #fa0 !important;
+}
+
+.stopped-user td,
+ .stopped-user th {
+    background-color: #A1A3A6 !important;
+}
+.stop-form input[type="submit"] {
+    border: none;
+    margin: 0px auto;
+    width: 50px;
+    color: #fff;
+    font-weight: bold;
+    background-color: #ed1a3d;
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    font-size: 15px;
+}
+
+.stop-form input[type="submit"]:hover {
+    background-color: #b22d35;
+}
+
+.valid-form input[type="submit"] {
+    border: none;
+    margin: 0px auto;
+    width: 50px;
+    color: #fff;
+    font-weight: bold;
+    background-color: #40ba8d;
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    font-size: 15px;
+}
+
+.valid-form input[type="submit"]:hover {
+    background-color: #26896d;
+}
+
+/* 店舗一覧画面 */
+.description-line {
+  display: flex;
+  align-items: flex-start;
+}
+
+.text-area {
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+.restaurant-register-btn {
+    background-color: #fa0;
+    color: #fff;
+    border: none;
+}
+
+.restaurant-register-btn:hover {
+    background-color: #e58900;
+    color: #fff;
+}
+
+.restaurant-action {
+    display: flex;
+    gap: 10px;
+}
+
+.restaurant-action a.btn,
+.restaurant-action input[type="submit"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    padding: 0 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    line-height: normal;
+}
+
+.restaurant-action input[type="submit"] {
+    cursor: pointer;
+    background-color: #ed1a3d;
+    color: #fff;
+    border: none;
+}
+
+.restaurant-action input[type="submit"]:hover {
+    cursor: pointer;
+    background-color: #b22d35;
+    color: #fff;
+    border: none;
+}
+
+
+
+.restaurant-edit-btn {
+    background-color: #758492;
+    color: #fff;
+    border: none;
+}
+
+.restaurant-edit-btn:hover {
+    background-color: #77787B;
+    color: #fff;
+    border: none;
+}
+
+
+.restaurant-accordion:hover,
+.restaurant-accordion:focus {
+    border-color: #ffa500;
+    box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
+}
+
+.restaurant-accordion:not(.collapsed) {
+  background-color: #ffe5b4 !important;
+  color: #333 !important;
+  box-shadow: none;
+}
+
+.restaurant-accordion:not(.collapsed):hover,
+.restaurant-accordion:not(.collapsed):focus {
+    border-color: #ffa500;
+    box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
+}
+
+/*店舗登録画面*/
+.restaurant-register-card {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.restaurant-register-card h2 {
+    font-size: 1.8rem;
+    color: #ff9900;
+    font-weight: 700;
+    border-bottom: 2px solid #ffcc66;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.restaurant-register-btn {
+    background-color: #fa0;
+    color: #fff;
+    border: none;
+}
+
+.restaurant-register-btn:hover {
+    background-color: #e58900;
+    color: #fff;
+}
+
+/*予約画面*/
+.nya-container {
+    border-radius: 20px;
+}
+
+.nya-container h2 {
+    font-size: 1.8rem;
+    color: #ff9900;
+    font-weight: 700;
+    border-bottom: 2px solid #ffcc66;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.restaurant-info {
+    margin-bottom: 20px;
+}
+
+.reservation-form:focus {
+    border-color: #ffa500;
+    box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
+}
+
+
+.reservation-btn {
+    background-color: #fa0;
+    color: #fff;
+    border: none;
+}
+
+.reservation-btn:hover {
+    background-color: #e58900;
+    color: #fff;
+}
+
+/* ▼予約変更ページのみ適用▼ */
+.reservation-page {
+  background-color: #eeece4;
+  font-family: "Noto Sans JP", "メイリオ", sans-serif;
+  color: #333;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.reservation-page h2 {
+    font-size: 1.8rem;
+    color: #ff9900;
+    font-weight: 700;
+    border-bottom: 2px solid #ffcc66;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.reservation-card {
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border-radius: 8px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.reservation-page label {
+    font-weight: 600;
+    color: #555;
+    margin-top: 1rem;
+}
+
+.reservation-page input,
+.reservation-page select {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px 10px;
+    width: 100%;
+    transition: border-color 0.2s;
+}
+
+.reservation-page input:focus,
+.reservation-page select:focus {
+    border-color: #ff9900;
+    outline: none;
+    box-shadow: 0 0 4px rgba(255,153,0,0.2);
+}
+
+.reservation-page .text-danger {
+    font-size: 0.9rem;
+    margin-top: 2px;
+}
+
+#reservationEditForm button[type="button"] {
+    background-color: #ff9900;
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+    transition: 0.3s;
+}
+
+#reservationEditForm button[type="button"]:hover {
+    background-color: #e58900;
+}
+
+/* ▼マイページ専用：会員情報編集ボタン ▼ */
+.edit-btn {
+  background: linear-gradient(90deg, #ffb84d 0%, #ff9900 100%);
+  border: none;
+  color: #fff !important;
+  font-weight: 600;
+  padding: 8px 20px;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  transition: 0.3s ease;
+}
+
+.edit-btn:hover {
+  background: linear-gradient(90deg, #ffa733 0%, #e58900 100%);
+  transform: translateY(1px);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+/* ▼ログインボタン専用（btn-orange） ▼ */
+.btn-orange {
+  background-color: #fa0 !important;
+  border-color: #fa0 !important;
+  color: #fff !important;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+/* ホバー・フォーカス・アクティブ（クリック時）すべて統一 */
+.btn-orange:hover,
+.btn-orange:focus,
+.btn-orange:active,
+.btn-orange:active:focus {
+  background-color: #e69100 !important;
+  border-color: #e69100 !important;
+  color: #fff !important;
+  box-shadow: 0 0 0 0.25rem rgba(255,153,0,0.3) !important;
+  outline: none !important;
+}
+
+.sidebar .border-bottom {
+  border-bottom: 2px solid #b0b0b0 !important;
+}
+
+/* マイページ画面の予約一覧*/
+.mypage-reservation-card {
+  display: flex;
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #e5e0d3;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 16px;
+  margin: 0 auto 20px auto;
+  transition: 0.2s;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.restaurant-img {
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 16px;
+}
+
+.reservation-info {
+  flex: 1;
+}
+
+.reservation-info h5 {
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.reservation-info p {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.reservation-actions .btn {
+  font-weight: 600;
+  border-radius: 6px;
+  margin-right: 10px;
+}
+
+.btn-change {
+  background-color: #fa0;
+  color: #fff;
+  border: none;
+}
+
+.btn-change:hover {
+  background-color: #e69100;
+}
+
+.btn-cancel {
+  background-color: #e57373;
+  color: #fff;
+  border: none;
+}
+
+.btn-cancel:hover {
+  background-color: #d9534f;
+}
+
+.form-control::placeholder {
+  color: #ccc !important;
+  opacity: 1;
+}
+
+/*アコーディオンをオレンジ色に*/
+.accordion-button {
+  box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #fff5e6;
+  color: #fa0;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,0.125);
+  border-color: #fa0 !important;
+}
+
+.accordion-button:focus {
+  border-color: #fa0 !important;
+  box-shadow: 0 0 0 0.25rem rgba(255,153,0,0.25) !important;
+}
+
+.accordion-button::after {
+  filter: invert(64%) sepia(80%) saturate(560%) hue-rotate(360deg) brightness(100%) contrast(95%);
+}
+
+.accordion-button:not(.collapsed)::after {
+  filter: invert(64%) sepia(80%) saturate(560%) hue-rotate(360deg) brightness(100%) contrast(95%);
+}
+
+/* ナビバー */
+.nya-navbar {
+    background-color: #fff;              /* 背景は白 */
+    border-bottom: 4px solid #fa0;      /* オレンジライン */
+    padding: 0 1rem;
+    font-weight: bold;
+    font-family: "Yu Gothic", sans-serif;
+    height: 80px;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.nya-navbar .navbar-brand {
+    height: 100%;           /* ナビバーに合わせる */
+    display: flex;
+    align-items: center;
+}
+
+.nya-navbar .nya-logo {
+    max-height: 60px;
+    width: auto;
+    filter: brightness(1.2); /* 明るさ20%アップ */
+    transition: box-shadow 0.2s; /* ホバー時の影変化をスムーズに */
+}
+
+/* ホバー時（ロゴも明るく、文字はオレンジ） */
+.nya-navbar .navbar-brand:hover .nya-logo {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 下方向に影をつける */
+    border-radius: 8px; /* 少し丸めると自然 */
+}
+
+/* サイト名 */
+.nya-navbar .site-title {
+    font-size: 1.2rem;
+    color: #333;            /* 通常は黒 */
+    font-weight: bold;
+    transition: color 0.2s; /* ホバー時にスムーズに変化 */
+}
+
+/* ホバー時 */
+.nya-navbar .navbar-brand:hover .site-title {
+    color: #fa0; /* オレンジ */
+    text-decoration: underline;
+}
+
+/* ナビリンク */
+.nya-navbar .nav-link {
+    color: #333;
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+    font-size: 1rem;
+    }
+
+/* ホバー時 */
+.nya-navbar .nav-link:hover {
+    color: #fa0;
+    text-decoration: underline;
+}
+
+/* ログアウトボタンをリンク風に */
+.nya-navbar .btn-link.nav-link {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.nya-navbar .btn-link.nav-link:hover {
+    color: #fa0;
+}
+
+/* 固定ナビバー用に上部余白を確保 */
+body {
+    padding-top: 140px; /* nya-navbar の高さ＋余白分 */
+}

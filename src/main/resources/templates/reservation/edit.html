@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/main.js}"></script>
+    <title>予約変更画面</title>
+</head>
+<body class="reservation-page">
+<header>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <!--パンくずリスト-->
+    <nav aria-label="breadcrumb" role="navigation" class="nya-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/mypage}">マイページ</a></li>
+            <li class="breadcrumb-item active" aria-current="page">予約変更画面</li>
+        </ol>
+    </nav>
+</header>
+<div class="reservation-page">
+    <div class="container my-5 reservation-card">
+        <h2 class="text-center mb-4">予約変更</h2>
+
+        <div th:if="${errorMessages}" class="alert alert-danger py-2">
+            <p class="mb-0" th:each="err : ${errorMessages}" th:text="${err}"></p>
+        </div>
+
+        <div class="restaurant-info">
+            <div th:text="${'営業時間(L.Oは営業終了30分前)：' + restaurant.startBusiness + '~' + restaurant.endBusiness}"></div>
+            <div th:text="${'定員：' + restaurant.capacity + '席'}"></div>
+            <div>
+                定休日：<span th:each="regularHoliday : ${regularHolidays}">
+                                        <th:block th:switch="${regularHoliday.regularHoliday}">
+                                            <span th:case=1 th:text="月曜日"></span>
+                                            <span th:case=2 th:text="火曜日"></span>
+                                            <span th:case=3 th:text="水曜日"></span>
+                                            <span th:case=4 th:text="木曜日"></span>
+                                            <span th:case=5 th:text="金曜日"></span>
+                                            <span th:case=6 th:text="土曜日"></span>
+                                            <span th:case=7 th:text="日曜日"></span>
+                                        </th:block>
+                                    </span>
+            </div>
+            <hr/>
+        </div>
+
+        <form id="reservationEditForm" th:action="@{/reservation/update/{id}(id=${formModel.id})}"
+              th:object="${formModel}" th:method="post" novalidate>
+            <input type="hidden" name="_method" value="put"/>
+            <input type="hidden" th:field="*{restaurantId}">
+            <input type="hidden" th:field="*{userId}">
+
+            <!-- 予約日 -->
+            <div class="mb-3">
+                <label for="reservationDate" class="form-label">予約日</label>
+                <input type="date" id="reservationDate" class="form-control" th:field="*{reservationDate}">
+                <div class="text-danger small" th:if="${#fields.hasErrors('reservationDate')}"
+                     th:errors="*{reservationDate}"></div>
+            </div>
+
+            <!-- 予約時間 -->
+            <div class="mb-3">
+                <label for="timeSelect" class="form-label">予約時間</label>
+                <select id="timeSelect" class="form-select"
+                        th:field="*{reservationTime}"
+                        th:attr="data-start=${restaurant.startBusiness}, data-end=${restaurant.endBusiness}">
+                </select>
+                <input type="hidden" id="currentTime" th:value="${formModel.reservationTime}">
+                <div class="text-danger small" th:if="${#fields.hasErrors('reservationTime')}"
+                     th:errors="*{reservationTime}"></div>
+            </div>
+
+            <!-- 人数 -->
+            <div class="mb-3">
+                <label for="headcount" class="form-label">人数</label>
+                <input type="number" id="headcount" class="form-control"
+                       th:field="*{headcount}" min="1" th:max="${restaurant.capacity}">
+                <div class="text-danger small" th:if="${#fields.hasErrors('headcount')}"
+                     th:errors="*{headcount}"></div>
+            </div>
+
+            <!-- ボタン -->
+            <div class="button-area text-center">
+                <button type="button" id="confirmButton">予約を変更する</button>
+            </div>
+        </form>
+    </div>
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">予約変更確認</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+                </div>
+                <div class="modal-body">
+                    予約を変更しますか？
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning text-white" id="modalSubmitBtn">予約を変更する</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">キャンセル</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div th:replace="fragments/fragment :: footer"></div>
+</footer>
+
+<div th:replace="fragments/fragment :: scriptsAndJs"></div>
+</body>
+</html>

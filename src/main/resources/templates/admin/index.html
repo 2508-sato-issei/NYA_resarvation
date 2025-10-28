@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/fragment :: head"></div>
+    <title>サイト管理者画面</title>
+</head>
+<body>
+<header>
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <!--パンくずリスト-->
+    <nav aria-label="breadcrumb" role="navigation" class="nya-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+            <li class="breadcrumb-item active" aria-current="page">サイト管理者</li>
+        </ol>
+    </nav>
+</header>
+<main>
+    <div class="admin-sidebar">
+        <div class="list-group">
+            <a th:href="@{/admin/user-list}" class="list-group-item list-group-item-action">サイト会員一覧</a>
+            <a th:href="@{/admin/restaurant-list}" class="list-group-item list-group-item-action">店舗一覧</a>
+        </div>
+    </div>
+    <div class="admin-main">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="card bg-light admin-card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">予約人気店舗</h5>
+                        <div class="row justify-content-center row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+                            <div class="col" th:each="popularRestaurant : ${popularRestaurants}">
+                                <a th:href="@{/restaurant/{id}(id=${popularRestaurant.id})}" class="card admin-restaurant-card h-100">
+                                    <img th:src="${popularRestaurant.mainImage} != null ? @{'/storage/restaurant/' + ${popularRestaurant.mainImage}} : @{/storage/noimage.jpg}"
+                                         alt="店舗画像" class="card-img-admin">
+                                    <div class="card-body">
+                                        <p th:text="${popularRestaurant.name}"></p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <div class="card bg-white admin-card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">総会員数</h5>
+                                <p class="card-text" th:text="${totalUsers} + '名'"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card bg-white admin-card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">店舗登録数</h5>
+                                <p class="card-text" th:text="${totalRestaurants} + '件'"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="card bg-white admin-card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">総予約数</h5>
+                                <p class="card-text" th:text="${totalReservations} + '件'"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+<footer>
+    <div th:replace="fragments/fragment :: footer"></div>
+</footer>
+
+<div th:replace="fragments/fragment :: scriptsAndJs"></div>
+</body>
+</html>

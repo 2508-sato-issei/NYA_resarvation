@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title th:text="${restaurant.name} + 'の店舗詳細'">店舗詳細</title>
+    <style>
+        body {
+            background-color: #eeece4;
+        }
+
+        /* 全体カード */
+        .restaurant-detail-card {
+            background-color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            margin: 3rem auto;
+            max-width: 880px;
+            transition: box-shadow 0.3s ease;
+        }
+        .restaurant-detail-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 店舗画像 */
+        .restaurant-detail-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 1.8rem;
+        }
+
+        /* 見出し */
+        .restaurant-detail-card h2 {
+            margin-bottom: 1.2rem;
+            font-size: 1.9rem;
+            font-weight: bold;
+            color: #222;
+            border-left: 6px solid #fa0;
+            padding-left: 0.8rem;
+        }
+
+        .restaurant-detail-card h3 {
+            margin-top: 2.5rem;
+            margin-bottom: 1.2rem;
+            font-size: 1.4rem;
+            color: #fa0;
+            font-weight: bold;
+        }
+
+        /* 情報テーブル */
+        .restaurant-detail-card table {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        .restaurant-detail-card th {
+            width: 150px;
+            color: #666;
+            font-weight: 600;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .restaurant-detail-card td {
+            color: #333;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* 予約ボタン */
+        .btn-reservation {
+            background-color: #fa0;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 0 3px 6px rgba(250, 160, 0, 0.4);
+        }
+
+        .btn-reservation:hover {
+            background-color: #e69500;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(250, 160, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+<header>
+    <!-- 共通メニューバーの読み込み -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <!--パンくずリスト-->
+    <nav aria-label="breadcrumb" role="navigation" class="nya-breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/search(area=${area}, genre=${genre}, headcount=${headcount})}">検索結果</a></li>
+            <li class="breadcrumb-item active" aria-current="page">店舗詳細</li>
+        </ol>
+    </nav>
+</header>
+
+<main>
+    <div th:if="${errorMessage != null}" th:text="${errorMessage}" class="alert alert-danger py-2"></div>
+
+    <div class="restaurant-detail-card">
+        <h2 th:text="${restaurant.name}">店舗名</h2>
+
+        <img th:src="${restaurant.mainImage} != null ? @{'/storage/restaurant/' + ${restaurant.mainImage}} : @{/storage/noimage.jpg}"
+             alt="店舗画像">
+
+        <!-- 基本情報 -->
+        <table class="table table-borderless">
+            <tbody>
+            <tr>
+                <th>エリア</th>
+                <td th:text="${restaurant.area}">エリア</td>
+            </tr>
+            <tr>
+                <th>ジャンル</th>
+                <td th:text="${restaurant.genre}">ジャンル</td>
+            </tr>
+            <tr>
+                <th>予算</th>
+                <td th:text="${#numbers.formatInteger(restaurant.minAmount, 0, 'COMMA')} + '円～' + ${#numbers.formatInteger(restaurant.maxAmount, 0, 'COMMA')} + '円'">予算</td>
+            </tr>
+            <tr>
+                <th>定休日</th>
+                <td th:text="${#lists.isEmpty(holidayNames) ? 'なし' : #strings.arrayJoin(holidayNames, '、')}">定休日</td>
+            </tr>
+            <tr>
+                <th>説明</th>
+                <td th:text="${restaurant.explanation}">説明</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- 予約ボタン -->
+        <form th:action="@{'/reservation/new/' + ${restaurant.id}}" method="get">
+            <button type="submit" class="btn-reservation w-100">予約する</button>
+        </form>
+
+        <!-- 詳細情報セクション -->
+        <h3>店舗詳細情報</h3>
+        <table class="table table-borderless">
+            <tbody>
+            <tr>
+                <th>店舗名</th>
+                <td th:text="${restaurant.name}">店舗名</td>
+            </tr>
+            <tr>
+                <th>ジャンル</th>
+                <td th:text="${restaurant.genre}">ジャンル</td>
+            </tr>
+            <tr>
+                <th>電話番号</th>
+                <td th:text="${restaurant.telephone}">電話番号</td>
+            </tr>
+            <tr>
+                <th>住所</th>
+                <td th:text="${restaurant.address}">住所</td>
+            </tr>
+            <tr>
+                <th>営業時間</th>
+                <td th:text="${#temporals.format(restaurant.startBusiness, 'HH:mm')} + ' ～ ' + ${#temporals.format(restaurant.endBusiness, 'HH:mm')}">営業時間</td>
+            </tr>
+            <tr>
+                <th>定休日</th>
+                <td th:text="${#lists.isEmpty(holidayNames) ? 'なし' : #strings.arrayJoin(holidayNames, '・')}">定休日</td>
+            </tr>
+            <tr>
+                <th>予算</th>
+                <td th:text="${#numbers.formatInteger(restaurant.minAmount, 0, 'COMMA')} + '円～' + ${#numbers.formatInteger(restaurant.maxAmount, 0, 'COMMA')} + '円'">予算</td>
+            </tr>
+            <tr>
+                <th>定員</th>
+                <td th:text="${restaurant.capacity} + ' 名'">定員</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer>
+    <div th:replace="fragments/fragment :: footer"></div>
+</footer>
+
+<div th:replace="fragments/fragment :: scriptsAndJs"></div>
+</body>
+</html>
