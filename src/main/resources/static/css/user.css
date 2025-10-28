@@ -1,0 +1,145 @@
+/* ===========================
+   ▼ユーザー一覧
+   =========================== */
+.user-page {
+  background-color: #eeece4;
+  font-family: "Noto Sans JP", "Helvetica Neue", sans-serif;
+  color: #333;
+  padding: 30px 0;
+}
+
+/* タイトル */
+.user-page h2 {
+  font-weight: 700;
+  text-align: left;
+  border-left: 6px solid #fa0;
+  padding-left: 10px;
+  margin-bottom: 25px;
+}
+
+/* テーブル */
+.user-table {
+  background-color: #fff;
+  border-radius: 8px;
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.user-table thead {
+  background-color: #fffaf0;
+  border-bottom: 2px solid #fa0;
+}
+
+.user-table th {
+  font-weight: 600;
+  color: #444;
+  text-align: center;
+  padding: 10px;
+  background: linear-gradient(to bottom, #fff, #fffaf0);
+}
+
+.user-table td {
+  text-align: center;
+  padding: 10px;
+  border-top: 1px solid #e0dfda;
+  vertical-align: middle;
+  transition: background-color 0.15s ease;
+}
+
+/* 停止ユーザー */
+.stopped-user td,
+.stopped-user th {
+  background-color: #d8d8d8 !important;
+  color: #666;
+}
+
+/* ステータス */
+.td-status span[th\\:if] {
+  color: #ed1a3d;
+  font-weight: 600;
+}
+.td-status span[th\\:unless] {
+  color: #40ba8d;
+  font-weight: 600;
+}
+
+/* 有効・停止ボタン */
+.valid-form input[type="submit"],
+.stop-form input[type="submit"] {
+  border: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.valid-form input[type="submit"] {
+  background-color: #40ba8d;
+}
+.valid-form input[type="submit"]:hover {
+  background-color: #26896d;
+}
+
+.stop-form input[type="submit"] {
+  background-color: #ed1a3d;
+}
+.stop-form input[type="submit"]:hover {
+  background-color: #b22d35;
+}
+
+/* テーブル全体の見栄え */
+.table-container {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* パンくずリスト */
+.breadcrumb-item a {
+  text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+  color: #fa0;
+  text-decoration: underline;
+}
+
+/* ===========================
+   ▼ページネーション
+   =========================== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.pagination ul {
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0;
+}
+
+.pagination li a,
+.pagination li strong {
+    display: block;
+    padding: 0.5rem 0.8rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.pagination li a:hover {
+    background-color: #fa0;
+    color: #fff;
+}
+
+.pagination li strong {
+    background-color: #fa0;
+    color: #fff;
+    border-color: #fa0;
+}

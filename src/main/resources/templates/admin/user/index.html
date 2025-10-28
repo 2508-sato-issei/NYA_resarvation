@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
 <head>
     <div th:replace="fragments/fragment :: head"></div>
-    <title>ユーザー一覧</title>
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+    <title>サイト会員一覧</title>
 </head>
 <body>
 <header>
@@ -12,15 +13,15 @@
         <ol class="breadcrumb p-3 bg-light rounded-2">
             <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
             <li class="breadcrumb-item"><a th:href="@{/admin}">サイト管理者画面</a></li>
-            <li class="breadcrumb-item active" aria-current="page">ユーザー一覧</li>
+            <li class="breadcrumb-item active" aria-current="page">サイト会員一覧</li>
         </ol>
     </nav>
 </header>
-<main>
+<main class="user-page">
     <div class="container bg-white">
         <div class="row justify-content-center">
             <div class="col-xxl-9 col-xl-10 col-lg-11 text-center">
-                <h2>ユーザー一覧</h2>
+                <h2>サイト会員一覧</h2>
                 <table class="table table-striped user-table">
                     <thead>
                     <tr>
@@ -72,6 +73,27 @@
             </div>
         </div>
     </div>
+    <!-- ページネーション -->
+    <div th:if="${page.totalPages > 1}" class="pagination">
+        <ul>
+            <li th:if="${!page.first}">
+                <a th:href="@{/admin/user-list(page=${page.number - 1})}">« 前へ</a>
+            </li>
+
+            <li th:each="i : ${#numbers.sequence(startPage, endPage)}"
+                th:classappend="${i == page.number} ? 'active'">
+                <a th:if="${i != page.number}"
+                   th:href="@{/admin/user-list(page=${i})}"
+                   th:text="${i + 1}"></a>
+                <strong th:if="${i == page.number}" th:text="${i + 1}"></strong>
+            </li>
+
+            <li th:if="${!page.last}">
+                <a th:href="@{/admin/user-list(page=${page.number + 1})}">次へ »</a>
+            </li>
+        </ul>
+    </div>
+
 </main>
 <footer>
     <div th:replace="fragments/fragment :: footer"></div>

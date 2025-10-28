@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <!-- Bootstrap CSS -->
     <link th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>会員情報編集</title>
     <style>
         body {
             background-color: #eeece4;
-            font-family: "Yu Gothic", sans-serif;
         }
 
         main {
             display: flex;
             justify-content: center;
-            margin-top: 50px;
+            margin-top: 10px;
+            flex-direction: column;  /* 縦方向のレイアウト */
+            align-items: center;     /* 横方向中央揃え */
+            min-height: auto;
+            margin-bottom: 30px;  /* 下に余白を追加 */
         }
 
         .edit-card {
@@ -27,9 +31,12 @@
         }
 
         h2 {
-            color: #fa0;
-            text-align: center;
-            margin-bottom: 30px;
+            font-size: 1.8rem;
+            color: #ff9900;
+            font-weight: 700;
+            border-bottom: 2px solid #ffcc66;
+            display: inline-block;
+            padding-bottom: 5px;
         }
 
         label {
@@ -39,8 +46,8 @@
         input[type="text"], input[type="password"] {
             width: 100%;
             padding: 8px 12px;
-            margin-top: 5px;
-            margin-bottom: 15px;
+            margin-top: 10px;
+            margin-bottom: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -66,14 +73,6 @@
             margin-bottom: 10px;
         }
 
-        .breadcrumb a {
-            color: #fa0;
-        }
-
-        .breadcrumb .active {
-            color: #333;
-        }
-
         .pwVisible {
             margin-right: 5px;
         }
@@ -85,8 +84,8 @@
     <div th:replace="fragments/navbar :: navbar"></div>
 
     <!--パンくずリスト-->
-    <nav aria-label="breadcrumb" role="navigation">
-        <ol class="breadcrumb p-3 bg-light rounded-2">
+    <nav aria-label="breadcrumb" role="navigation" class="nya-breadcrumb">
+        <ol class="breadcrumb">
             <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
             <li class="breadcrumb-item"><a th:href="@{/mypage}">マイページ</a></li>
             <li class="breadcrumb-item active" aria-current="page">会員情報編集</li>
@@ -106,30 +105,30 @@
                 <p>
                     <div th:if="${#fields.hasErrors('account')}" th:errors="*{account}" class="alert alert-danger py-2"></div>
                     <div th:if="${accountError != null}" th:text="${accountError}" class="alert alert-danger py-2"></div>
-                    <label for="account">アカウント：</label><br>
-                    <input type="text" id="account" th:field="*{account}">
+                    <label for="account">アカウント</label><br>
+                    <input type="text" id="account" th:field="*{account}" placeholder="10文字以下">
                 </p>
 
                 <p>
                     <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger py-2"></div>
-                    <label for="password">パスワード：</label><br>
-                    <input type="password" id="password" th:field="*{password}">
+                    <label for="password">パスワード</label><br>
+                    <input type="password" id="password" th:field="*{password}" placeholder="6〜20桁の半角数字">
                 </p>
 
                 <p>
-                    <label for="confirmPassword">パスワード（確認用）：</label><br>
+                    <label for="confirmPassword">パスワード（確認用）</label><br>
                     <input type="password" id="confirmPassword" th:field="*{confirmPassword}">
                 </p>
 
                 <p>
                     <input id="pwVisible" class="pwVisible" type="checkbox" onclick="passwordVisibility()" >
-                    <label>パスワード表示</label>
+                    <label>パスワードを表示する</label>
                 </p>
 
                 <p>
                     <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger py-2"></div>
-                    <label for="name">氏名：</label><br>
-                    <input type="text" id="name" th:field="*{name}">
+                    <label for="name">氏名</label><br>
+                    <input type="text" id="name" th:field="*{name}" placeholder="（例）ALH　太郎">
                 </p>
 
                 <p>
@@ -139,6 +138,12 @@
         </form>
     </div>
 </main>
+
+<footer>
+    <div th:replace="fragments/fragment :: footer"></div>
+</footer>
+
+<div th:replace="fragments/fragment :: scriptsAndJs"></div>
 
 <!-- パスワード表示切替 -->
 <script>
@@ -171,10 +176,5 @@
     });
 </script>
 
-<footer>
-    <div th:replace="fragments/fragment :: footer"></div>
-</footer>
-
-<div th:replace="fragments/fragment :: scriptsAndJs"></div>
 </body>
 </html>
