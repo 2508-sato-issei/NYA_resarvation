@@ -47,7 +47,6 @@
             width: 100%;
             padding: 8px 12px;
             margin-top: 10px;
-            margin-bottom: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
@@ -101,22 +100,25 @@
         <!-- 新規会員登録フォーム -->
         <form th:action="@{/user/add}" method="post" th:object="${userForm}">
             <div>
+                <br>
                 <p>
-                    <div th:if="${#fields.hasErrors('account')}" th:errors="*{account}" class="alert alert-danger py-2"></div>
                     <div th:if="${accountError != null}" th:text="${accountError}" class="alert alert-danger py-2"></div>
                     <label for="account">アカウント</label><br>
+                    <div th:if="${#fields.hasErrors('account')}" th:errors="*{account}" class="alert alert-danger py-2"></div>
                     <input type="text" id="account" th:field="*{account}" placeholder="10文字以下">
                 </p>
 
+                <br>
                 <p>
-                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger py-2"></div>
                     <label for="password">パスワード</label><br>
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger py-2"></div>
                     <input type="password" id="password" th:field="*{password}" placeholder="6〜20桁の半角数字">
                 </p>
 
+                <br>
                 <p>
-                    <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="alert alert-danger py-2"></div>
                     <label for="confirmPassword">パスワード（確認用）</label><br>
+                    <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="alert alert-danger py-2"></div>
                     <input type="password" id="confirmPassword" th:field="*{confirmPassword}">
                 </p>
 
@@ -125,12 +127,14 @@
                     <label>パスワードを表示する</label>
                 </p>
 
+                <br>
                 <p>
-                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger py-2"></div>
                     <label for="name">氏名</label><br>
+                    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger py-2"></div>
                     <input type="text" id="name" th:field="*{name}" placeholder="（例）ALH　太郎">
                 </p>
 
+                <br>
                 <p>
                     <button type="submit">登録</button>
                 </p>

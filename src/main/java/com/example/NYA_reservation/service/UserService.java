@@ -121,4 +121,10 @@ public class UserService {
         userRepository.changeIsStopped(id, isStopped, ts);
     }
 
+    public void deleteUser(Integer id) {
+        if (!userRepository.existsById(id)) {
+            throw new IllegalArgumentException("指定されたユーザーが存在しません");
+        }
+        userRepository.deleteById(id);
+    }
 }

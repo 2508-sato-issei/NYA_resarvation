@@ -166,7 +166,14 @@ public class AdminController {
         if (!model.containsAttribute("formModel")) {
             //idで変更元のレストラン情報を取得
             RestaurantForm restaurant = restaurantService.findRestaurantById(id);
+
             mav.addObject("formModel", restaurant);
+        }
+
+        if(!model.containsAttribute("imageFileName")){
+            //idで変更元の画像ファイル名（String型）を取得
+            String imageFileName = restaurantService.getImageFileName(id);
+            mav.addObject("imageFileName", imageFileName);
         }
 
         //定休日情報を取得し、定休日インデックスをリストに詰める
@@ -197,6 +204,7 @@ public class AdminController {
     public ModelAndView updateRestaurant(@ModelAttribute("formModel") @Validated RestaurantForm restaurantForm,
                                          BindingResult result,
                                          @RequestParam(value = "regularHoliday", required = false) List<Integer> regularHolidays,
+                                         @RequestParam(value = "existingImage", required = false) String existingImage,
                                          RedirectAttributes redirectAttributes,
                                          @PathVariable("id") Integer id) {
 
@@ -206,6 +214,12 @@ public class AdminController {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.formModel", result);
             redirectAttributes.addFlashAttribute("formModel", restaurantForm);
+
+            if(restaurantForm.getMainImage() != null){
+                String imageFileName = restaurantForm.getMainImage().getOriginalFilename();
+                redirectAttributes.addFlashAttribute("imageFileName", imageFileName);
+            }
+
             if (regularHolidays == null) {
                 redirectAttributes.addFlashAttribute("dayOfWeeks", noneRegularHoliday);
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
@@ -218,6 +232,10 @@ public class AdminController {
                 redirectAttributes.addFlashAttribute("formModel", restaurantForm);
                 redirectAttributes.addFlashAttribute("dayOfWeeks", noneRegularHoliday);
                 redirectAttributes.addFlashAttribute("errorMessage", E0034);
+                if(restaurantForm.getMainImage() != null){
+                    String imageFileName = restaurantForm.getMainImage().getOriginalFilename();
+                    redirectAttributes.addFlashAttribute("imageFileName", imageFileName);
+                }
                 return new ModelAndView("redirect:/admin/restaurant/edit/" + id);
             }
         }
@@ -225,7 +243,7 @@ public class AdminController {
         restaurantForm.setId(id);
 
         //店舗情報をDBに登録し、その情報を取得
-        RestaurantForm savedRestaurant = restaurantService.addRestaurant(restaurantForm);
+        RestaurantForm savedRestaurant = restaurantService.updateRestaurant(restaurantForm, existingImage);
 
         //元々の定休日情報を削除
         regularHolidayService.deleteByRestaurantId(id);
