@@ -21,7 +21,7 @@
 <main>
     <div class="container my-5 restaurant-register-card">
         <h2 class="mb-4">店舗編集</h2>
-        <form th:method="put" th:action="@{/admin/restaurant/update/{id}(id = ${formModel.id})}" th:object="${formModel}">
+        <form th:method="put" th:action="@{/admin/restaurant/update/{id}(id = ${formModel.id})}" th:object="${formModel}" enctype="multipart/form-data">
             <!-- CSRFトークン -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
@@ -152,6 +152,20 @@
                 </div>
             </div>
             <br>
+            <div class="form-group row mb-3">
+                <div class="col-md-4">
+                    <label for="mainImage" class="col-form-label text-md-left fw-bold">画像</label>
+                </div>
+                <div class="col-md-8">
+                    <div th:if="${#fields.hasErrors('mainImage')}" th:errors="*{mainImage}"></div>
+                    <input id="mainImage" type="file" class="form-control" th:field="*{mainImage}">
+                    <input type="hidden" name="existingImage" th:value="${imageFileName}">
+                </div>
+            </div>
+            <div th:if="${imageFileName != null}" class="row" id="imagePreview">
+                <img th:src="@{/storage/restaurant/__${imageFileName}__}" class="restaurant-image" alt="店舗画像">
+            </div>
+            <div th:unless="${imageFileName != null}" class="row" id="imagePreview"></div>
             <div class="text-center">
                 <input class="btn restaurant-register-btn" type="submit" value="更新">
             </div>
@@ -163,5 +177,6 @@
 </footer>
 
 <div th:replace="fragments/fragment :: scriptsAndJs"></div>
+<script th:src="@{/js/preview.js}"></script>
 </body>
 </html>
