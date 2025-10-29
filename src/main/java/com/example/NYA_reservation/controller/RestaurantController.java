@@ -1,28 +1,37 @@
 package com.example.NYA_reservation.controller;
 
+import com.example.NYA_reservation.controller.form.ReviewForm;
 import com.example.NYA_reservation.repository.entity.RegularHoliday;
 import com.example.NYA_reservation.repository.entity.Restaurant;
+import com.example.NYA_reservation.repository.entity.User;
+import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.RegularHolidayService;
 import com.example.NYA_reservation.service.RestaurantService;
+import com.example.NYA_reservation.service.ReviewService;
+import com.example.NYA_reservation.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/restaurant")
 public class RestaurantController {
 
+    @Autowired
+    UserService userService;
     @Autowired
     RestaurantService restaurantService;
     @Autowired
     RegularHolidayService regularHolidayService;
+    @Autowired
+    ReviewService reviewService;
 
-    @GetMapping("/restaurant/{id}")
+    @GetMapping("/{id}")
     public String showRestaurantDetail(@PathVariable Integer id,
                                        @RequestParam(required = false) String referer,
                                        @RequestParam(required = false) String area,
@@ -59,7 +68,25 @@ public class RestaurantController {
         model.addAttribute("headcount", headcount);
         model.addAttribute("restaurant", restaurant);
         model.addAttribute("holidayNames", holidayNames);
+        model.addAttribute("reviews", reviewService.getReviewsByRestaurant(id));
+        model.addAttribute("reviewForm", new ReviewForm());
         return "restaurant-detail";
+    }
+
+    @PostMapping("/{id}/reviews")
+    public String postReview(@PathVariable Integer id,
+                             @ModelAttribute ReviewForm reviewForm,
+                             @AuthenticationPrincipal LoginUserDetails loginUser) {
+
+        Restaurant restaurant = restaurantService.findById(id);
+        User user = userService.findById(loginUser.getId());
+
+        reviewForm.setId(null);
+        reviewForm.setRestaurant(restaurant);
+        reviewForm.setUser(user);
+
+        reviewService.addReview(id, reviewForm);
+        return "redirect:/restaurant/" + id;
     }
 
 }

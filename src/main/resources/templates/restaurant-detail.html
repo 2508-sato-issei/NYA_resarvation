@@ -185,6 +185,61 @@
             </tr>
             </tbody>
         </table>
+
+        <h3>口コミ一覧</h3>
+
+        <div th:if="${#lists.isEmpty(reviews)}" class="alert alert-info">
+            まだ口コミはありません。
+        </div>
+
+        <div th:if="${not #lists.isEmpty(reviews)}" class="row row-cols-1 g-3">
+            <div th:each="review : ${reviews}" class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <strong th:text="${review.user.account}">ユーザー名</strong>
+                            <small class="text-muted" th:text="${#dates.format(review.createdDate, 'yyyy/MM/dd HH:mm')}">日付</small>
+                        </div>
+                        <h5 class="card-title mb-1" th:text="${review.title}">タイトル</h5>
+                        <p class="text-warning mb-2">★<span th:text="${review.rating}">5</span></p>
+                        <p class="card-text" th:text="${review.comment}">コメント内容</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-4">
+
+        <div th:if="${#authorization.expression('isAuthenticated()')}">
+            <h3 class="mb-3">口コミを投稿する</h3>
+            <div class="card p-4 shadow-sm">
+                <form th:action="@{'/restaurant/' + ${restaurant.id} + '/reviews'}" method="post" th:object="${reviewForm}">
+                    <div class="mb-3">
+                        <label class="form-label">タイトル</label>
+                        <input type="text" class="form-control" th:field="*{title}" placeholder="タイトルを入力">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">評価</label>
+                        <select class="form-select" th:field="*{rating}">
+                            <option value="5">★★★★★</option>
+                            <option value="4">★★★★</option>
+                            <option value="3">★★★</option>
+                            <option value="2">★★</option>
+                            <option value="1">★</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">コメント</label>
+                        <textarea class="form-control" rows="4" th:field="*{comment}" placeholder="コメントを入力"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-reservation w-100">投稿する</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 </main>
 

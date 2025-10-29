@@ -7,6 +7,7 @@ import com.example.NYA_reservation.repository.UserRepository;
 import com.example.NYA_reservation.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 import static com.example.NYA_reservation.validation.ErrorMessage.E0011;
@@ -109,7 +109,9 @@ public class UserService {
 
     public Page<UserForm> pageUser(Pageable pageable) {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
-        Page<User> page = userRepository.findAll(pageable);
+        Pageable sortedPageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), sort);
+
+        Page<User> page = userRepository.findAll(sortedPageable);
         return page.map(userConverter::toForm);
     }
 
