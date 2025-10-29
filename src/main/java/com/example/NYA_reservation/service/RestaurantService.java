@@ -19,6 +19,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static com.example.NYA_reservation.validation.ErrorMessage.E0011;
@@ -68,18 +72,57 @@ public class RestaurantService {
         return restaurantConverter.toRestaurantForm(result);
     }
 
+    //IDでレストランの画像ファイル名を取得
+    public String getImageFileName(Integer id){
+        Restaurant result = restaurantRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(E0011));
+        return result.getMainImage();
+    }
+
     //店舗数取得
     public Long countRestaurants(){
         return restaurantRepository.count();
     }
 
 
-    //店舗登録・更新処理
+    //店舗登録
     public RestaurantForm addRestaurant(RestaurantForm restaurantForm){
+        MultipartFile imageFile = restaurantForm.getMainImage();
+        String mainImage = "";
+        if(!imageFile.isEmpty()){
+            mainImage = imageFile.getOriginalFilename();
+            Path filePath = Paths.get("src/main/resources/static/storage/restaurant/" + mainImage);
+            copyImageFile(imageFile, filePath);
+        }
 
         Restaurant savedRestaurant =
-                restaurantRepository.save(restaurantConverter.toRestaurantEntity(restaurantForm));
+                restaurantRepository.save(restaurantConverter.toRestaurantEntity(restaurantForm, mainImage));
         return restaurantConverter.toRestaurantForm(savedRestaurant);
+    }
+
+    //店舗更新処理
+    public RestaurantForm updateRestaurant(RestaurantForm restaurantForm, String existingImage) {
+        MultipartFile imageFile = restaurantForm.getMainImage();
+        String mainImage = existingImage;
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            mainImage = imageFile.getOriginalFilename();
+            Path filePath = Paths.get("src/main/resources/static/storage/restaurant/" + mainImage);
+            copyImageFile(imageFile, filePath);
+        }
+
+        Restaurant savedRestaurant =
+                restaurantRepository.save(restaurantConverter.toRestaurantEntity(restaurantForm, mainImage));
+        return restaurantConverter.toRestaurantForm(savedRestaurant);
+    }
+
+    //画像ファイルを指定したファイルにコピー
+    public void copyImageFile(MultipartFile imageFile, Path filePath){
+        try {
+            Files.copy(imageFile.getInputStream(), filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //店舗情報削除

@@ -58,7 +58,7 @@ public class RestaurantConverter {
     }
 
     //Formの値をEntityに詰め替え
-    public Restaurant toRestaurantEntity(RestaurantForm restaurantForm){
+    public Restaurant toRestaurantEntity(RestaurantForm restaurantForm, String mainImage){
         Restaurant restaurant = new Restaurant();
 
         restaurant.setName(restaurantForm.getName());
@@ -72,6 +72,7 @@ public class RestaurantConverter {
         restaurant.setCapacity(restaurantForm.getCapacity());
         restaurant.setMinAmount(restaurantForm.getMinAmount());
         restaurant.setMaxAmount(restaurantForm.getMaxAmount());
+        restaurant.setMainImage(mainImage);
 
         if(restaurantForm.getId() != null){
             restaurant.setId(restaurantForm.getId());

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -36,4 +37,7 @@ public class User {
 
     @Column(insertable = false, updatable = true)
     private Timestamp updatedDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
 }

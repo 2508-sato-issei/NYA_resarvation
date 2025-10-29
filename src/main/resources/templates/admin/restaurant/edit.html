@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <div th:replace="fragments/fragment :: head"></div>
+    <link rel="stylesheet" th:href="@{/css/restaurant.css}">
     <title>店舗編集</title>
 </head>
 <body>
@@ -20,7 +21,7 @@
 <main>
     <div class="container my-5 restaurant-register-card">
         <h2 class="mb-4">店舗編集</h2>
-        <form th:method="put" th:action="@{/admin/restaurant/update/{id}(id = ${formModel.id})}" th:object="${formModel}">
+        <form th:method="put" th:action="@{/admin/restaurant/update/{id}(id = ${formModel.id})}" th:object="${formModel}" enctype="multipart/form-data">
             <!-- CSRFトークン -->
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
@@ -30,11 +31,13 @@
                 <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                 <input type="text" th:field="*{name}" id="name" class="form-control">
             </div>
+            <br>
             <div class="form-group row mb-3">
                 <label class="form-label" for="tel">電話番号(ハイフンあり)</label>
                 <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"></div>
                 <input type="tel" th:field="*{telephone}" id="tel" class="form-control">
             </div>
+            <br>
             <div class="form-group row mb-3">
                 <label class="form-label" for="address">住所</label>
                 <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
@@ -64,36 +67,55 @@
                     <option value="カフェ">カフェ</option>
                 </select>
             </div>
+            <br>
             <div class="form-group row mb-3">
                 <label class="form-label" for="explanation">説明</label>
                 <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('explanation')}" th:errors="*{explanation}"></div>
                 <textarea th:field="*{explanation}" id="explanation" class="form-control"></textarea>
             </div>
-            <div class="form-group row mb-3">
-                <label class="form-label" for="startBusiness">営業開始</label>
-                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('startBusiness')}" th:errors="*{startBusiness}"></div>
-                <input type="time" id="startBusiness" class="form-control" name="startBusiness" th:value="${#temporals.format(formModel.startBusiness, 'HH:mm')}">
+            <br>
+            <div class="form-group mb-3 business-time-2line">
+                <div class="label-row">
+                    <label class="form-label mb-0">営業開始</label>
+                    <label class="form-label mb-0">営業終了</label>
+                </div>
+                <div th:if="${#fields.hasErrors('startBusiness')} or ${#fields.hasErrors('endBusiness')}"
+                     class="alert alert-danger py-2 error-box">
+                    <div th:each="msg : ${#fields.errors('startBusiness')}" th:text="${msg}"></div>
+                    <div th:each="msg : ${#fields.errors('endBusiness')}" th:text="${msg}"></div>
+                </div>
+                <div class="input-row">
+                    <input type="time" id="startBusiness" class="form-control time-input"
+                           name="startBusiness" th:value="${#temporals.format(formModel.startBusiness, 'HH:mm')}">
+                    <span class="time-separator">～</span>
+                    <input type="time" id="endBusiness" class="form-control time-input"
+                           name="endBusiness" th:value="${#temporals.format(formModel.endBusiness, 'HH:mm')}">
+                </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="form-label" for="endBusiness">営業終了</label>
-                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('endBusiness')}" th:errors="*{endBusiness}"></div>
-                <input type="time" id="endBusiness" class="form-control" name="endBusiness" th:value="${#temporals.format(formModel.endBusiness, 'HH:mm')}">
-            </div>
+            <br>
             <div class="form-group row mb-3">
                 <label class="form-label" for="capacity">定員</label>
                 <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}"></div>
                 <input type="number" min="1" th:field="*{capacity}" id="capacity" class="form-control">
             </div>
-            <div class="form-group row mb-3">
-                <label class="form-label" for="minAmount">最低利用料金</label>
-                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('minAmount')}" th:errors="*{minAmount}"></div>
-                <input type="number" min="1" th:field="*{minAmount}" id="minAmount" class="form-control">
+            <br>
+            <div class="form-group mb-3 amount-2line">
+                <div class="amount-row">
+                    <label class="form-label mb-0">最低利用料金</label>
+                    <label class="form-label mb-0">最高利用料金</label>
+                </div>
+                <div class="alert alert-danger py-2"
+                     th:if="${#fields.hasErrors('minAmount')} or ${#fields.hasErrors('maxAmount')}">
+                    <div th:each="msg : ${#fields.errors('minAmount')}" th:text="${msg}"></div>
+                    <div th:each="msg : ${#fields.errors('maxAmount')}" th:text="${msg}"></div>
+                </div>
+                <div class="input-row">
+                    <input type="number" min="1" th:field="*{minAmount}" id="minAmount" class="form-control amount-input">
+                    <span class="amount-separator">～</span>
+                    <input type="number" min="1" th:field="*{maxAmount}" id="maxAmount" class="form-control amount-input">
+                </div>
             </div>
-            <div class="form-group row mb-3">
-                <label class="form-label" for="maxAmount">最高利用料金</label>
-                <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('maxAmount')}" th:errors="*{maxAmount}"></div>
-                <input type="number" min="1" th:field="*{maxAmount}" id="maxAmount" class="form-model">
-            </div>
+            <br>
             <div class="form-group mb-3">
                 <label class="form-label d-block">定休日</label>
                 <div class="alert alert-danger py-2 mb-2" th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
@@ -129,6 +151,21 @@
                     </div>
                 </div>
             </div>
+            <br>
+            <div class="form-group row mb-3">
+                <div class="col-md-4">
+                    <label for="mainImage" class="col-form-label text-md-left fw-bold">画像</label>
+                </div>
+                <div class="col-md-8">
+                    <div th:if="${#fields.hasErrors('mainImage')}" th:errors="*{mainImage}"></div>
+                    <input id="mainImage" type="file" class="form-control" th:field="*{mainImage}">
+                    <input type="hidden" name="existingImage" th:value="${imageFileName}">
+                </div>
+            </div>
+            <div th:if="${imageFileName != null}" class="row" id="imagePreview">
+                <img th:src="@{/storage/restaurant/__${imageFileName}__}" class="restaurant-image" alt="店舗画像">
+            </div>
+            <div th:unless="${imageFileName != null}" class="row" id="imagePreview"></div>
             <div class="text-center">
                 <input class="btn restaurant-register-btn" type="submit" value="更新">
             </div>
@@ -140,5 +177,6 @@
 </footer>
 
 <div th:replace="fragments/fragment :: scriptsAndJs"></div>
+<script th:src="@{/js/preview.js}"></script>
 </body>
 </html>

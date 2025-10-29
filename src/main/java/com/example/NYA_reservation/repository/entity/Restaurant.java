@@ -51,7 +51,7 @@ public class Restaurant {
     @Column
     private Integer maxAmount;
 
-    @Column(insertable = false, updatable = false)
+    @Column
     private String mainImage;
 
     @Column(insertable = false, updatable = false)
@@ -62,5 +62,8 @@ public class Restaurant {
 
     @OneToMany(mappedBy = "restaurant")
     private List<Reservation> reservations;
+
+    @OneToMany(mappedBy = "restaurant")
+    private List<Review> reviews;
 
 }

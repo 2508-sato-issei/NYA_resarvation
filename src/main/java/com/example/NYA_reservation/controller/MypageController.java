@@ -6,12 +6,16 @@ import com.example.NYA_reservation.security.LoginUserDetails;
 import com.example.NYA_reservation.service.ReservationService;
 import com.example.NYA_reservation.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -94,5 +98,12 @@ public class MypageController {
         mav.addObject("pastReservations", pastReservations);
         mav.addObject("loginUser", loginUser);
         return mav;
+    }
+
+    @PostMapping("/withdraw/{id}")
+    public String withdraw(@PathVariable Integer id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        userService.deleteUser(id);
+        request.logout();
+        return "redirect:/";
     }
 }
