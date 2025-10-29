@@ -1,0 +1,39 @@
+/* 二行構成（営業時間・料金） */
+.business-time-2line,
+.amount-2line {
+  max-width: 380px;
+}
+
+/* ラベル行を自然な距離に配置 */
+.label-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 100px;
+  margin-bottom: 4px;
+}
+
+.amount-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 60px;
+  margin-bottom: 4px;
+}
+
+/* 入力欄行を横並び */
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 入力欄サイズ */
+.time-input,
+.amount-input {
+  width: 120px;
+}
+
+/* ～ の見た目 */
+.time-separator,
+.amount-separator {
+  font-weight: bold;
+}

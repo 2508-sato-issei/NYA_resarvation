@@ -50,6 +50,7 @@
                     <input type="date" class="form-control reservation-form" id="date" th:field="*{reservationDate}">
                     <span class="help-block text-secondary">予約は2か月先まで可</span>
                 </div>
+                <br>
                 <div class="form-group row mb-3">
                     <label class="form-label" for="timeSelect">✅予約時間</label>
                 <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('reservationTime')}" th:errors="*{reservationTime}"></div>
@@ -61,6 +62,7 @@
                 <input type="hidden" id="currentTime" th:value="*{reservationTime}">
                 <span class="help-block text-secondary">営業終了1時間前まで予約可</span>
                 </div>
+                <br>
                 <div class="form-group row mb-5">
                     <label class="form-label" for="headcount">✅予約人数</label>
                 <div class="alert alert-danger py-2" th:if="${#fields.hasErrors('headcount')}" th:errors="*{headcount}"></div>

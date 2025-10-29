@@ -330,8 +330,6 @@ a.text-primary:hover {
     border: none;
 }
 
-
-
 .restaurant-edit-btn {
     background-color: #758492;
     color: #fff;
@@ -343,7 +341,6 @@ a.text-primary:hover {
     color: #fff;
     border: none;
 }
-
 
 .restaurant-accordion:hover,
 .restaurant-accordion:focus {
@@ -416,7 +413,6 @@ a.text-primary:hover {
     border-color: #ffa500;
     box-shadow: 0 0 0 0.25rem rgba(255, 165, 0, 0.25);
 }
-
 
 .reservation-btn {
     background-color: #fa0;
