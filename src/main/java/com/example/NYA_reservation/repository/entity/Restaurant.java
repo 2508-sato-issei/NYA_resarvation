@@ -51,7 +51,7 @@ public class Restaurant {
     @Column
     private Integer maxAmount;
 
-    @Column(insertable = false, updatable = false)
+    @Column
     private String mainImage;
 
     @Column(insertable = false, updatable = false)

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.time.LocalTime;
@@ -55,6 +56,8 @@ public class RestaurantForm {
 
     @NotNull(message = E0028)
     private Integer maxAmount;
+
+    private MultipartFile mainImage;
 
     private Timestamp createdDate;
     private Timestamp updatedDate;
